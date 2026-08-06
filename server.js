@@ -53,7 +53,7 @@ app.post
 ('/alice', (req, res) => {
   var body = req.body || {};
   var command = (body.request && body.request.command) || 'пустая команда';
-  last = { text: 'Алиса получила: "' + command + '"', time: new Date().toLocaleTimeString('ru-RU') };
+  last = { text: 'Алиса получила: "' + command + '"', time: new Date().toLocaleTimeString('ru-RU', { timeZone: 'Europe/Moscow' }) };
   clients.forEach(function (c) { c.write('data: ' + JSON.stringify(last) + '\n\n'); });
   res.json({
     version: '1.0',
