@@ -183,7 +183,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '1.3.1-pc-telemetry-pass-through',
+  VERSION: '1.4.0-windows-context-layer',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -342,7 +342,7 @@ function detectIntent(ctx, contextStore) {
     return { name: 'ENTERTAINMENT', confidence: .88 };
   }
 
-  if (/компьютер|пк|программ|окн|файл|документ|папк|загрузк|рабочий стол|браузер|хром|телеграм|word|ворд|excel|эксель/.test(c)) {
+  if (/компьютер|пк|программ|окн|файл|документ|папк|загрузк|рабочий стол|браузер|хром|телеграм|word|ворд|excel|эксель|что сейчас на экране|где я сейчас|в какой программе/.test(c)) {
     return { name: 'PC', confidence: .82 };
   }
 
@@ -440,8 +440,9 @@ async function route(ctx, runtime) {
   if(intent.name==='HELP')return{reply:'Можно говорить обычными словами: задачи, заметки, списки, погода, поиск, расчёты. Контур компьютера подключается отдельным модулем.'};
 
   if(intent.name==='HELP_ME'){
-    runtime.context.remember(ctx,{pendingClarification:{type:'pc_help'}});
-    return{reply:'Помогу. Скажи, что сейчас видишь на экране или что хотела сделать. Когда подключим Windows Agent, я смогу сама получить состояние окна.'};
+    const result=await runtime.registry.run('pc',{ctx,intent},runtime);
+    runtime.context.remember(ctx,{lastTool:'pc',...(result.remember||{})});
+    return result;
   }
 
   if(intent.name==='CONTEXT_SELECT'){
@@ -1100,10 +1101,75 @@ function resultReply(r, fallback) {
   return { reply: fallback || 'Готово.' };
 }
 
+
+function cleanWindowText(v){
+  return String(v||'').replace(/\s+/g,' ').trim().slice(0,140);
+}
+
+function appLabel(process){
+  const p=String(process||'').toLowerCase();
+  const map={
+    chrome:'Google Chrome',
+    browser:'Яндекс Браузер',
+    msedge:'Microsoft Edge',
+    explorer:'Проводник',
+    telegram:'Telegram',
+    winword:'Microsoft Word',
+    excel:'Microsoft Excel',
+    notepad:'Блокнот',
+    outline:'Outline',
+    acrobat:'Adobe Acrobat',
+    capcut:'CapCut',
+    steam:'Steam'
+  };
+  return map[p]||cleanWindowText(process)||'программа';
+}
+
+function describeActiveWindow(data){
+  const title=cleanWindowText(data&&data.title);
+  const app=appLabel(data&&data.process);
+  if(title) return app+': «'+title+'»';
+  return app;
+}
+
+function helpForActive(data){
+  const p=String(data&&data.process||'').toLowerCase();
+  const where=describeActiveWindow(data);
+
+  if(p==='explorer'){
+    return 'Сейчас активно окно '+where+'. Это Проводник. Скажи, что хотела найти или открыть, например: «найди файл договор» или «открой загрузки».';
+  }
+  if(p==='chrome'||p==='browser'||p==='msedge'){
+    return 'Сейчас активно окно '+where+'. Это браузер. Скажи, что именно не получается на странице. Я уже понимаю, в какой программе ты находишься; чтение кнопок и содержимого страницы подключим следующим слоем.';
+  }
+  if(p==='winword'){
+    return 'Сейчас активно окно '+where+'. Это Microsoft Word. Скажи, что хотела сделать с документом — открыть, найти или разобраться, куда пропало нужное окно.';
+  }
+  if(p==='excel'){
+    return 'Сейчас активно окно '+where+'. Это Microsoft Excel. Скажи, что именно хотела сделать с таблицей.';
+  }
+  if(p==='telegram'){
+    return 'Сейчас активно окно '+where+'. Это Telegram. Скажи, что именно не получается.';
+  }
+  if(p==='outline'){
+    return 'Сейчас активно окно '+where+'. Это Outline. Если проблема связана с подключением, опиши, что видишь или что перестало работать.';
+  }
+
+  return 'Сейчас активно окно '+where+'. Я уже определила программу и заголовок окна. Скажи, что хотела сделать или что кажется неправильным.';
+}
+
 module.exports = {
   name:'pc', description:'Безопасное управление Windows через локальный агент', risk:'read',
   async run(input, runtime){
     const c=input.ctx.command, bridge=runtime.pcBridge;
+
+    if(input.intent && input.intent.name==='HELP_ME'){
+      const r=await bridge.run('active_window',{});
+      if(!r) return {reply:'Компьютер на связи, но я не успела получить активное окно. Скажи, что хотела сделать.'};
+      if(r.ok===false) return {reply:'Компьютер на связи, но активное окно определить не удалось. Скажи, что сейчас видишь.'};
+      if(r.data) return {reply:helpForActive(r.data),remember:{lastPcContext:r.data}};
+      return {reply:'Компьютер на связи. Скажи, что хотела сделать или что сейчас видишь на экране.'};
+    }
 
     if(/статус компьютера|компьютер.*на связи|пк.*на связи/.test(c)){
       const s=bridge.status();
@@ -1129,8 +1195,28 @@ module.exports = {
       return resultReply(await bridge.run('search_files',{query:q,limit:10}),'Поиск выполнила.');
     }
 
+    if(/что сейчас на экране|какое окно сейчас активно|какое окно открыто сейчас|где я сейчас|в какой программе я сейчас/.test(c)){
+      const r=await bridge.run('active_window',{});
+      if(!r) return {reply:'Не успела получить активное окно.'};
+      if(r.ok===false) return {reply:'Активное окно определить не удалось.'};
+      if(r.data){
+        return {reply:'Сейчас активно окно '+describeActiveWindow(r.data)+'.',remember:{lastPcContext:r.data}};
+      }
+      return {reply:'Активное окно определить не удалось.'};
+    }
+
     if(/что сейчас открыто|какие окна открыты|покажи открытые окна/.test(c)){
-      return resultReply(await bridge.run('list_windows',{}),'Показала открытые окна.');
+      const r=await bridge.run('list_windows',{});
+      if(!r) return {reply:'Не успела получить список окон.'};
+      if(r.ok===false) return resultReply(r,'Не получилось получить список окон.');
+      const wins=Array.isArray(r.data&&r.data.windows)?r.data.windows:[];
+      if(!wins.length) return {reply:'Открытых обычных окон сейчас не нашла.'};
+      const first=wins.slice(0,5).map((w,i)=>(i+1)+'. '+describeActiveWindow(w));
+      const more=wins.length>5?' Ещё открыто '+(wins.length-5)+'.':'';
+      return {
+        reply:'Сейчас открыто '+wins.length+' окон. '+first.join('. ')+'.'+more,
+        remember:{lastPcWindows:wins,lastPcContext:wins[0]||null}
+      };
     }
 
     if(/информация о компьютере|что с компьютером|состояние компьютера|почему компьютер тормозит/.test(c)){
@@ -1174,7 +1260,7 @@ module.exports = {
       return {reply:parts.join(' ')};
     }
 
-    return{reply:'Команду для компьютера поняла не полностью. Скажи, например: «открой хром», «найди файл договор» или «что сейчас открыто».'};
+    return{reply:'Команду для компьютера поняла не полностью. Скажи, например: «открой хром», «что сейчас на экране», «какие окна открыты», «найди файл договор» или просто «помоги».'};
   }
 };
 
