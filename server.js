@@ -80,12 +80,24 @@ function createApp() {
   storage.load().then(()=>console.log('[storage] loaded')).catch(e=>console.error('[storage]',e.message));
   setInterval(()=>context.cleanup(),5*60*1000).unref();
 
-  app.get('/health',(req,res)=>res.json({
-    ok:true,
-    version:VERSION,
-    tools:registry.list().map(x=>x.name),
-    pc:pcBridge.status()
-  }));
+  app.get('/health',(req,res)=>{
+    const s=pcBridge.status();
+    const safeMeta=s.meta ? {
+      version:s.meta.version||null,
+      telemetry:s.meta.telemetry||null
+    } : null;
+    res.json({
+      ok:true,
+      version:VERSION,
+      tools:registry.list().map(x=>x.name),
+      pc:{
+        configured:s.configured,
+        online:s.online,
+        lastSeen:s.lastSeen,
+        meta:safeMeta
+      }
+    });
+  });
 
   app.get('/alice',(req,res)=>res.json({status:'ok',text:'Smart Assistant Core работает',version:VERSION}));
   app.head('/alice',(req,res)=>res.status(200).end());
@@ -109,7 +121,11 @@ function createApp() {
   app.post('/pc/heartbeat',(req,res)=>{
     if(!pcBridge.authorize(req))return res.status(401).json({ok:false});
     const b=req.body||{},machine=String(b.machine||'home-pc-v2');
-    pcBridge.heartbeat(machine,{hostname:b.hostname||'',user:b.user||'',version:b.version||''});
+    const meta={version:String(b.version||'')};
+    if(b.telemetry && typeof b.telemetry==='object'){
+      meta.telemetry=b.telemetry;
+    }
+    pcBridge.heartbeat(machine,meta);
     res.json({ok:true,serverTime:Date.now()});
   });
 
@@ -167,7 +183,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '1.3.0-pc-v2-isolated',
+  VERSION: '1.3.1-pc-telemetry-pass-through',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -1125,11 +1141,12 @@ module.exports = {
       const d = (s.meta && s.meta.telemetry) || {};
       const parts = ['Компьютер на связи.'];
 
-      if(Number.isFinite(Number(d.cpuLoadPercent))){
+      if(d.cpuLoadPercent!=null && Number.isFinite(Number(d.cpuLoadPercent))){
         parts.push('Процессор загружен примерно на '+Math.round(Number(d.cpuLoadPercent))+' процентов.');
       }
 
-      if(Number.isFinite(Number(d.totalMemoryGB)) && Number.isFinite(Number(d.freeMemoryGB))){
+      if(d.totalMemoryGB!=null && d.freeMemoryGB!=null &&
+         Number.isFinite(Number(d.totalMemoryGB)) && Number.isFinite(Number(d.freeMemoryGB))){
         const total = Number(d.totalMemoryGB);
         const free = Number(d.freeMemoryGB);
         const used = Math.max(0,total-free);
@@ -1137,11 +1154,12 @@ module.exports = {
         parts.push('Оперативная память: занято '+used.toFixed(1)+' из '+total.toFixed(1)+' гигабайт, '+pct+' процентов.');
       }
 
-      if(Number.isFinite(Number(d.diskTotalGB)) && Number.isFinite(Number(d.diskFreeGB))){
+      if(d.diskTotalGB!=null && d.diskFreeGB!=null &&
+         Number.isFinite(Number(d.diskTotalGB)) && Number.isFinite(Number(d.diskFreeGB))){
         parts.push('На диске C свободно '+Number(d.diskFreeGB).toFixed(1)+' из '+Number(d.diskTotalGB).toFixed(1)+' гигабайт.');
       }
 
-      if(Number.isFinite(Number(d.uptimeHours))){
+      if(d.uptimeHours!=null && Number.isFinite(Number(d.uptimeHours))){
         parts.push('Windows работает без перезагрузки около '+Math.round(Number(d.uptimeHours))+' часов.');
       }
 
