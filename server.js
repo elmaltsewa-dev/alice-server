@@ -167,7 +167,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '1.2.6-system-status',
+  VERSION: '1.2.8-heartbeat-telemetry',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -552,7 +552,11 @@ class PcBridge {
 
   heartbeat(machine, meta = {}) {
     const id = machine || 'home-pc';
-    this.agents.set(id, { lastSeen: Date.now(), meta });
+    const prev = this.agents.get(id);
+    this.agents.set(id, {
+      lastSeen: Date.now(),
+      meta: { ...((prev && prev.meta) || {}), ...(meta || {}) }
+    });
   }
 
   online(machine = 'home-pc') {
@@ -1114,11 +1118,11 @@ module.exports = {
     }
 
     if(/информация о компьютере|что с компьютером|состояние компьютера|почему компьютер тормозит/.test(c)){
-      const r = await bridge.run('system_status',{});
-      if(!r) return {reply:'Не получила ответ от компьютера.'};
-      if(r.ok === false) return resultReply(r,'Не получилось проверить компьютер.');
+      const s = bridge.status();
+      if(!s.configured) return {reply:'Windows Agent ещё не настроен на сервере.'};
+      if(!s.online) return {reply:'Компьютер сейчас не на связи.'};
 
-      const d = r.data || {};
+      const d = (s.meta && s.meta.telemetry) || {};
       const parts = ['Компьютер на связи.'];
 
       if(Number.isFinite(Number(d.cpuLoadPercent))){
@@ -1138,12 +1142,15 @@ module.exports = {
       }
 
       if(Number.isFinite(Number(d.uptimeHours))){
-        const h = Math.round(Number(d.uptimeHours));
-        parts.push('Windows работает без перезагрузки около '+h+' часов.');
+        parts.push('Windows работает без перезагрузки около '+Math.round(Number(d.uptimeHours))+' часов.');
       }
 
-      if(parts.length===1){
-        parts.push('Связь с Windows есть, но подробные показатели агент пока не передал.');
+      if(s.meta && s.meta.version){
+        parts.push('Агент версии '+s.meta.version+'.');
+      }
+
+      if(parts.length===1 || (parts.length===2 && s.meta && s.meta.version)){
+        parts.push('Диагностический снимок ещё не получен. Подожди около двадцати секунд и повтори.');
       }
 
       return {reply:parts.join(' ')};
