@@ -167,7 +167,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '1.2.2-regression-candidate',
+  VERSION: '1.2.5-pc-encoding-safe',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -1064,8 +1064,20 @@ function appFrom(text) {
 
 function resultReply(r, fallback) {
   if (!r) return { reply:'Не получила ответ от компьютера.' };
-  if (r.ok === false) return { reply:r.message || 'Не получилось выполнить команду.' };
-  return { reply:r.message || fallback || 'Готово.' };
+  // Windows Agent transport may run under legacy Windows PowerShell encodings.
+  // Never use human-readable text returned by the agent in Alice responses.
+  // The agent returns execution status/data; all Russian user-facing text is generated here on Render.
+  if (r.ok === false) {
+    const code = String(r.code || '');
+    const errors = {
+      APP_NOT_FOUND: 'Не нашла эту программу на компьютере.',
+      NOT_FOUND: 'Ничего похожего не нашла.',
+      NOT_ALLOWED: 'Эта команда компьютеру не разрешена.',
+      FAILED: 'Не получилось выполнить команду на компьютере.'
+    };
+    return { reply: errors[code] || 'Не получилось выполнить команду на компьютере.' };
+  }
+  return { reply: fallback || 'Готово.' };
 }
 
 module.exports = {
