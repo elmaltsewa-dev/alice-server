@@ -183,7 +183,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '1.5.0-ui-automation-read',
+  VERSION: '1.6.0-confirmed-ui-actions',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -285,6 +285,10 @@ function detectIntent(ctx, contextStore) {
 
   if (/^(да|ага|подтверждаю|хорошо)$/.test(c)) return { name: 'CONFIRM_YES', confidence: 1 };
   if (/^(нет|не надо|отмена|отмени)$/.test(c)) return { name: 'CONFIRM_NO', confidence: 1 };
+
+  if (/^(нажми|кликни|щёлкни|щелкни|выбери)\s+/.test(c)) {
+    return { name: 'PC', confidence: .99 };
+  }
 
   if (/^(дальше|далее)$/.test(c)) return { name: 'CONTEXT_NEXT', confidence: .98 };
   if (/^(назад|предыдущий|предыдущая)$/.test(c)) return { name: 'CONTEXT_PREV', confidence: .98 };
@@ -476,9 +480,34 @@ async function route(ctx, runtime) {
 
   if(intent.name==='CONFIRM_YES'||intent.name==='CONFIRM_NO'){
     const s=runtime.context.session(ctx.sessionId);
-    if(!s.pendingClarification)return{reply:'Сейчас нечего подтверждать.'};
+    const pending=s.pendingClarification;
+    if(!pending)return{reply:'Сейчас нечего подтверждать.'};
+
     s.pendingClarification=null;
-    return{reply:intent.name==='CONFIRM_YES'?'Поняла.':'Хорошо, отменяю.'};
+
+    if(intent.name==='CONFIRM_NO'){
+      return{reply:pending.type==='pc_ui_action'?'Хорошо, не нажимаю.':'Хорошо, отменяю.'};
+    }
+
+    if(pending.type==='pc_ui_action'){
+      const r=await runtime.pcBridge.run('invoke_ui',pending.args||{});
+      if(!r)return{reply:'Не получила ответ от компьютера. Ничего повторно не нажимаю.'};
+      if(r.ok===false){
+        const code=String(r.code||'');
+        const errors={
+          WINDOW_CHANGED:'Окно уже изменилось, поэтому ничего не нажала. Повтори команду в нужном окне.',
+          NOT_FOUND:'Элемент уже не найден. Ничего не нажала.',
+          AMBIGUOUS:'На экране несколько одинаковых элементов. Ничего не нажала.',
+          NOT_SUPPORTED:'Этот элемент пока нельзя безопасно нажать через Windows Automation.',
+          BLOCKED:'Это действие пока заблокировано из соображений безопасности.',
+          FAILED:'Не получилось выполнить нажатие. Ничего повторно не нажимаю.'
+        };
+        return{reply:errors[code]||'Не получилось выполнить нажатие. Ничего повторно не нажимаю.'};
+      }
+      return{reply:'Готово. Нажала «'+String(pending.label||'элемент')+'».'};
+    }
+
+    return{reply:'Поняла.'};
   }
 
   if(intent.name==='UNKNOWN'){
@@ -599,6 +628,9 @@ class PcBridge {
   }
 
   poll(machine = 'home-pc-v2') {
+    const now=Date.now();
+    // Never execute an old UI command after reconnect/sleep.
+    this.jobs=this.jobs.filter(j=>now-j.createdAt<=10000);
     const i = this.jobs.findIndex(j => j.machine === machine);
     if (i < 0) return null;
     return this.jobs.splice(i, 1)[0];
@@ -1094,7 +1126,11 @@ function resultReply(r, fallback) {
       APP_NOT_FOUND: 'Не нашла эту программу на компьютере.',
       NOT_FOUND: 'Ничего похожего не нашла.',
       NOT_ALLOWED: 'Эта команда компьютеру не разрешена.',
-      FAILED: 'Не получилось выполнить команду на компьютере.'
+      FAILED: 'Не получилось выполнить команду на компьютере.',
+      WINDOW_CHANGED: 'Окно уже изменилось. Ничего не нажала.',
+      AMBIGUOUS: 'Нашла несколько одинаковых элементов. Ничего не нажала.',
+      NOT_SUPPORTED: 'Этот элемент пока нельзя безопасно нажать.',
+      BLOCKED: 'Это действие пока заблокировано из соображений безопасности.'
     };
     return { reply: errors[code] || 'Не получилось выполнить команду на компьютере.' };
   }
@@ -1178,6 +1214,21 @@ function uniqueNamed(items, typeNames){
   return out;
 }
 
+
+function normalizeUiQuery(v){
+  return String(v||'')
+    .replace(/^(нажми|кликни|щёлкни|щелкни|выбери)\s+/,'')
+    .replace(/^(на\s+)?(кнопку|кнопка|ссылку|ссылка|вкладку|вкладка|пункт)\s+/,'')
+    .replace(/[«»"]/g,'')
+    .trim()
+    .slice(0,100);
+}
+
+function blockedUiActionLabel(v){
+  const s=String(v||'').toLowerCase();
+  return /удал|delete|remove|стер|format|формат|сброс|reset|factory|деинстал|uninstall|оплат|платеж|платёж|купить|purchase|pay|заказать|отправить|send|publish|опубликов|перезагруз|restart|выключ|shutdown|установить|install/.test(s);
+}
+
 function summarizeUiSnapshot(data, mode='help'){
   if(!data) return 'Не получила данные активного окна.';
   const win=data.window||data;
@@ -1240,6 +1291,51 @@ module.exports = {
       }
 
       return {reply:'Компьютер на связи, но я не успела прочитать активное окно. Скажи, что хотела сделать.'};
+    }
+
+    if(/^(нажми|кликни|щёлкни|щелкни|выбери)\s+/.test(c)){
+      const query=normalizeUiQuery(c);
+      if(!query)return{reply:'Скажи название кнопки или элемента.'};
+
+      if(blockedUiActionLabel(query)){
+        return{reply:'Такое действие я пока не выполняю автоматически. Могу только показать, где находится этот элемент.'};
+      }
+
+      const r=await bridge.run('resolve_ui_target',{query,maxNodes:220,timeBudgetMs:1500});
+      if(!r)return{reply:'Не успела найти этот элемент. Ничего не нажимаю.'};
+      if(r.ok===false){
+        if(r.code==='NOT_FOUND')return{reply:'Не нашла на активном окне элемент «'+query+'». Ничего не нажимаю.'};
+        if(r.code==='AMBIGUOUS'){
+          const names=Array.isArray(r.data&&r.data.candidates)?r.data.candidates.slice(0,4).map(x=>x.name):[];
+          return{reply:'Нашла несколько подходящих элементов'+(names.length?': '+names.join(', '):'')+'. Уточни название. Ничего не нажимаю.'};
+        }
+        return{reply:'Не получилось безопасно определить нужный элемент. Ничего не нажимаю.'};
+      }
+
+      const target=r.data&&r.data.target;
+      const win=r.data&&r.data.window;
+      if(!target||!win)return{reply:'Не получила точные данные элемента. Ничего не нажимаю.'};
+
+      if(blockedUiActionLabel(target.name)){
+        return{reply:'Элемент «'+target.name+'» относится к действию, которое я пока не выполняю автоматически.'};
+      }
+
+      runtime.context.remember(input.ctx,{
+        pendingClarification:{
+          type:'pc_ui_action',
+          label:target.name,
+          args:{
+            name:target.name,
+            type:target.type,
+            automationId:target.automationId||'',
+            expectedProcessId:win.processId,
+            expectedWindowTitle:win.title||''
+          }
+        }
+      });
+
+      return{reply:'Нашла '+(target.type==='Button'?'кнопку':target.type==='TabItem'?'вкладку':'элемент')+
+        ' «'+target.name+'» в активном окне. Нажать?'};
     }
 
     if(/статус компьютера|компьютер.*на связи|пк.*на связи/.test(c)){
@@ -1343,7 +1439,7 @@ module.exports = {
       return {reply:parts.join(' ')};
     }
 
-    return{reply:'Команду для компьютера поняла не полностью. Скажи, например: «открой хром», «что сейчас на экране», «какие кнопки здесь есть», «какие окна открыты», «найди файл договор» или просто «помоги».'};
+    return{reply:'Команду для компьютера поняла не полностью. Скажи, например: «открой хром», «что сейчас на экране», «какие кнопки здесь есть», «нажми Назад», «какие окна открыты», «найди файл договор» или просто «помоги».'};
   }
 };
 
