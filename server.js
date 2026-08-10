@@ -1,379 +1,2910 @@
+
+сегодня 17:51
+
+Вставленный текст(1).txt
+Документ
+
+2026-08-10_18-10-17.png
+2026-08-10_18-10-05.png
+2026-08-10_18-09-56.png
+Windows 10 , ПК, Включен обычно, после решений всех задач он выключается, но может находиться в спящем режиме. Я полностью являюсь владельцем. "Что именно Станция должна уметь делать с ПК в первой версии. " вот теперь смотри, работать со станцией и пк будет моя супруга, скажу честно, она полный лузер при работе с ПК, есть какие то базовые знания, на этом все. Поэтому здесь лучше предпринять по максимому. "Какие программы особенно важны. " Даже как то сложно вот так с порога ответить что важно. Она человек разносторонний и поэтому ее может понести хоть куда. И она всегда зовет меня и просит чтобы я ей помог. Вот поэтому я сейчас и решаю этот вопрос, чтобы она звала не меня, а работала со станцией Яндекс. "Как сейчас запускаете навык на Станции. " Алиса, запусти таймер- ответ на сколько запустить таймер. 7. Response:
+
+{
+  "version": "1.0",
+  "session": {
+    "message_id": 23,
+    "session_id": "bb1d692f-0068-4ee0-b124-7eb3fce99e18",
+    "skill_id": "c2f72b52-4634-45c1-b74f-e7a533e0aaab",
+    "user": {
+      "user_id": "03B03F9194CCE60EAA0B1D62F784A9BE8DD105486564BCF1287AE6E10BB6BCB7"
+    },
+    "application": {
+      "application_id": "20E382D1CDBAD0F2A69D113835A38CFC4BBE56357E6E17E6002AC8E7402192C5"
+    },
+    "user_id": "20E382D1CDBAD0F2A69D113835A38CFC4BBE56357E6E17E6002AC8E7402192C5",
+    "new": false
+  },
+  "response": {
+    "text": "Не нашла город москве.",
+    "end_session": false
+  }
+}
+Request:
+{
+  "meta": {
+    "locale": "ru-RU",
+    "timezone": "UTC",
+    "client_id": "ru.yandex.searchplugin/7.16 (none none; android 4.4.2)",
+    "interfaces": {
+      "screen": {},
+      "payments": {},
+      "account_linking": {}
+    }
+  },
+  "session": {
+    "message_id": 23,
+    "session_id": "bb1d692f-0068-4ee0-b124-7eb3fce99e18",
+    "skill_id": "c2f72b52-4634-45c1-b74f-e7a533e0aaab",
+    "user": {
+      "user_id": "03B03F9194CCE60EAA0B1D62F784A9BE8DD105486564BCF1287AE6E10BB6BCB7"
+    },
+    "application": {
+      "application_id": "20E382D1CDBAD0F2A69D113835A38CFC4BBE56357E6E17E6002AC8E7402192C5"
+    },
+    "user_id": "20E382D1CDBAD0F2A69D113835A38CFC4BBE56357E6E17E6002AC8E7402192C5",
+    "new": false
+  },
+  "request": {
+    "command": "погода в москве",
+    "original_utterance": "погода в москве",
+    "nlu": {
+      "tokens": [
+        "погода",
+        "в",
+        "москве"
+      ],
+      "entities": [
+        {
+          "type": "YANDEX.GEO",
+          "tokens": {
+            "start": 1,
+            "end": 3
+          },
+          "value": {
+            "city": "москва"
+          }
+        }
+      ],
+      "intents": {}
+    },
+    "markup": {
+      "dangerous_context": false
+    },
+    "type": "SimpleUtterance"
+  },
+  "version": "1.0"
+}  
+
+2026-08-10_18-29-36.png
+2026-08-10_18-32-02.png
+на аккаунте супруги 3. Идет с перва роутер ростелеком, потом усилитель тап динк, к нему провод до пк.
+
+2026-08-10_18-29-36.png
+2026-08-10_18-32-02.png
+2. на аккаунте супруги 3. Идет с перва роутер ростелеком, потом усилитель тап линк, к нему провод до пк.
+
+
+Обработка заняла 4m 4s
+Готово. Я собрал первую рабочую кандидат-связку для вашего ПК и текущего сервера.
+
+Скачать ALICE_PC_AGENT_V1_CANDIDATE.zip
+
+Внутри:
+
+server_pc_candidate.js — новая серверная часть;
+
+alice-pc-agent.ps1 — агент для Windows 10;
+
+install.ps1 — установщик агента;
+
+README.md — инструкция.
+
+Пока не запускайте установщик. Сначала нам нужно поставить server_pc_candidate.js в GitHub вместо текущего server.js, но сделать это аккуратно.
+
+Я пытался создать отдельную тестовую ветку в вашем GitHub, чтобы не задеть рабочий main, но интеграция GitHub вернула 403 — права на создание ветки мне не дали. Поэтому текущий рабочий server.js я не менял. Он по-прежнему содержит старую архитектуру и открытый /debug, который показывает начало GH_TOKEN.
+
+В кандидате уже сделано главное: связь Render ↔ ПК с авторизацией, heartbeat «ПК на связи», очередь команд, получение результата, использование NLU Яндекса для города, удаление валют/криптовалют и первые команды Windows.
+
+Первая версия уже понимает такие запросы:
+
+«статус компьютера»
+«открой хром»
+«запусти телеграм»
+«открой загрузки»
+«открой документы»
+«открой рабочий стол»
+«покажи последние загрузки»
+«найди файл договор»
+«какие окна открыты»
+«состояние компьютера»
+
+Опасных действий пока специально нет: она ничего не удаляет, не выключает ПК и не исполняет произвольные команды.
+
+Следующий шаг: открываем ваш GitHub и я проведу вас буквально по кнопкам, как безопасно заменить server.js, сохранив старую версию для отката. После успешного деплоя Render установим агент на Windows и впервые скажем Станции команду для ПК. 
+
+
+Обработка заняла 1m 35s
+Готово. Я сделал однофайловую установочную сборку, чтобы вам не пришлось вручную раскладывать 30 файлов по GitHub.
+
+Скачать готовый пакет 1.2.2 DEPLOY
+
+И отдельно сам файл, который будем ставить в GitHub: server.js
+
+Я его уже проверил: синтаксис Node.js — OK, запуск ядра — OK, маршруты /alice, /health, /events, /pc/heartbeat, /pc/poll, /pc/result зарегистрировались нормально. SHA-256 server.js: b5bedda5a26a5e977336f7cfb6c8c3c470dfa66e389aa4cc91d218d21da5ebe0.
+
+Теперь делаем установку. У меня к вашему GitHub есть чтение, но GitHub сейчас показывает для подключения push: false, поэтому именно один шаг сохранения файла вы сделаете в браузере.
+
+Откройте github.com → elmaltsewa-dev → alice-server.
+
+Нажмите файл server.js.
+
+Справа сверху над кодом нажмите значок карандаша — Edit this file.
+
+Откройте скачанный мной новый server.js обычным Блокнотом.
+
+В Блокноте: Ctrl+A → Ctrl+C.
+
+Вернитесь в редактор GitHub. В старом коде: Ctrl+A → Ctrl+V.
+
+Нажмите зелёную кнопку Commit changes…
+
+В поле сообщения можете оставить:
+Smart Assistant Core 1.2.2
+
+Выберите Commit directly to the main branch.
+
+Нажмите Commit changes.
+
+Старая версия при этом не теряется: GitHub сохранит предыдущий server.js в истории коммитов, поэтому откат возможен.
+
+После коммита Render должен сам начать новый deploy, потому что у вас уже настроено автодеплой-развёртывание main.
+
+Когда Render закончит, в браузере откройте:
+
+https://alice-server-lh6w.onrender.com/alice
+
+Должно появиться примерно:
+
+Smart Assistant Core работает
+
+и версия:
+
+1.2.2-regression-candidate
+
+Затем откройте:
+
+https://alice-server-lh6w.onrender.com/health
+
+Там должны быть ok: true и список инструментов.
+
+Сейчас делайте замену server.js. Если хотите, можете сразу прислать скрин страницы GitHub с открытым server.js — я укажу на вашем конкретном экране, куда нажать. 
+
+
+server.js
+Код
+
+
+я так понимаю ты что просишь чтобы я открыл тебе доступ к GitHub, та к тебе и не надо  тебе доступа ты мне просто давай инструкции что сделать, я сделаю
+
+Да, именно так. Никакой дополнительный доступ к GitHub мне не нужен. Я готовлю файлы и говорю вам, куда нажать; вы сами всё делаете в своём браузере. Так и продолжаем.
+
+Сейчас у нас готов новый server.js. Делайте только это:
+
+Откройте GitHub → elmaltsewa-dev/alice-server.
+
+Нажмите на файл server.js.
+
+Нажмите значок карандаша Edit this file справа сверху.
+
+Скачайте мой готовый файл: server.js 1.2.2
+
+Откройте скачанный файл в Блокноте: Ctrl+A → Ctrl+C.
+
+Вернитесь в GitHub, в редактор старого server.js: Ctrl+A → Ctrl+V.
+
+Нажмите Commit changes....
+
+В названии коммита напишите: Smart Assistant Core 1.2.2
+
+Оставьте Commit directly to the main branch.
+
+Нажмите зелёную Commit changes.
+
+После этого ничего больше пока не делайте. Render сам увидит изменение и начнёт развёртывание.
+
+Когда GitHub покажет, что новый server.js сохранён, пришлите мне скриншот страницы. Я сразу дам следующий конкретный шаг — проверим Render и только после успешной проверки пойдём дальше.
+
+
+server.js
+Код
+
+
+да нету у меня к твоему файлу доступа
+
+Да, моя ошибка — я дал вам ссылку на вложенный путь, который у вас нормально не открылся.
+
+Вот теперь два простых файла:
+
+Скачать полный код как TXT
+
+Скачать тот же файл в ZIP
+
+Делайте через TXT:
+
+Скачайте server_1.2.2_ГОТОВЫЙ_КОД.txt.
+
+Откройте его Блокнотом.
+
+Ctrl+A → Ctrl+C.
+
+В GitHub откройте старый server.js → карандаш Edit.
+
+В редакторе GitHub: Ctrl+A → Ctrl+V.
+
+Commit changes → Smart Assistant Core 1.2.2 → Commit directly to main.
+
+Если и эта ссылка у вас не откроется — скажите сразу. Тогда я дам вам другой способ, без скачивания файла. 
+
+
+server_1.2.2_ГОТОВЫЙ_КОД.txt
+Документ
+
+
+Библиотека
+/
+server_1.2.2_ГОТОВЫЙ_КОД.txt
+
+
+// SMART ASSISTANT CORE 1.2.2 — GENERATED DEPLOYMENT BUILD
+// Source architecture: modular package SMART_ASSISTANT_CORE_1.2.2_REGRESSION_CANDIDATE
+// This single file is generated only to make deployment to the existing GitHub/Render service simple.
+// Do not add secrets here. GH_TOKEN / GH_REPO / PC_AGENT_TOKEN remain Render environment variables.
+
+'use strict';
+const __modules = Object.create(null);
+const __cache = Object.create(null);
+function __require(id) {
+  if (__cache[id]) return __cache[id].exports;
+  const factory = __modules[id];
+  if (!factory) throw new Error('Bundled module not found: ' + id);
+  const module = { exports: {} };
+  __cache[id] = module;
+  factory(module, module.exports, __require, require);
+  return module.exports;
+}
+
+__modules["server.js"] = function(module, exports, __require, require) {
 const express = require('express');
-const app = express();
-app.use(express.json());
+const { createApp } = __require("src/app.js");
 
-const TZ = 'Europe/Moscow';
-const GH_TOKEN = process.env.GH_TOKEN || '';
-const GH_REPO = process.env.GH_REPO || 'elmaltsewa-dev/alice-server';
-const clients = new Set();
+const app = createApp();
+const port = process.env.PORT || 3000;
 
-let lastView = null, lastSearch = null, reader = null, timer = null;
-let reminders = [], reminderId = 1, pomo = null, stopwatch = null;
-let lastFun = 'joke', lastRiddle = null;
-let db = { tasks: [], lists: {}, notes: [], city: 'Москва' };
-let dbSha = null;
+app.listen(port, () => {
+  console.log(`[Smart Assistant Core] listening on ${port}`);
+});
 
-function send(p) { lastView = p; const d = 'data: ' + JSON.stringify(p) + '\n\n'; clients.forEach(c => c.write(d)); }
+};
 
-// ---------- память ----------
-async function loadDb() {
-  if (!GH_TOKEN) return;
+__modules["src/app.js"] = function(module, exports, __require, require) {
+const express = require('express');
+const { VERSION } = __require("src/config.js");
+const { buildRequestContext } = __require("src/core/request-context.js");
+const { ContextStore } = __require("src/core/context-store.js");
+const { ToolRegistry } = __require("src/core/tool-registry.js");
+const { route } = __require("src/core/router.js");
+const { GitHubStorage } = __require("src/storage/github-storage.js");
+const { panelHtml } = __require("src/ui/panel.js");
+const { PcBridge } = __require("src/pc/bridge.js");
+
+const timeTool = __require("src/tools/time.js");
+const timerTool = __require("src/tools/timer.js");
+const tasksTool = __require("src/tools/tasks.js");
+const listsTool = __require("src/tools/lists.js");
+const notesTool = __require("src/tools/notes.js");
+const weatherTool = __require("src/tools/weather.js");
+const calculatorTool = __require("src/tools/calculator.js");
+const translateTool = __require("src/tools/translate.js");
+const knowledgeTool = __require("src/tools/knowledge.js");
+const entertainmentTool = __require("src/tools/entertainment.js");
+const browserTool = __require("src/tools/browser.js");
+const pcTool = __require("src/tools/pc.js");
+
+function createApp() {
+  const app = express();
+  app.use(express.json({limit:'1mb'}));
+
+  const context = new ContextStore();
+  const storage = new GitHubStorage();
+  const registry = new ToolRegistry();
+  const pcBridge = new PcBridge();
+  [
+    timeTool,timerTool,tasksTool,listsTool,notesTool,weatherTool,
+    calculatorTool,translateTool,knowledgeTool,entertainmentTool,browserTool,pcTool
+  ].forEach(t=>registry.register(t));
+
+  const clients = new Set();
+  let lastView = null;
+
+  function sendView(p) {
+    lastView = p;
+    const data='data: '+JSON.stringify(p)+'\n\n';
+    for(const c of clients){try{c.write(data);}catch{}}
+  }
+
+  const runtime = { context, storage, registry, sendView, pcBridge };
+
+  storage.load().then(()=>console.log('[storage] loaded')).catch(e=>console.error('[storage]',e.message));
+  setInterval(()=>context.cleanup(),5*60*1000).unref();
+
+  app.get('/health',(req,res)=>res.json({
+    ok:true,
+    version:VERSION,
+    tools:registry.list().map(x=>x.name),
+    pc:pcBridge.status()
+  }));
+
+  app.get('/alice',(req,res)=>res.json({status:'ok',text:'Smart Assistant Core работает',version:VERSION}));
+  app.head('/alice',(req,res)=>res.status(200).end());
+
+  app.get('/events',(req,res)=>{
+    res.writeHead(200,{'Content-Type':'text/event-stream','Cache-Control':'no-cache','Connection':'keep-alive'});
+    if(lastView)res.write('data: '+JSON.stringify(lastView)+'\n\n');
+    clients.add(res);
+    req.on('close',()=>clients.delete(res));
+  });
+
+  // Без вывода любых секретов.
+  app.get('/debug',(req,res)=>res.json({
+    ok:true,
+    version:VERSION,
+    storageConfigured:!!process.env.GH_TOKEN,
+    repository:process.env.GH_REPO||'elmaltsewa-dev/alice-server',
+    registeredTools:registry.list()
+  }));
+
+  app.post('/pc/heartbeat',(req,res)=>{
+    if(!pcBridge.authorize(req))return res.status(401).json({ok:false});
+    const b=req.body||{},machine=String(b.machine||'home-pc');
+    pcBridge.heartbeat(machine,{hostname:b.hostname||'',user:b.user||'',version:b.version||''});
+    res.json({ok:true,serverTime:Date.now()});
+  });
+
+  app.get('/pc/poll',(req,res)=>{
+    if(!pcBridge.authorize(req))return res.status(401).json({ok:false});
+    const machine=String(req.query.machine||'home-pc');
+    pcBridge.heartbeat(machine,{});
+    res.json({ok:true,job:pcBridge.poll(machine)});
+  });
+
+  app.post('/pc/result',(req,res)=>{
+    if(!pcBridge.authorize(req))return res.status(401).json({ok:false});
+    const b=req.body||{};
+    pcBridge.complete(String(b.id||''),b.result||{ok:false,message:'Пустой результат'});
+    res.json({ok:true});
+  });
+
+  app.post('/alice',async(req,res)=>{
+    const body=req.body||{};
+    const ctx=buildRequestContext(body);
+    let out;
+    try{
+      out=await route(ctx,runtime);
+    }catch(e){
+      console.error('[alice]',e.stack||e.message);
+      out={reply:'Произошла внутренняя ошибка. Я записала её в журнал сервера.'};
+    }
+
+    if(out&&(out.html||out.speakOnly||out.stopSpeak)){
+      const view={};
+      if(out.html)view.html=out.html;
+      if(out.speakOnly)view.speak=out.speakOnly;
+      if(out.stopSpeak)view.stopSpeak=true;
+      sendView(view);
+    }
+
+    res.json({
+      version:'1.0',
+      session:body.session||{},
+      response:{
+        text:(out&&out.reply)||'Готово.',
+        end_session:false
+      }
+    });
+  });
+
+  app.get('/',(req,res)=>res.send(panelHtml(VERSION)));
+
+  return app;
+}
+
+module.exports={createApp};
+
+};
+
+__modules["src/config.js"] = function(module, exports, __require, require) {
+module.exports = {
+  VERSION: '1.2.2-regression-candidate',
+  TZ: process.env.TZ_NAME || 'Europe/Moscow',
+  GH_TOKEN: process.env.GH_TOKEN || '',
+  GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
+  STORAGE_FILE: process.env.STORAGE_FILE || 'data.json',
+  SESSION_TTL_MS: 30 * 60 * 1000,
+  USER_CONTEXT_TTL_MS: 24 * 60 * 60 * 1000,
+  PC_AGENT_TOKEN: process.env.PC_AGENT_TOKEN || '',
+  PC_AGENT_TTL_MS: 45 * 1000
+};
+
+};
+
+__modules["src/core/context-store.js"] = function(module, exports, __require, require) {
+const { SESSION_TTL_MS, USER_CONTEXT_TTL_MS } = __require("src/config.js");
+
+class ContextStore {
+  constructor() {
+    this.sessions = new Map();
+    this.users = new Map();
+  }
+
+  _touch(map, key, ttl, factory) {
+    const now = Date.now();
+    let item = map.get(key);
+    if (!item || now - item.updatedAt > ttl) {
+      item = { updatedAt: now, data: factory() };
+      map.set(key, item);
+    }
+    item.updatedAt = now;
+    return item.data;
+  }
+
+  session(id) {
+    return this._touch(this.sessions, id, SESSION_TTL_MS, () => ({
+      lastIntent: null,
+      lastTool: null,
+      lastResults: [],
+      selectedIndex: null,
+      pendingClarification: null,
+      lastReferencedObject: null
+    }));
+  }
+
+  user(id) {
+    return this._touch(this.users, id, USER_CONTEXT_TTL_MS, () => ({
+      lastIntent: null,
+      lastTool: null,
+      lastResults: [],
+      lastReferencedObject: null
+    }));
+  }
+
+  remember(ctx, patch) {
+    const s = this.session(ctx.sessionId);
+    const u = this.user(ctx.userId);
+    Object.assign(s, patch || {});
+    Object.assign(u, patch || {});
+  }
+
+  resolveOrdinal(text) {
+    const map = {
+      'перв': 1, 'втор': 2, 'трет': 3, 'четверт': 4, 'пят': 5,
+      'шест': 6, 'седьм': 7, 'восьм': 8, 'девят': 9, 'десят': 10
+    };
+    const m = String(text || '').match(/\b(\d{1,2})\b/);
+    if (m) return Number(m[1]);
+    for (const [stem, n] of Object.entries(map)) {
+      if (String(text || '').includes(stem)) return n;
+    }
+    return null;
+  }
+
+  resolveReference(ctx) {
+    const s = this.session(ctx.sessionId);
+    const u = this.user(ctx.userId);
+    return s.lastReferencedObject || u.lastReferencedObject || null;
+  }
+
+  cleanup() {
+    const now = Date.now();
+    for (const [k, v] of this.sessions) if (now - v.updatedAt > SESSION_TTL_MS) this.sessions.delete(k);
+    for (const [k, v] of this.users) if (now - v.updatedAt > USER_CONTEXT_TTL_MS) this.users.delete(k);
+  }
+}
+
+module.exports = { ContextStore };
+
+};
+
+__modules["src/core/intent-engine.js"] = function(module, exports, __require, require) {
+function includesAny(text, parts) {
+  return parts.some(p => text.includes(p));
+}
+
+function detectIntent(ctx, contextStore) {
+  const c = ctx.command;
+
+  if (!c) return { name: 'EMPTY', confidence: 1 };
+
+  if (/^(да|ага|подтверждаю|хорошо)$/.test(c)) return { name: 'CONFIRM_YES', confidence: 1 };
+  if (/^(нет|не надо|отмена|отмени)$/.test(c)) return { name: 'CONFIRM_NO', confidence: 1 };
+
+  if (/^(дальше|далее)$/.test(c)) return { name: 'CONTEXT_NEXT', confidence: .98 };
+  if (/^(назад|предыдущий|предыдущая)$/.test(c)) return { name: 'CONTEXT_PREV', confidence: .98 };
+  if (/^(перв|втор|трет|четверт|пят|шест|седьм|восьм|девят|\d+)/.test(c)) {
+    return { name: 'CONTEXT_SELECT', confidence: .9, index: contextStore.resolveOrdinal(c) };
+  }
+  if (/^(открой|покажи|прочитай|зачитай)\s+(его|ее|её|это|этот|эту|тот|ту)$/.test(c)) {
+    return { name: 'CONTEXT_ACT', confidence: .95 };
+  }
+
+  if (includesAny(c, ['не понимаю', 'что произошло', 'что случилось', 'помоги', 'что нажать', 'куда пропало', 'не могу открыть'])) {
+    return { name: 'HELP_ME', confidence: .92 };
+  }
+
+  if (/привет|здравствуй|добрый (день|вечер|утро)/.test(c)) return { name: 'GREETING', confidence: .98 };
+  if (/помощь|что ты умеешь/.test(c)) return { name: 'HELP', confidence: .98 };
+
+  if (/который час|сколько времени|время сейчас|какое число|какая дата|день недели|неделя года|до нового года|время в мире|какое число будет через|сколько.*(прошло|до)/.test(c)) {
+    return { name: 'TIME_DATE', confidence: .95 };
+  }
+
+  if (/таймер|напомни|напоминан|помодоро|секундомер|сколько осталось/.test(c)) {
+    return { name: 'TIMER', confidence: .95 };
+  }
+
+  if (/задач|план на сегодня|важная|важные|очисти выполненные|выполни/.test(c)) {
+    return { name: 'TASKS', confidence: .92 };
+  }
+
+  if (/создай список|добавь в |покажи все списки|вычеркни|очисти список|удали список|сколько позиций/.test(c)) {
+    return { name: 'LISTS', confidence: .92 };
+  }
+
+  if (/заметк|^запиши|найди в заметках/.test(c)) {
+    return { name: 'NOTES', confidence: .92 };
+  }
+
+  if (/погода|будет дождь|нужна куртка|уф|рассвет|закат|прогноз на неделю|фаз.*луны/.test(c)) {
+    return { name: 'WEATHER', confidence: .98 };
+  }
+
+  if (/посчитай|процент|случайное число|дюйм|килограмм|километр/.test(c)) {
+    return { name: 'CALCULATOR', confidence: .9 };
+  }
+
+  if (/переведи|как по-английски/.test(c)) {
+    return { name: 'TRANSLATE', confidence: .9 };
+  }
+
+  if (/в этот день|кто такой|кто такая|что такое|расскажи про|столица|население/.test(c)) {
+    return { name: 'KNOWLEDGE', confidence: .9 };
+  }
+
+  if (/анекдот|факт|комплимент|совет|мотивируй|монетк|кубик|камень.*ножницы|ножницы.*бумага|загадк|^ответ|^еще|^ещё|другой|что посмотреть|что приготовить|что съесть|идея подарка|что подарить/.test(c)) {
+    return { name: 'ENTERTAINMENT', confidence: .88 };
+  }
+
+  if (/компьютер|пк|программ|окн|файл|документ|папк|загрузк|рабочий стол|браузер|хром|телеграм|word|ворд|excel|эксель/.test(c)) {
+    return { name: 'PC', confidence: .82 };
+  }
+
+  if (/найди фото|^найди|^поищи|^поиск|покажи еще|покажи ещё|назад к списку|открой сайт|^открой|^зачитай|прочитай вслух|озвучь|стоп чтение|хватит читать|замолчи/.test(c)) {
+    return { name: 'BROWSER', confidence: .86 };
+  }
+
+  return { name: 'UNKNOWN', confidence: .2 };
+}
+
+module.exports = { detectIntent };
+
+};
+
+__modules["src/core/request-context.js"] = function(module, exports, __require, require) {
+function normalizeText(text) {
+  return String(text || '')
+    .toLowerCase()
+    .replace(/ё/g, 'е')
+    .replace(/[.,!?;:"]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function getUserId(body) {
+  const s = body.session || {};
+  return (s.user && s.user.user_id) ||
+    (s.application && s.application.application_id) ||
+    s.user_id ||
+    'anonymous';
+}
+
+function getSessionId(body) {
+  return (body.session && body.session.session_id) || 'no-session';
+}
+
+function indexEntities(body) {
+  const entities = (((body || {}).request || {}).nlu || {}).entities || [];
+  const out = { raw: entities, geo: [], datetime: [], number: [], fio: [] };
+  for (const e of entities) {
+    if (!e || !e.type) continue;
+    if (e.type === 'YANDEX.GEO') out.geo.push(e.value || {});
+    else if (e.type === 'YANDEX.DATETIME') out.datetime.push(e.value || {});
+    else if (e.type === 'YANDEX.NUMBER') out.number.push(e.value);
+    else if (e.type === 'YANDEX.FIO') out.fio.push(e.value || {});
+  }
+  return out;
+}
+
+function buildRequestContext(body) {
+  const request = (body && body.request) || {};
+  return {
+    rawBody: body || {},
+    userId: getUserId(body || {}),
+    sessionId: getSessionId(body || {}),
+    messageId: ((body || {}).session || {}).message_id || 0,
+    isNewSession: !!(((body || {}).session || {}).new),
+    command: normalizeText(request.command),
+    originalUtterance: String(request.original_utterance || request.command || '').trim(),
+    type: request.type || 'SimpleUtterance',
+    entities: indexEntities(body || {}),
+    intents: (((request.nlu || {}).intents) || {}),
+    meta: (body && body.meta) || {}
+  };
+}
+
+module.exports = { buildRequestContext, normalizeText };
+
+};
+
+__modules["src/core/router.js"] = function(module, exports, __require, require) {
+const { detectIntent } = __require("src/core/intent-engine.js");
+
+const MAP = {
+  TIME_DATE:'time_date',
+  TIMER:'timer',
+  TASKS:'tasks',
+  LISTS:'lists',
+  NOTES:'notes',
+  WEATHER:'weather',
+  CALCULATOR:'calculator',
+  TRANSLATE:'translate',
+  KNOWLEDGE:'knowledge',
+  ENTERTAINMENT:'entertainment',
+  BROWSER:'browser',
+  PC:'pc'
+};
+
+async function route(ctx, runtime) {
+  const intent = detectIntent(ctx, runtime.context);
+  runtime.context.remember(ctx,{lastIntent:intent.name});
+
+  if(intent.name==='EMPTY')return{reply:'Я слушаю.'};
+  if(intent.name==='GREETING')return{reply:'Привет. Я на связи.'};
+  if(intent.name==='HELP')return{reply:'Можно говорить обычными словами: задачи, заметки, списки, погода, поиск, расчёты. Контур компьютера подключается отдельным модулем.'};
+
+  if(intent.name==='HELP_ME'){
+    runtime.context.remember(ctx,{pendingClarification:{type:'pc_help'}});
+    return{reply:'Помогу. Скажи, что сейчас видишь на экране или что хотела сделать. Когда подключим Windows Agent, я смогу сама получить состояние окна.'};
+  }
+
+  if(intent.name==='CONTEXT_SELECT'){
+    const s=runtime.context.session(ctx.sessionId), n=intent.index;
+    if(!n||!s.lastResults[n-1])return{reply:'Сейчас нет такого результата.'};
+    const obj=s.lastResults[n-1];
+    runtime.context.remember(ctx,{selectedIndex:n,lastReferencedObject:obj});
+    return{reply:'Выбрала '+n+': '+(obj.title||obj.name||'результат')+'. Что сделать дальше?'};
+  }
+
+  if(intent.name==='CONTEXT_ACT'){
+    const obj=runtime.context.resolveReference(ctx);
+    if(!obj)return{reply:'Не поняла, о чём речь. Назови объект.'};
+    if(obj.url){
+      const synthetic={...ctx,command:'открой '+(runtime.context.session(ctx.sessionId).selectedIndex||1)};
+      return await runtime.registry.run('browser',{ctx:synthetic},runtime);
+    }
+    return{reply:'Помню объект, но для него пока нет такого действия.'};
+  }
+
+  if(intent.name==='CONTEXT_NEXT'||intent.name==='CONTEXT_PREV'){
+    const obj=runtime.context.resolveReference(ctx);
+    if(obj&&obj.type==='web'){
+      obj.page += intent.name==='CONTEXT_NEXT'?1:-1;
+      obj.page=Math.max(0,Math.min(obj.page,obj.pages.length-1));
+      runtime.context.remember(ctx,{lastReferencedObject:obj});
+      return{reply:obj.pages[obj.page].slice(0,950)};
+    }
+    return{reply:'Сейчас нечего листать.'};
+  }
+
+  if(intent.name==='CONFIRM_YES'||intent.name==='CONFIRM_NO'){
+    const s=runtime.context.session(ctx.sessionId);
+    if(!s.pendingClarification)return{reply:'Сейчас нечего подтверждать.'};
+    s.pendingClarification=null;
+    return{reply:intent.name==='CONFIRM_YES'?'Поняла.':'Хорошо, отменяю.'};
+  }
+
+  if(intent.name==='UNKNOWN'){
+    return{reply:'Я поняла слова, но пока не уверена, что именно нужно сделать. Скажи цель обычной фразой — например: «найди документ», «запиши заметку» или «помоги с компьютером».'};
+  }
+
+  const toolName=MAP[intent.name];
+  if(!toolName)return{reply:'Этот сценарий ещё не подключён.'};
+  const result=await runtime.registry.run(toolName,{ctx,intent},runtime);
+  runtime.context.remember(ctx,{lastTool:toolName,...(result.remember||{})});
+  return result;
+}
+
+module.exports = { route };
+
+};
+
+__modules["src/core/safety.js"] = function(module, exports, __require, require) {
+const RISK = {
+  READ: 'read',
+  CHANGE: 'change',
+  DANGEROUS: 'dangerous'
+};
+
+function requiresConfirmation(risk) {
+  return risk === RISK.DANGEROUS;
+}
+
+module.exports = { RISK, requiresConfirmation };
+
+};
+
+__modules["src/core/tool-registry.js"] = function(module, exports, __require, require) {
+class ToolRegistry {
+  constructor() {
+    this.tools = new Map();
+  }
+
+  register(tool) {
+    if (!tool || !tool.name || typeof tool.run !== 'function') {
+      throw new Error('Invalid tool registration');
+    }
+    if (this.tools.has(tool.name)) throw new Error(`Duplicate tool: ${tool.name}`);
+    this.tools.set(tool.name, tool);
+    return this;
+  }
+
+  has(name) { return this.tools.has(name); }
+  get(name) { return this.tools.get(name); }
+
+  async run(name, input, runtime) {
+    const tool = this.tools.get(name);
+    if (!tool) throw new Error(`Unknown tool: ${name}`);
+    return await tool.run(input || {}, runtime || {});
+  }
+
+  list() {
+    return Array.from(this.tools.values()).map(t => ({
+      name: t.name,
+      description: t.description || '',
+      risk: t.risk || 'read'
+    }));
+  }
+}
+
+module.exports = { ToolRegistry };
+
+};
+
+__modules["src/pc/bridge.js"] = function(module, exports, __require, require) {
+const { PC_AGENT_TOKEN, PC_AGENT_TTL_MS } = __require("src/config.js");
+
+class PcBridge {
+  constructor() {
+    this.agents = new Map();
+    this.jobs = [];
+    this.waiters = new Map();
+  }
+
+  configured() {
+    return !!PC_AGENT_TOKEN;
+  }
+
+  authorize(req) {
+    if (!PC_AGENT_TOKEN) return false;
+    return String(req.headers.authorization || '') === 'Bearer ' + PC_AGENT_TOKEN;
+  }
+
+  heartbeat(machine, meta = {}) {
+    const id = machine || 'home-pc';
+    this.agents.set(id, { lastSeen: Date.now(), meta });
+  }
+
+  online(machine = 'home-pc') {
+    const a = this.agents.get(machine);
+    return !!a && Date.now() - a.lastSeen <= PC_AGENT_TTL_MS;
+  }
+
+  status(machine = 'home-pc') {
+    const a = this.agents.get(machine);
+    return {
+      configured: this.configured(),
+      online: this.online(machine),
+      lastSeen: a ? a.lastSeen : null,
+      meta: a ? a.meta : null
+    };
+  }
+
+  enqueue(action, args = {}, machine = 'home-pc') {
+    const id = 'job_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+    const job = { id, machine, action, args, createdAt: Date.now() };
+    this.jobs.push(job);
+    return job;
+  }
+
+  poll(machine = 'home-pc') {
+    const i = this.jobs.findIndex(j => j.machine === machine);
+    if (i < 0) return null;
+    return this.jobs.splice(i, 1)[0];
+  }
+
+  waitResult(id, timeoutMs = 3000) {
+    return new Promise(resolve => {
+      const timer = setTimeout(() => {
+        this.waiters.delete(id);
+        resolve(null);
+      }, timeoutMs);
+      this.waiters.set(id, result => {
+        clearTimeout(timer);
+        this.waiters.delete(id);
+        resolve(result);
+      });
+    });
+  }
+
+  complete(id, result) {
+    const done = this.waiters.get(id);
+    if (done) done(result);
+    return !!done;
+  }
+
+  async run(action, args = {}, machine = 'home-pc') {
+    if (!this.configured()) return { ok:false, code:'NOT_CONFIGURED', message:'Windows Agent ещё не настроен.' };
+    if (!this.online(machine)) return { ok:false, code:'OFFLINE', message:'Компьютер сейчас не на связи. Возможно, он выключен или спит.' };
+    const job = this.enqueue(action, args, machine);
+    const result = await this.waitResult(job.id, 3000);
+    if (!result) return { ok:true, accepted:true, message:'Команду компьютеру передала.' };
+    return result;
+  }
+}
+
+module.exports = { PcBridge };
+
+};
+
+__modules["src/services/weather.js"] = function(module, exports, __require, require) {
+const WMO = {
+  0:'ясно',1:'в основном ясно',2:'переменная облачность',3:'пасмурно',
+  45:'туман',48:'туман',51:'морось',53:'морось',55:'морось',
+  61:'небольшой дождь',63:'дождь',65:'сильный дождь',
+  71:'небольшой снег',73:'снег',75:'сильный снег',
+  80:'ливень',81:'ливень',82:'сильный ливень',
+  85:'снегопад',86:'снегопад',95:'гроза',96:'гроза',99:'гроза'
+};
+
+function wmo(c){ return WMO[c] || ('код ' + c); }
+function isRain(c){ return (c>=51&&c<=67)||(c>=80&&c<=82)||(c>=95&&c<=99); }
+
+async function geoCity(name) {
   try {
-    const r = await fetch('https://api.github.com/repos/' + GH_REPO + '/contents/data.json', { headers: { Authorization: 'Bearer ' + GH_TOKEN, 'User-Agent': 'alice', Accept: 'application/vnd.github+json' } });
-    if (r.status === 200) { const j = await r.json(); dbSha = j.sha; const d = JSON.parse(Buffer.from(j.content, 'base64').toString('utf8')); db = Object.assign({ tasks: [], lists: {}, notes: [], city: 'Москва' }, d); }
-  } catch (e) {}
-}
-let saveT = null;
-function saveDb() {
-  if (!GH_TOKEN) return;
-  clearTimeout(saveT);
-  saveT = setTimeout(async () => {
-    try {
-      const body = { message: 'data', content: Buffer.from(JSON.stringify(db)).toString('base64') };
-      if (dbSha) body.sha = dbSha;
-      const r = await fetch('https://api.github.com/repos/' + GH_REPO + '/contents/data.json', { method: 'PUT', headers: { Authorization: 'Bearer ' + GH_TOKEN, 'User-Agent': 'alice', 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-      const j = await r.json(); if (j.content) dbSha = j.content.sha;
-    } catch (e) {}
-  }, 1500);
+    const r = await fetch('https://geocoding-api.open-meteo.com/v1/search?name=' +
+      encodeURIComponent(name) + '&count=1&language=ru&format=json');
+    const j = await r.json();
+    return j.results && j.results[0] ? j.results[0] : null;
+  } catch (e) {
+    console.error('[weather.geo]', e.message);
+    return null;
+  }
 }
 
-// ---------- утилиты ----------
+async function weatherFor(lat, lon) {
+  const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat +
+    '&longitude=' + lon +
+    '&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m' +
+    '&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max' +
+    '&timezone=auto&forecast_days=7';
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`Weather HTTP ${r.status}`);
+  return await r.json();
+}
+
+module.exports = { geoCity, weatherFor, wmo, isRain };
+
+};
+
+__modules["src/services/web.js"] = function(module, exports, __require, require) {
 function decode(s){return String(s).replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#039;/g,"'").replace(/&amp;/g,'&');}
 function strip(s){return decode(String(s).replace(/<[^>]+>/g,''));}
-function now(){return new Date();}
-function pick(a){return a[Math.floor(Math.random()*a.length)];}
-function fmtClock(d){return d.toLocaleTimeString('ru-RU',{timeZone:TZ,hour:'2-digit',minute:'2-digit'});}
-function fmtDate(d){return d.toLocaleDateString('ru-RU',{timeZone:TZ,day:'numeric',month:'long',year:'numeric'});}
-function fmtDay(d){return d.toLocaleDateString('ru-RU',{timeZone:TZ,weekday:'long'});}
-function isoWeek(d){const x=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=x.getUTCDay()||7;x.setUTCDate(x.getUTCDate()+4-day);const y=new Date(Date.UTC(x.getUTCFullYear(),0,1));return Math.ceil((((x-y)/86400000)+1)/7);}
-const NUMWORDS=[['одиннадцать',11],['двенадцать',12],['тринадцать',13],['четырнадцать',14],['пятнадцать',15],['шестнадцать',16],['семнадцать',17],['восемнадцать',18],['девятнадцать',19],['двадцать',20],['тридцать',30],['сорок',40],['пятьдесят',50],['один',1],['два',2],['три',3],['четыре',4],['пять',5],['шесть',6],['семь',7],['восемь',8],['девять',9],['десять',10]];
-function numify(s){let r=' '+s+' ';NUMWORDS.forEach(p=>{r=r.split(' '+p[0]+' ').join(' '+p[1]+' ');});return r;}
-function firstNum(s){const m=numify(s).match(/(\d+)/);return m?parseInt(m[1]):null;}
-function allNums(s){return (numify(s).match(/\d+/g)||[]).map(Number);}
-function parseDur(s){const t=numify(s);let m=t.match(/(\d+)\s*(сек|секунд)/);if(m)return parseInt(m[1])*1000;m=t.match(/(\d+)\s*(мин|минут)/);if(m)return parseInt(m[1])*60000;m=t.match(/(\d+)\s*(час|часа|часов)/);if(m)return parseInt(m[1])*3600000;return null;}
-const MONTHS={января:0,февраля:1,марта:2,апреля:3,мая:4,июня:5,июля:6,августа:7,сентября:8,октября:9,ноября:10,декабря:11};
-function parseDateRu(s){
-  if(/нов(ый|ого|ым)\s+год/.test(s))return new Date(now().getFullYear()+1,0,1);
-  const m=s.match(/(\d{1,2})\s+(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря)/);
-  if(!m)return null;
-  const d=parseInt(m[1]),mo=MONTHS[m[2]];let y=now().getFullYear();let dt=new Date(y,mo,d);
-  const t=now();t.setHours(0,0,0,0);
-  if(/до/.test(s)&&dt<t)dt=new Date(y+1,mo,d);
-  if(/прошло/.test(s)&&dt>t)dt=new Date(y-1,mo,d);
-  return dt;
-}
-function daysDiff(a,b){return Math.round((b-a)/86400000);}
-function moonPhase(){const syn=29.53058867;const known=Date.UTC(2000,0,6,18,14);const days=(Date.now()-known)/86400000;const ph=((days%syn)+syn)%syn;const i=Math.floor(ph/syn*8+0.5)%8;return ['🌑 новолуние','🌒 растущий серп','🌓 первая четверть','🌔 растущая луна','🌕 полнолуние','🌖 убывающая луна','🌗 последняя четверть','🌘 убывающий серп'][i];}
 
-// ---------- внешние API ----------
-async function geoCity(n){try{const r=await fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(n)+'&count=1&language=ru&format=json');const j=await r.json();return j.results&&j.results[0]?j.results[0]:null;}catch(e){return null;}}
-async function weatherFor(lat,lon){const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max&timezone=auto&forecast_days=7');return await r.json();}
-const WMO={0:'ясно',1:'в основном ясно',2:'переменная облачность',3:'пасмурно',45:'туман',48:'туман',51:'морось',53:'морось',55:'морось',61:'небольшой дождь',63:'дождь',65:'сильный дождь',71:'небольшой снег',73:'снег',75:'сильный снег',80:'ливень',81:'ливень',82:'сильный ливень',85:'снегопад',86:'снегопад',95:'гроза',96:'гроза',99:'гроза'};
-function wmo(c){return WMO[c]||('код '+c);}
-function isRain(c){return (c>=51&&c<=67)||(c>=80&&c<=82)||(c>=95&&c<=99);}
-async function cbr(){try{const r=await fetch('https://www.cbr-xml-daily.ru/daily_json.js');return await r.json();}catch(e){return null;}}
-async function crypto(ids){try{const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids='+ids+'&vs_currencies=usd');return await r.json();}catch(e){return null;}}
-async function translate(t,dir){try{const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(t)+'&langpair='+dir);const j=await r.json();return j.responseData?j.responseData.translatedText:null;}catch(e){return null;}}
+async function ddgSearch(q,p){
+  try{
+    const r=await fetch('https://lite.duckduckgo.com/lite/?q='+encodeURIComponent(q)+(p?'&s='+(p*10):''),{headers:{'User-Agent':'Mozilla/5.0'}});
+    const h=await r.text();const out=[];const re=/<a[^>]+rel="nofollow"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+    let m;while((m=re.exec(h))&&out.length<6){const t=strip(m[2]).trim();if(m[1].startsWith('http')&&t&&!m[1].includes('duckduckgo'))out.push({title:t,url:m[1]});}
+    return out;
+  }catch(e){console.error('[search.ddg]',e.message);return[];}
+}
+
+async function ddgHtmlSearch(q,p){
+  try{
+    const r=await fetch('https://html.duckduckgo.com/html/?q='+encodeURIComponent(q)+(p?'&s='+(p*10):''),{headers:{'User-Agent':'Mozilla/5.0'}});
+    const h=await r.text();const out=[];const re=/<a[^>]+class="result__a"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+    let m;while((m=re.exec(h))&&out.length<6){let href=m[1];if(href.includes('uddg=')){try{href=decodeURIComponent(href.split('uddg=')[1].split('&')[0]);}catch{}}
+      const t=strip(m[2]).trim();if(href.startsWith('http')&&t)out.push({title:t,url:href});}
+    return out;
+  }catch(e){console.error('[search.ddgHtml]',e.message);return[];}
+}
+
+async function bingSearch(q){
+  try{
+    const r=await fetch('https://www.bing.com/search?q='+encodeURIComponent(q),{headers:{'User-Agent':'Mozilla/5.0','Accept-Language':'ru-RU,ru;q=0.9'}});
+    const h=await r.text();const out=[];const re=/<li class="b_algo"[\s\S]*?<a[^>]+href="(https?:\/\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+    let m;while((m=re.exec(h))&&out.length<6){const t=strip(m[2]).trim();if(t&&!m[1].includes('bing.com')&&!m[1].includes('microsoft.com'))out.push({title:t,url:m[1]});}
+    return out;
+  }catch(e){console.error('[search.bing]',e.message);return[];}
+}
+
+async function searchAll(q,p=0){let r=await ddgSearch(q,p);if(!r.length)r=await ddgHtmlSearch(q,p);if(!r.length)r=await bingSearch(q);return r;}
+
+async function readPage(url){
+  try{new URL(url);}catch{return null;}
+  try{
+    const r=await fetch('https://r.jina.ai/'+url,{headers:{'User-Agent':'Mozilla/5.0'}});
+    let t=await r.text();
+    t=t.replace(/!?\[([^\]]*)\]\([^)]*\)/g,'$1').replace(/[#>*`_]/g,'').replace(/\n{3,}/g,'\n\n');
+    if(t.length>300)return t.slice(0,20000);
+  }catch(e){console.error('[read.jina]',e.message);}
+  try{
+    const r=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0'}});
+    let h=await r.text();
+    h=h.replace(/<script[\s\S]*?<\/script>/gi,'').replace(/<style[\s\S]*?<\/style>/gi,'');
+    const parts=h.match(/<(p|h1|h2|h3|li)[^>]*>([\s\S]*?)<\/(p|h1|h2|h3|li)>/gi)||[];
+    return parts.map(strip).filter(x=>x.length>40).join('\n\n').slice(0,20000)||null;
+  }catch(e){console.error('[read.direct]',e.message);return null;}
+}
+
+function splitPages(t){
+  const pages=[];let cur='';
+  String(t||'').split(/\n+/).forEach(p=>{if((cur+p).length>1200&&cur){pages.push(cur.trim());cur='';}cur+=p+'\n';});
+  if(cur.trim())pages.push(cur.trim());
+  return pages.length?pages:[String(t||'')];
+}
+
 async function wikiSummary(q){
   try{
     const s=await fetch('https://ru.wikipedia.org/w/api.php?action=opensearch&search='+encodeURIComponent(q)+'&limit=1&format=json&origin=*');
     const a=await s.json();const title=a[1]&&a[1][0];if(!title)return null;
     const r=await fetch('https://ru.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title));
     const j=await r.json();return j.extract?{title:j.title,text:j.extract}:null;
-  }catch(e){return null;}
+  }catch(e){console.error('[wiki]',e.message);return null;}
+}
+
+async function translate(t,dir){
+  try{
+    const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(t)+'&langpair='+dir);
+    const j=await r.json();return j.responseData?j.responseData.translatedText:null;
+  }catch(e){console.error('[translate]',e.message);return null;}
+}
+
+
+async function wikiImages(q){
+  try{
+    const r=await fetch('https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch='+encodeURIComponent('filetype:bitmap '+q)+'&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url&iiurlwidth=480');
+    const j=await r.json();const pages=j.query&&j.query.pages?Object.values(j.query.pages):[];
+    pages.sort((a,b)=>(a.index||0)-(b.index||0));
+    return pages.map(p=>p.imageinfo&&p.imageinfo[0]?{thumb:p.imageinfo[0].thumburl}:null).filter(Boolean);
+  }catch(e){console.error('[images]',e.message);return[];}
 }
 async function onThisDay(){
   try{
-    const d=now();const mm=('0'+(d.getMonth()+1)).slice(-2),dd=('0'+d.getDate()).slice(-2);
+    const d=new Date(),mm=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0');
     const r=await fetch('https://ru.wikipedia.org/api/rest_v1/feed/onthisday/events/'+mm+'/'+dd);
-    const j=await r.json();const ev=(j.events||[]).filter(e=>e.text&&e.year);
-    const sel=[];while(sel.length<3&&ev.length)sel.push(ev.splice(Math.floor(Math.random()*ev.length),1)[0]);
-    return sel;
-  }catch(e){return[];}
+    const j=await r.json();return (j.events||[]).filter(e=>e.text&&e.year).slice(0,5);
+  }catch(e){console.error('[onThisDay]',e.message);return[];}
 }
+module.exports = { searchAll, readPage, splitPages, wikiSummary, translate, wikiImages, onThisDay };
+
+};
+
+__modules["src/storage/github-storage.js"] = function(module, exports, __require, require) {
+const crypto = require('crypto');
+const { GH_TOKEN, GH_REPO, STORAGE_FILE } = __require("src/config.js");
+
+function userKey(userId) {
+  return crypto.createHash('sha256').update(String(userId || 'anonymous')).digest('hex').slice(0, 24);
+}
+
+class GitHubStorage {
+  constructor() {
+    this.sha = null;
+    this.state = { schemaVersion: 2, users: {}, legacy: null, migratedTo: null };
+    this.saveTimer = null;
+  }
+
+  async load() {
+    if (!GH_TOKEN) return this.state;
+    try {
+      const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${STORAGE_FILE}`, {
+        headers: {
+          Authorization: `Bearer ${GH_TOKEN}`,
+          'User-Agent': 'alice-smart-assistant',
+          Accept: 'application/vnd.github+json'
+        }
+      });
+      if (r.status !== 200) return this.state;
+      const j = await r.json();
+      this.sha = j.sha;
+      const parsed = JSON.parse(Buffer.from(j.content, 'base64').toString('utf8'));
+
+      if (parsed && parsed.schemaVersion === 2 && parsed.users) {
+        this.state = parsed;
+      } else {
+        this.state = {
+          schemaVersion: 2,
+          users: {},
+          legacy: {
+            tasks: Array.isArray(parsed.tasks) ? parsed.tasks : [],
+            lists: parsed.lists && typeof parsed.lists === 'object' ? parsed.lists : {},
+            notes: Array.isArray(parsed.notes) ? parsed.notes : [],
+            city: parsed.city || 'Москва'
+          },
+          migratedTo: null
+        };
+      }
+    } catch (e) {
+      console.error('[storage.load]', e.message);
+    }
+    return this.state;
+  }
+
+  ensureUser(userId) {
+    const key = userKey(userId);
+    if (!this.state.users[key]) {
+      let seed = { tasks: [], lists: {}, notes: [], city: 'Москва', profile: {} };
+      if (this.state.legacy && !this.state.migratedTo) {
+        seed = { ...seed, ...this.state.legacy };
+        this.state.migratedTo = key;
+      }
+      this.state.users[key] = seed;
+    }
+    return this.state.users[key];
+  }
+
+  scheduleSave() {
+    if (!GH_TOKEN) return;
+    clearTimeout(this.saveTimer);
+    this.saveTimer = setTimeout(() => this.save().catch(e => console.error('[storage.save]', e.message)), 1200);
+  }
+
+  async save() {
+    if (!GH_TOKEN) return;
+    const body = {
+      message: 'smart-assistant data',
+      content: Buffer.from(JSON.stringify(this.state, null, 2)).toString('base64')
+    };
+    if (this.sha) body.sha = this.sha;
+
+    const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${STORAGE_FILE}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${GH_TOKEN}`,
+        'User-Agent': 'alice-smart-assistant',
+        'Content-Type': 'application/json',
+        Accept: 'application/vnd.github+json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!r.ok) throw new Error(`GitHub storage HTTP ${r.status}`);
+    const j = await r.json();
+    if (j.content && j.content.sha) this.sha = j.content.sha;
+  }
+}
+
+module.exports = { GitHubStorage, userKey };
+
+};
+
+__modules["src/tools/browser.js"] = function(module, exports, __require, require) {
+const { searchAll, readPage, splitPages, wikiImages } = __require("src/services/web.js");
+const { searchCard, textCard, card } = __require("src/ui/cards.js");
+
+function imageCard(q,imgs){return card('Фото: '+q,'<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">'+imgs.map(x=>'<img src="'+x.thumb+'" style="max-width:100%;border-radius:8px">').join('')+'</div>');}
+
+module.exports={
+  name:'browser',description:'Поиск, изображения и чтение веб-страниц',risk:'read',
+  async run(input,runtime){
+    const ctx=input.ctx,c=ctx.command,s=runtime.context.session(ctx.sessionId);
+
+    if(/найди фото/.test(c)){const q=c.replace(/.*найди фото/,'').trim()||'кот';const imgs=await wikiImages(q);return imgs.length?{reply:'Нашла фотографии.',html:imageCard(q,imgs)}:{reply:'Не нашла фото.'};}
+
+    if(/^найди|^поищи|^поиск/.test(c)){
+      const q=c.replace(/^(найди|поищи|поиск)/,'').trim();if(!q)return{reply:'Что найти?'};
+      const results=await searchAll(q,0);if(!results.length)return{reply:'Не нашла результатов.'};
+      runtime.context.remember(ctx,{lastIntent:'BROWSER',lastTool:'browser',lastResults:results,searchQuery:q,searchPage:0,selectedIndex:null});
+      return{reply:'Нашла '+results.length+' результатов.',html:searchCard(q,results)};
+    }
+
+    if(/покажи еще|покажи ещё/.test(c)){
+      if(!s.searchQuery)return{reply:'Сначала что-нибудь найди.'};
+      const page=(s.searchPage||0)+1,results=await searchAll(s.searchQuery,page);if(!results.length)return{reply:'Больше результатов не нашла.'};
+      runtime.context.remember(ctx,{lastResults:results,searchPage:page,selectedIndex:null});
+      return{reply:'Показала следующую страницу.',html:searchCard(s.searchQuery,results)};
+    }
+
+    if(/открой сайт/.test(c)){
+      const name=c.replace(/.*открой сайт/,'').trim().replace(/\s+/g,'');let url=null;
+      if(name.includes('.'))url='https://'+name;else{const r=await searchAll(name+' официальный сайт',0);if(r.length)url=r[0].url;}
+      if(!url)return{reply:'Не нашла сайт.'};
+      const text=await readPage(url);if(!text)return{reply:'Не смогла прочитать сайт.'};
+      const obj={type:'web',title:name,url,pages:splitPages(text),page:0};runtime.context.remember(ctx,{lastReferencedObject:obj});
+      return{reply:'Открыла сайт в режиме чтения.',html:textCard(name,obj.pages[0])};
+    }
+
+    if(/^открой/.test(c)){
+      const n=runtime.context.resolveOrdinal(c);if(!n||!s.lastResults[n-1])return{reply:'Назови номер результата, например: открой второй.'};
+      const r=s.lastResults[n-1],text=await readPage(r.url);if(!text)return{reply:'Не смогла прочитать страницу.'};
+      const obj={type:'web',title:r.title,url:r.url,pages:splitPages(text),page:0};runtime.context.remember(ctx,{lastReferencedObject:obj,selectedIndex:n});
+      return{reply:'Открыла '+r.title+'.',html:textCard(r.title,obj.pages[0])};
+    }
+
+    if(/назад к списку/.test(c)){if(!s.lastResults.length)return{reply:'Списка нет.'};return{reply:'Вернулась к результатам.',html:searchCard(s.searchQuery||'поиск',s.lastResults)};}
+
+    if(/^зачитай|прочитай вслух|озвучь/.test(c)){const obj=runtime.context.resolveReference(ctx);if(obj&&obj.type==='web')return{reply:'Зачитываю.',speakOnly:obj.pages[obj.page].slice(0,1000)};if(s.lastResults.length)return{reply:'Зачитываю результаты.',speakOnly:s.lastResults.map((x,i)=>(i+1)+'. '+x.title).join('. ')};return{reply:'Нечего зачитывать.'};}
+    if(/стоп чтение|хватит читать|замолчи/.test(c))return{reply:'Остановилась.',stopSpeak:true};
+
+    return{reply:'Скажи: найди …, затем открой второй.'};
+  }
+};
+
+};
+
+__modules["src/tools/calculator.js"] = function(module, exports, __require, require) {
+function nums(s){return (String(s).match(/\d+(?:[.,]\d+)?/g)||[]).map(x=>Number(x.replace(',','.')));}
 function calcExpr(s){
-  let t=s.replace(/плюс/g,'+').replace(/минус/g,'-').replace(/умножить/g,'*').replace(/разделить/g,'/').replace(/[хx×]/g,'*').replace(/[:]/g,'/').replace(/,/g,'.').replace(/[^0-9.+\-*/() ]/g,'');
+  const t=String(s).replace(/плюс/g,'+').replace(/минус/g,'-').replace(/умножить/g,'*').replace(/разделить/g,'/').replace(/[хx×]/g,'*').replace(/:/g,'/').replace(/,/g,'.').replace(/[^0-9.+\-*/() ]/g,'');
   if(!t.trim()||!/\d/.test(t))return null;
-  try{const v=Function('"use strict";return ('+t+')')();return (typeof v==='number'&&isFinite(v))?Math.round(v*100)/100:null;}catch(e){return null;}
+  try{const v=Function('"use strict";return ('+t+')')();return typeof v==='number'&&isFinite(v)?Math.round(v*100)/100:null;}catch{return null;}
 }
-
-// ---------- поиск и чтение ----------
-async function ddgSearch(q,p){try{const r=await fetch('https://lite.duckduckgo.com/lite/?q='+encodeURIComponent(q)+(p?'&s='+(p*10):''),{headers:{'User-Agent':'Mozilla/5.0'}});const h=await r.text();const out=[];const re=/<a[^>]+rel="nofollow"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;let m;while((m=re.exec(h))&&out.length<6){const t=strip(m[2]).trim();if(m[1].startsWith('http')&&t&&m[1].indexOf('duckduckgo')===-1)out.push({title:t,url:m[1]});}return out;}catch(e){return[];}}
-async function ddgHtmlSearch(q,p){try{const r=await fetch('https://html.duckduckgo.com/html/?q='+encodeURIComponent(q)+(p?'&s='+(p*10):''),{headers:{'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}});const h=await r.text();const out=[];const re=/<a[^>]+class="result__a"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;let m;while((m=re.exec(h))&&out.length<6){let href=m[1];if(href.indexOf('uddg=')!==-1){try{href=decodeURIComponent(href.split('uddg=')[1].split('&')[0]);}catch(e){}}const t=strip(m[2]).trim();if(href.startsWith('http')&&t)out.push({title:t,url:href});}return out;}catch(e){return[];}}
-async function jinaSearch(q){try{const r=await fetch('https://s.jina.ai/'+encodeURIComponent(q),{headers:{'User-Agent':'Mozilla/5.0'}});const t=await r.text();const out=[];const re=/##\s*\[\d+\]\s*([^\n]+)\n\s*(?:URL Source|URL):\s*(https?:\/\/\S+)/gi;let m;while((m=re.exec(t))&&out.length<6)out.push({title:m[1].trim(),url:m[2].trim()});return out;}catch(e){return[];}}
-async function bingSearch(q){try{const r=await fetch('https://www.bing.com/search?q='+encodeURIComponent(q),{headers:{'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36','Accept-Language':'ru-RU,ru;q=0.9'}});const h=await r.text();const out=[];const re=/<li class="b_algo"[\s\S]*?<a[^>]+href="(https?:\/\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;let m;while((m=re.exec(h))&&out.length<6){const t=strip(m[2]).trim();if(t&&m[1].indexOf('bing.com')===-1&&m[1].indexOf('microsoft.com')===-1)out.push({title:t,url:m[1]});}return out;}catch(e){return[];}}
-async function searchAll(q,p){let r=await ddgSearch(q,p);if(!r.length)r=await ddgHtmlSearch(q,p);if(!r.length)r=await jinaSearch(q);if(!r.length)r=await bingSearch(q);return r;}
-async function readPage(url){
-  try{new URL(url);}catch(e){return null;}
-  try{const r=await fetch('https://r.jina.ai/'+url,{headers:{'User-Agent':'Mozilla/5.0'}});let t=await r.text();t=t.replace(/!?\[([^\]]*)\]\([^)]*\)/g,'$1').replace(/[#>*`_]/g,'').replace(/\n{3,}/g,'\n\n');if(t.length>300)return t.slice(0,20000);}catch(e){}
-  try{const r=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0'}});let h=await r.text();h=h.replace(/<script[\s\S]*?<\/script>/gi,'').replace(/<style[\s\S]*?<\/style>/gi,'');const parts=h.match(/<(p|h1|h2|h3|li)[^>]*>([\s\S]*?)<\/(p|h1|h2|h3|li)>/gi)||[];const t=parts.map(p=>strip(p)).filter(x=>x.length>40).join('\n\n');return t.slice(0,20000)||null;}catch(e){return null;}
-}
-function splitPages(t){const pages=[];let cur='';t.split(/\n+/).forEach(p=>{if((cur+p).length>1200&&cur){pages.push(cur.trim());cur='';}cur+=p+'\n';});if(cur.trim())pages.push(cur.trim());return pages.length?pages:[t];}
-async function wikiImages(q){try{const r=await fetch('https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch='+encodeURIComponent('filetype:bitmap '+q)+'&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url&iiurlwidth=480');const j=await r.json();const pages=j.query&&j.query.pages?Object.values(j.query.pages):[];pages.sort((a,b)=>(a.index||0)-(b.index||0));return pages.map(p=>p.imageinfo&&p.imageinfo[0]?{thumb:p.imageinfo[0].thumburl}:null).filter(Boolean);}catch(e){return[];}}
-
-// ---------- базы знаний ----------
-const JOKES=['Программист ставит на ночь два стакана: один с водой — если захочет пить, второй пустой — если не захочет.','— Почему программисты путают Хэллоуин и Рождество? — Потому что OCT 31 == DEC 25.','Жена посылает мужа-программиста в магазин: «Купи батон хлеба. Если будут яйца — возьми десяток». Муж возвращается с десятью батонами.','— Алло, это техподдержка? У меня в компьютере мышь завелась! — Скачайте кота.','Оптимист видит стакан наполовину полным, пессимист — наполовину пустым, программист — в два раза больше, чем нужно.','Заходит QA-инженер в бар. Заказывает пиво. Заказывает 0 кружек пива. Заказывает -1 кружку. Заказывает ящерицу. А потом заходит настоящий пользователь — и бар падает.','— Сколько программистов нужно, чтобы вкрутить лампочку? — Ни одного, это аппаратная проблема.','У программиста спрашивают: «Почему ты такой спокойный?» — «У меня всё в try-catch».','Два байта встречаются. Первый спрашивает: «Ты чего такой бледный?» — «Да приболел немного».','— Что говорит программист, когда тонет? — F1! F1!'];
-const FACTS=['Осьминоги имеют три сердца и голубую кровь.','Мёд не портится тысячелетиями: в египетских гробницах находили съедобный мёд.','За один день молния может нагреть воздух до 30 000 °C — это в 5 раз горячее поверхности Солнца.','Сердце синего кита бьётся всего 2 раза в минуту.','В космосе пахнет жареным стейком и раскалённым металлом — так описывают астронавты.','Бананы — это ягоды, а клубника — нет.','У уток вода не скатывается с перьев из-за особой смазки, а не из-за формы пера.','Слоны — единственные животные, которые не умеют прыгать.','В теле человека больше бактерий, чем человеческих клеток.','Свет Солнца доходит до Земли за 8 минут 20 секунд.','Шахматная партия теоретически может длиться 11 797 ходов без взятия фигур.','Коалы спят до 22 часов в сутки.'];
-const FACTS_SPACE=['Космос полностью бесшумен — звуку нечем передаваться.','Нейтронные звёзды вращаются до 600 раз в секунду.','На Венере день длиннее года.','В наблюдаемой Вселенной больше звёзд, чем песчинок на всех пляжах Земли.','Следы астронавтов на Луне останутся на миллионы лет — там нет ветра.'];
-const FACTS_ANIMALS=['Муравьи никогда не спят.','Дельфины дают друг другу имена.','Сердце креветки находится в голове.','Тигры имеют полосатую кожу, а не только шерсть.','Вороны умеют узнавать человеческие лица и помнить обиды.'];
-const COMPLIMENTS=['Ты разбираешься в вещах, которые большинству даже не снились.','С тобой любая задача становится проще.','Ты из тех людей, кто доводит дело до конца.','У тебя отличный вкус — хотя бы потому, что ты создал себе голосового помощника.','Ты сегодня выглядишь на все сто процентов заряда.','Твоя настойимость вызывает уважение.'];
-const ADVICE=['Сделай сегодня одно маленькое дело, которое откладывал неделю.','Выпей стакан воды прямо сейчас.','Поставь телефон в другую комнату на один час.','Запиши три вещи, за которые ты благодарен сегодня.','Прогуляйся 15 минут без наушников.','Позвони тому, с кем давно не разговаривал.'];
-const MOTIVATE=['Дорогу осилит идущий. Ты уже идёшь.','Большие дела начинаются с маленьких шагов. Ты свой уже сделал.','Не сравнивай себя с другими — сравнивай себя со вчерашним собой.','Ошибки — это просто данные для следующей попытки.','Ты уже справился со множеством вещей, которые раньше казались невозможными.'];
-const RIDDLES=[{q:'Что можно увидеть с закрытыми глазами?',a:'Сон'},{q:'Висит груша — нельзя скушать. Что это?',a:'Лампочка'},{q:'Зимой и летом одним цветом. Что это?',a:'Ёлка'},{q:'Без рук, без ног, а в дверь стучит. Что это?',a:'Ветер'},{q:'Что принадлежит тебе, но другие пользуются этим чаще?',a:'Твоё имя'},{q:'Чем больше из неё берёшь, тем больше она становится. Что это?',a:'Яма'},{q:'Какой месяц короче всех?',a:'Май — три буквы'},{q:'Что стоит между окном и дверью?',a:'Буква «и»'}];
-const MOVIES=[['Интерстеллар','космос, любовь и физика'],['Начало','сны внутри снов'],['Матрица','что реально?'],['Побег из Шоушенка','надежда и свобода'],['Игра в имитацию','как взломали Энигму'],['Марсианин','выживание на Марсе с юмором'],['Терминал','человек застрял в аэропорту'],['Искусственный разум','робот, который хотел любить']];
-const DISHES=[['Паста карбонара','спагетти, бекон, яйцо, пармезан — 20 минут'],['Овощное рагу','кабачок, перец, морковь, томат — тушить 30 минут'],['Куриный суп','классика: курица, картофель, морковь, лук'],['Сырники','творог, яйцо, мука, сахар — 25 минут'],['Греческий салат','овощи, фета, оливки, масло'],['Плов','рис, морковь, мясо, специи — около часа'],['Оладьи','кефир, мука, яйцо — 20 минут'],['Шакшука','яйца в томатном соусе с перцем']];
-const GIFTS=['Настольная игра для компании','Термокружка для поездок','Книга-бестселлер в твёрдом переплёте','Сертификат на впечатления','Плед крупной вязки','Умная колонка или лампа','Набор хорошего чая или кофе','Фотоальбом с вашими общими снимками'];
-
-// ---------- карточки ----------
-function card(t,i){return '<div class="card"><h1>'+t+'</h1>'+i+'</div>';}
-function searchHtml(q,res){const rows=res.map((r,i)=>{let dom='';try{dom=new URL(r.url).hostname;}catch(e){}return '<div class="row"><span class="num">'+(i+1)+'</span><div><div class="t">'+r.title+'</div><div class="d">'+dom+'</div></div></div>';}).join('');return card('Поиск: '+q,rows+'<div class="hint">«открой 1…6», «покажи ещё», «зачитай»</div>');}
-function readerHtml(){return card(reader.title,'<div class="text">'+reader.pages[reader.idx].replace(/\n/g,'<br>')+'</div><div class="hint">Стр. '+(reader.idx+1)+' из '+reader.pages.length+'</div>');}
-function imagesHtml(q,imgs){return card('Фото: '+q,'<div class="grid">'+imgs.map(i=>'<img src="'+i.thumb+'" alt="">').join('')+'</div>');}
-function clockHtml(){const d=now();return card('Сейчас','<div class="big">'+fmtClock(d)+'</div><div class="sub">'+fmtDate(d)+', '+fmtDay(d)+'</div>');}
-function worldHtml(){const z=[['Москва','Europe/Moscow'],['Нью-Йорк','America/New_York'],['Лондон','Europe/London'],['Токио','Asia/Tokyo'],['Дубай','Asia/Dubai']];return card('Время в мире',z.map(x=>'<div class="row"><span class="t">'+x[0]+'</span><span class="big2">'+now().toLocaleTimeString('ru-RU',{timeZone:x[1],hour:'2-digit',minute:'2-digit'})+'</span></div>').join(''));}
-function timerHtml(e,l,s){return card(l,'<div class="big" data-ends="'+e+'" data-speakend="'+(s||'')+'">--:--</div>');}
-function remindersHtml(){if(!reminders.length)return card('Напоминания','<div class="sub">Пусто. Скажи: «напомни через 5 минут …»</div>');return card('Напоминания',reminders.map((r,i)=>'<div class="row"><span class="num">'+(i+1)+'</span><div class="t">'+r.text+' — в '+new Date(r.endsAt).toLocaleTimeString('ru-RU',{timeZone:TZ,hour:'2-digit',minute:'2-digit'})+'</div></div>').join(''));}
-function pomoHtml(){return timerHtml(pomo.endsAt,pomo.phase==='work'?'Помодоро: РАБОТА ('+pomo.round+'/4)':'Помодоро: перерыв',pomo.phase==='work'?'Перерыв! Пять минут отдыха.':'Отдых окончен, за работу!');}
-function tasksHtml(list){if(!list.length)return card('Задачи','<div class="sub">Пусто. Скажи: «добавь задачу …»</div>');return card('Задачи',list.map((t,i)=>'<div class="row"><span class="num">'+(i+1)+'</span><div class="t'+(t.done?' done':'')+'">'+(t.star?'★ ':'')+t.text+(t.done?' ✔':'')+'</div></div>').join(''));}
-function listsHtml(){const keys=Object.keys(db.lists);if(!keys.length)return card('Списки','<div class="sub">Пусто. Скажи: «создай список покупки»</div>');return card('Списки',keys.map(k=>'<div class="sub" style="text-align:left;margin:12px 0 4px">📋 '+k+' ('+db.lists[k].filter(x=>!x.done).length+'/'+db.lists[k].length+')</div>'+db.lists[k].map((it,i)=>'<div class="row"><span class="num">'+(i+1)+'</span><div class="t'+(it.done?' done':'')+'">'+it.text+'</div></div>').join('')).join(''));}
-function notesHtml(list){if(!list.length)return card('Заметки','<div class="sub">Пусто. Скажи: «запиши …»</div>');return card('Заметки',list.map((n,i)=>'<div class="row"><span class="num">'+(i+1)+'</span><div class="t">'+n+'</div></div>').join(''));}
-function weatherHtml(name,w){const c=w.current;return card('Погода: '+name,'<div class="big">'+Math.round(c.temperature_2m)+'°</div><div class="sub">'+wmo(c.weather_code)+', ощущается как '+Math.round(c.apparent_temperature)+'°</div><div class="sub">ветер '+Math.round(c.wind_speed_10m)+' м/с · влажность '+c.relative_humidity_2m+'%</div>');}
-function weekHtml(name,w){const d=w.daily;let rows='';for(let i=0;i<7;i++){rows+='<div class="row"><span class="t">'+new Date(d.time[i]+'T00:00:00').toLocaleDateString('ru-RU',{weekday:'short',day:'numeric',month:'numeric'})+'</span><span class="big2">'+Math.round(d.temperature_2m_min[i])+'…'+Math.round(d.temperature_2m_max[i])+'°</span><span class="d">'+wmo(d.weather_code[i])+'</span></div>';}return card('Неделя: '+name,rows);}
-function moneyHtml(j){const v=j.Valute;return card('Курсы ЦБ',['USD','EUR','CNY','GBP'].map(k=>'<div class="row"><span class="t">'+k+'</span><span class="big2">'+v[k].Value.toFixed(2)+' ₽</span></div>').join(''));}
-function calcHtml(expr,val){return card(expr,'<div class="big">= '+val+'</div>');}
-function textCard(t,txt){return card(t,'<div class="text">'+txt.replace(/\n/g,'<br>')+'</div>');}
-function helpHtml(){return card('Команды (версия 3)','<div class="text">ПОИСК/ВРЕМЯ/ТАЙМЕРЫ/ЗАДАЧИ/СПИСКИ/ЗАМЕТКИ — как раньше<br>ПОГОДА: погода / погода в … / будет дождь / нужна куртка / уф-индекс / рассвет / закат / фаза луны / прогноз на неделю<br>ДЕНЬГИ: курсы / курс доллара / курс евро / переведи 100 долларов в рубли / биткоин / топ криптовалют<br>КАЛЬКУЛЯТОР: посчитай … / 20 процентов от 500 / прибавь 20 процентов к 100 / раздели 1500 на 3 человек / случайное число от 1 до 100 / сколько дюймов в 30 см<br>ПЕРЕВОД: переведи … / как по-английски …<br>ЗНАНИЯ: кто такой … / что такое … / столица … / население … / в этот день<br>РАЗВЛЕЧЕНИЯ: анекдот / ещё / факт / факт о космосе / факт о животных / комплимент / совет / мотивируй / подбрось монетку / брось кубик / загадка / ответ / что посмотреть / что приготовить / идея подарка</div>');}
-
-// ---------- маршрутизатор ----------
-function route(cmd){
-  if(/привет|здравствуй|добрый (день|вечер|утро)/.test(cmd))return{html:card('Привет!','<div class="sub">Я на связи. «помощь» — все команды.</div>'),reply:'Привет! Я на связи.'};
-  if(/помощь|что ты умеешь/.test(cmd))return{html:helpHtml(),reply:'Список команд на экране.'};
-
-  if(/который час|сколько времени|время сейчас/.test(cmd))return{html:clockHtml(),reply:'Сейчас '+fmtClock(now())+'.'};
-  if(/какое число|какая дата/.test(cmd))return{html:clockHtml(),reply:'Сегодня '+fmtDate(now())+'.'};
-  if(/день недели/.test(cmd))return{html:clockHtml(),reply:'Сегодня '+fmtDay(now())+'.'};
-  if(/выходной/.test(cmd)){const w=now().getDay();return{html:clockHtml(),reply:(w===0||w===6)?'Да, сегодня выходной.':'Нет, сегодня будний день.'};}
-  if(/неделя года/.test(cmd))return{html:clockHtml(),reply:'Сейчас '+isoWeek(now())+'-я неделя года.'};
-  if(/до нового года/.test(cmd)){const d=daysDiff(now(),new Date(now().getFullYear()+1,0,1));return{html:card('До Нового года 🎄','<div class="big">'+d+'</div><div class="sub">дней</div>'),reply:'До Нового года '+d+' дней.'};}
-  if(/время в мире/.test(cmd))return{html:worldHtml(),reply:'Мировое время на экране.'};
-  if(/сколько/.test(cmd)&&/прошло/.test(cmd)){const dt=parseDateRu(cmd);if(!dt)return{reply:'Назови дату, например: сколько дней прошло с 1 мая.'};const d=daysDiff(dt,now());if(d<0)return{reply:'Эта дата ещё впереди.'};return{html:card('Прошло','<div class="big">'+d+'</div><div class="sub">дней</div>'),reply:'Прошло '+d+' дней.'};}
-  if(/сколько/.test(cmd)&&/до/.test(cmd)){const dt=parseDateRu(cmd);if(!dt)return{reply:'Назови дату, например: сколько дней осталось до 15 августа.'};const d=daysDiff(now(),dt);if(d<0)return{reply:'Эта дата уже прошла.'};return{html:card('Отсчёт','<div class="big">'+d+'</div><div class="sub">дней до '+dt.toLocaleDateString('ru-RU',{day:'numeric',month:'long'})+'</div>'),reply:'Осталось '+d+' дней.'};}
-  if(/какое число будет через/.test(cmd)){const n=firstNum(cmd);if(!n)return{reply:'Скажи, через сколько дней.'};return{reply:'Через '+n+' дней будет '+new Date(now().getTime()+n*86400000).toLocaleDateString('ru-RU',{day:'numeric',month:'long'})+'.'};}
-
-  if(/останови таймер|стоп таймер/.test(cmd)){timer=null;return{html:card('Таймер','<div class="sub">Остановлен.</div>'),reply:'Таймер остановлен.'};}
-  if(/сколько осталось/.test(cmd)){if(!timer)return{reply:'Таймер не запущен.'};const s=Math.max(0,Math.round((timer.endsAt-Date.now())/1000));return{reply:'Осталось '+Math.floor(s/60)+' минут '+(s%60)+' секунд.'};}
-  if(/^таймер|запусти таймер|таймер на/.test(cmd)){const ms=parseDur(cmd);if(!ms)return{reply:'Скажи, например: таймер 5 минут.'};timer={endsAt:Date.now()+ms};return{html:timerHtml(timer.endsAt,'Таймер','Таймер завершён!'),reply:'Таймер запущен.'};}
-  if(/напомни/.test(cmd)){const ms=parseDur(cmd);if(!ms)return{reply:'Скажи, например: напомни через 10 минут позвонить маме.'};const text=cmd.replace(/.*напомни/,'').replace(/через\s*\d+\s*(секунд|сек|минут|мин|час[аов]?)/,'').trim()||'Напоминание';const r={id:reminderId++,endsAt:Date.now()+ms,text};reminders.push(r);setTimeout(()=>{reminders=reminders.filter(x=>x.id!==r.id);send({html:card('⏰ Напоминание','<div class="big2">'+r.text+'</div>'),speak:'Напоминаю: '+r.text});},ms);return{html:remindersHtml(),reply:'Хорошо, напомню.'};}
-  if(/покажи напоминания/.test(cmd))return{html:remindersHtml(),reply:'Напоминания на экране.'};
-  if(/отмени напоминание/.test(cmd)){const n=firstNum(cmd);if(n&&reminders[n-1]){const t=reminders[n-1].text;reminders.splice(n-1,1);return{html:remindersHtml(),reply:'Отменила: '+t};}return{reply:'Не нашла такое напоминание.'};}
-  if(/стоп помодоро|останови помодоро/.test(cmd)){if(pomo){clearTimeout(pomo.t);pomo=null;}return{html:card('Помодоро','<div class="sub">Остановлено.</div>'),reply:'Помодоро остановлен.'};}
-  if(/помодоро/.test(cmd)){if(pomo)clearTimeout(pomo.t);pomo={phase:'work',round:1};startPomoPhase(25*60000);return{html:pomoHtml(),reply:'Помодоро начат: 25 минут работы.'};}
-  if(/секундомер/.test(cmd)){if(!stopwatch||!stopwatch.running){stopwatch={startAt:Date.now(),acc:(stopwatch&&!stopwatch.running)?stopwatch.acc:0,running:true};return{html:card('Секундомер','<div class="big">▶ 00:00</div>'),reply:'Секундомер запущен.'};}const ms=stopwatch.acc+(Date.now()-stopwatch.startAt);stopwatch={acc:ms,running:false};const s=Math.round(ms/1000);return{html:card('Секундомер','<div class="big">⏸ '+Math.floor(s/60)+':'+('0'+(s%60)).slice(-2)+'</div>'),reply:'Время: '+Math.floor(s/60)+' минут '+(s%60)+' секунд.'};}
-
-  // задачи
-  if(/добавь задачу/.test(cmd)){const t=cmd.replace(/.*добавь задачу/,'').trim();if(!t)return{reply:'Какую задачу добавить?'};db.tasks.push({text:t,done:false,star:false});saveDb();return{html:tasksHtml(db.tasks),reply:'Задача добавлена: '+t};}
-  if(/покажи важные/.test(cmd))return{html:tasksHtml(db.tasks.filter(t=>t.star)),reply:'Важные на экране.'};
-  if(/покажи задачи|план на сегодня/.test(cmd))return{html:tasksHtml(db.tasks),reply:'Задачи на экране.'};
-  if(/выполни/.test(cmd)){const n=firstNum(cmd);if(n&&db.tasks[n-1]){db.tasks[n-1].done=true;saveDb();return{html:tasksHtml(db.tasks),reply:'Готово: '+db.tasks[n-1].text};}return{reply:'Не нашла задачу.'};}
-  if(/удали задачу/.test(cmd)){const n=firstNum(cmd);if(n&&db.tasks[n-1]){const t=db.tasks[n-1].text;db.tasks.splice(n-1,1);saveDb();return{html:tasksHtml(db.tasks),reply:'Удалила: '+t};}return{reply:'Не нашла задачу.'};}
-  if(/очисти выполненные/.test(cmd)){db.tasks=db.tasks.filter(t=>!t.done);saveDb();return{html:tasksHtml(db.tasks),reply:'Выполненные удалены.'};}
-  if(/сколько задач/.test(cmd)){return{reply:'Активных задач: '+db.tasks.filter(t=>!t.done).length+'.'};}
-  if(/важная/.test(cmd)){const n=firstNum(cmd);if(n&&db.tasks[n-1]){db.tasks[n-1].star=!db.tasks[n-1].star;saveDb();return{html:tasksHtml(db.tasks),reply:'Отметила.'};}return{reply:'Какую задачу отметить?'};}
-  if(/зачитай задачи/.test(cmd)){if(!db.tasks.length)return{reply:'Задач нет.'};return{speakOnly:db.tasks.map((t,i)=>(i+1)+'. '+t.text).join('. '),reply:'Зачитываю.'};}
-
-  // списки
-  if(/создай список/.test(cmd)){const n=cmd.replace(/.*создай список/,'').trim();if(!n)return{reply:'Как назвать список?'};db.lists[n]=db.lists[n]||[];saveDb();return{html:listsHtml(),reply:'Список «'+n+'» создан.'};}
-  if(/добавь в /.test(cmd)){let rest=cmd.replace(/.*добавь в /,'');let name=null,itemsStr='';if(rest.includes(':')){name=rest.split(':')[0].trim();itemsStr=rest.split(':').slice(1).join(':');}else{for(const k in db.lists){if(rest.startsWith(k)){name=k;itemsStr=rest.slice(k.length);break;}}if(!name){name=rest;itemsStr='';}}if(!name)return{reply:'В какой список?'};if(!itemsStr.trim())return{reply:'Что добавить?'};db.lists[name]=db.lists[name]||[];itemsStr.split(/,| и /).forEach(x=>{x=x.trim();if(x)db.lists[name].push({text:x,done:false});});saveDb();return{html:listsHtml(),reply:'Добавила в «'+name+'».'};}
-  if(/покажи все списки/.test(cmd))return{html:listsHtml(),reply:'Все списки на экране.'};
-  if(/вычеркни/.test(cmd)){const n=firstNum(cmd);const k=findList(cmd);if(k&&n&&db.lists[k][n-1]){db.lists[k][n-1].done=true;saveDb();return{html:listsHtml(),reply:'Вычеркнула.'};}return{reply:'Не нашла позицию.'};}
-  if(/удали \d+ из/.test(cmd)){const n=firstNum(cmd);const k=findList(cmd);if(k&&n&&db.lists[k][n-1]){const t=db.lists[k][n-1].text;db.lists[k].splice(n-1,1);saveDb();return{html:listsHtml(),reply:'Удалила: '+t};}return{reply:'Не нашла позицию.'};}
-  if(/очисти список/.test(cmd)){const k=findList(cmd);if(k){db.lists[k]=[];saveDb();return{html:listsHtml(),reply:'Очищен.'};}return{reply:'Какой список?'};}
-  if(/сколько позиций в/.test(cmd)){const k=findList(cmd);if(k)return{reply:'Осталось позиций: '+db.lists[k].filter(x=>!x.done).length+'.'};return{reply:'В каком списке?'};}
-  if(/удали список/.test(cmd)){const n=cmd.replace(/.*удали список/,'').trim();if(db.lists[n]){delete db.lists[n];saveDb();return{html:listsHtml(),reply:'Список удалён.'};}return{reply:'Не нашла список.'};}
-  if(/зачитай /.test(cmd)&&findList(cmd)){const k=findList(cmd);if(db.lists[k].length)return{speakOnly:k+': '+db.lists[k].map((x,i)=>(i+1)+'. '+x.text).join('. '),reply:'Зачитываю.'};}
-  if(/покажи /.test(cmd)){const k=findList(cmd);if(k)return{html:listsHtml(),reply:'Список на экране.'};}
-
-  // заметки
-  if(/запиши/.test(cmd)){const t=cmd.replace(/.*запиши/,'').trim();if(!t)return{reply:'Что записать?'};db.notes.push(t);saveDb();return{html:notesHtml(db.notes),reply:'Записала.'};}
-  if(/покажи заметки/.test(cmd))return{html:notesHtml(db.notes),reply:'Заметки на экране.'};
-  if(/удали заметку/.test(cmd)){const n=firstNum(cmd);if(n&&db.notes[n-1]){db.notes.splice(n-1,1);saveDb();return{html:notesHtml(db.notes),reply:'Удалила.'};}return{reply:'Не нашла.'};}
-  if(/очисти заметки/.test(cmd)){db.notes=[];saveDb();return{html:notesHtml(db.notes),reply:'Очищено.'};}
-  if(/найди в заметках/.test(cmd)){const q=cmd.replace(/.*найди в заметках/,'').trim();const f=db.notes.filter(n=>n.includes(q));return{html:notesHtml(f),reply:f.length?'Нашла: '+f.length:'Не нашла.'};}
-  if(/зачитай заметки/.test(cmd)){if(!db.notes.length)return{reply:'Заметок нет.'};return{speakOnly:db.notes.join('. '),reply:'Зачитываю.'};}
-
-  // погода
-  if(/фаз(а|у) луны|луна/.test(cmd)&&!/калькулятор/.test(cmd))return{html:card('Луна','<div class="big">'+moonPhase().split(' ')[0]+'</div><div class="sub">'+moonPhase().split(' ').slice(1).join(' ')+'</div>'),reply:'Сейчас '+moonPhase().split(' ').slice(1).join('.')+'.'};
-  if(/погода|будет дождь|нужна куртка|уф|рассвет|закат|прогноз на неделю/.test(cmd)){
-    let city=db.city||'Москва';
-    const m=cmd.match(/погода в\s+([а-яёa-z\s]+)$/i);if(m)city=m[1].trim();
-    return{async:true,run:async()=>{
-      const g=await geoCity(city);if(!g)return{reply:'Не нашла город '+city+'.'};
-      if(m){db.city=g.name;saveDb();}
-      const w=await weatherFor(g.latitude,g.longitude);
-      if(/прогноз на неделю/.test(cmd))return{html:weekHtml(g.name,w),reply:'Прогноз на неделю на экране.'};
-      if(/будет дождь/.test(cmd)){const rain=isRain(w.current.weather_code)||isRain(w.daily.weather_code[0]);return{html:weatherHtml(g.name,w),reply:rain?'Да, вероятен дождь. Возьми зонт.':'Дождя не ожидается.'};}
-      if(/нужна куртка/.test(cmd)){const t=w.current.temperature_2m;return{html:weatherHtml(g.name,w),reply:(t<8)?'Да, нужна куртка, всего '+Math.round(t)+'°.':'Нет, тепло: '+Math.round(t)+'°.'};}
-      if(/уф/.test(cmd))return{html:weatherHtml(g.name,w),reply:'УФ-индекс сегодня: '+Math.round(w.daily.uv_index_max[0])+' из 11.'};
-      if(/рассвет/.test(cmd))return{reply:'Рассвет в '+w.daily.sunrise[0].slice(11,16)+'.'};
-      if(/закат/.test(cmd))return{reply:'Закат в '+w.daily.sunset[0].slice(11,16)+'.'};
-      return{html:weatherHtml(g.name,w),reply:'В городе '+g.name+' сейчас '+Math.round(w.current.temperature_2m)+'°, '+wmo(w.current.weather_code)+'.'};
-    }};
+module.exports = {
+  name:'calculator', description:'Калькулятор', risk:'read',
+  async run(input){
+    const c=input.ctx.command;
+    if(/посчитай/.test(c)){const v=calcExpr(c.replace(/.*посчитай/,''));return{reply:v===null?'Не поняла выражение.':'Равно '+v+'.'};}
+    if(/процент.*от/.test(c)){const n=nums(c);if(n.length>=2)return{reply:String(Math.round((n[0]*n[1]/100)*100)/100)};}
+    if(/прибавь.*процент/.test(c)){const n=nums(c);if(n.length>=2){const v=n[1]*(1+n[0]/100);return{reply:String(Math.round(v*100)/100)};}}
+    if(/раздели.*на.*человек/.test(c)){const n=nums(c);if(n.length>=2&&n[1])return{reply:'По '+Math.round(n[0]/n[1]*100)/100+' на каждого.'};}
+    if(/случайное число/.test(c)){const n=nums(c),a=n[0]||1,b=n[1]||100;return{reply:'Выпало '+(a+Math.floor(Math.random()*(b-a+1)))+'.'};}
+    if(/дюйм/.test(c)){const n=nums(c)[0]||1;return{reply:(n/2.54).toFixed(2)+' дюймов.'};}
+    if(/килограмм/.test(c)){const n=nums(c)[0]||1;return{reply:(n*2.2046).toFixed(2)+' фунтов.'};}
+    if(/километр/.test(c)){const n=nums(c)[0]||1;return{reply:(n*0.6214).toFixed(2)+' миль.'};}
+    return{reply:'Скажи, например: посчитай 25 умножить на 4.'};
   }
+};
 
-  // деньги
-  if(/курсы|курс доллара|курс евро|биткоин|топ криптовалют|переведи.*в рубли|сколько.*доллар.*в рублях/.test(cmd)){
-    return{async:true,run:async()=>{
-      const j=await cbr();if(!j)return{reply:'Не смогла получить курсы ЦБ.'};
-      if(/биткоин/.test(cmd)){const c=await crypto('bitcoin');const usd=c&&c.bitcoin?c.bitcoin.usd:null;return{html:card('Биткоин','<div class="big">'+(usd?Math.round(usd).toLocaleString('ru-RU')+' $':'—')+'</div><div class="sub">≈ '+(usd?Math.round(usd*j.Valute.USD.Value).toLocaleString('ru-RU')+' ₽':'')+'</div>'),reply:usd?'Биткоин стоит '+Math.round(usd).toLocaleString('ru-RU')+' долларов.':'Не нашла курс биткоина.'};}
-      if(/топ криптовалют/.test(cmd)){const c=await crypto('bitcoin,ethereum,tether,binancecoin,ripple');if(!c)return{reply:'Не нашла крипто-курсы.'};const names={bitcoin:'Биткоин',ethereum:'Эфириум',tether:'Тезер',binancecoin:'BNB',ripple:'Рипл'};return{html:card('Топ-5 крипто',Object.keys(names).map(k=>'<div class="row"><span class="t">'+names[k]+'</span><span class="big2">'+(c[k]?c[k].usd+' $':'—')+'</span></div>').join('')),reply:'Криптовалюты на экране.'};}
-      const cur=cmd.match(/(доллар|доллара|бакс|евро|юань|юаней|фунт|фунта)/);
-      if(/переведи|сколько.*в рублях/.test(cmd)&&cur){const n=firstNum(cmd)||1;const map={доллар:'USD',доллара:'USD',бакс:'USD',евро:'EUR',юань:'CNY',юаней:'CNY',фунт:'GBP',фунта:'GBP'};const k=map[cur[1]];const val=j.Valute[k].Value*n;return{html:calcHtml(n+' '+k,val.toFixed(2)+' ₽'),reply:n+' '+k+' это '+val.toFixed(0)+' рублей.'};}
-      if(/курс доллара/.test(cmd))return{reply:'Доллар: '+j.Valute.USD.Value.toFixed(2)+' рублей.'};
-      if(/курс евро/.test(cmd))return{reply:'Евро: '+j.Valute.EUR.Value.toFixed(2)+' рублей.'};
-      return{html:moneyHtml(j),reply:'Курсы валют на экране.'};
-    }};
+};
+
+__modules["src/tools/entertainment.js"] = function(module, exports, __require, require) {
+const JOKES=[
+'Программист ставит на ночь два стакана: один с водой — если захочет пить, второй пустой — если не захочет.',
+'Почему программисты путают Хэллоуин и Рождество? Потому что OCT 31 равно DEC 25.',
+'У программиста спрашивают: почему ты такой спокойный? У меня всё в try-catch.'
+];
+const FACTS=['Осьминоги имеют три сердца и голубую кровь.','Свет Солнца доходит до Земли примерно за восемь минут двадцать секунд.','На Венере день длиннее года.'];
+const SPACE=['Космос практически бесшумен: звуку нужна среда для распространения.','На Венере день длиннее года.'];
+const ANIMALS=['Сердце креветки находится в головогруди.','Тигры имеют полосатую кожу, а не только шерсть.'];
+const COMPLIMENTS=['С тобой любая задача становится проще.','Ты из тех людей, кто доводит дело до конца.'];
+const ADVICE=['Сделай сегодня одно маленькое дело, которое давно откладывал.','Прогуляйся пятнадцать минут без телефона.'];
+const MOTIVATE=['Большие дела начинаются с маленьких шагов.','Ошибки — это данные для следующей попытки.'];
+const MOVIES=[['Интерстеллар','космос, любовь и физика'],['Начало','сны внутри снов'],['Матрица','что реально?']];
+const DISHES=[['Паста карбонара','около двадцати минут'],['Овощное рагу','около тридцати минут'],['Сырники','около двадцати пяти минут']];
+const GIFTS=['Настольная игра','Термокружка','Книга','Фотоальбом'];
+const RIDDLES=[{q:'Что можно увидеть с закрытыми глазами?',a:'Сон'},{q:'Чем больше из неё берёшь, тем больше она становится?',a:'Яма'}];
+const states=new Map(),pick=a=>a[Math.floor(Math.random()*a.length)];
+function st(k){if(!states.has(k))states.set(k,{last:'fact',riddle:null});return states.get(k);}
+module.exports={
+  name:'entertainment',description:'Развлечения',risk:'read',
+  async run(input){
+    const c=input.ctx.command,s=st(input.ctx.userId);
+    if(/анекдот/.test(c)){s.last='joke';return{reply:pick(JOKES)};}
+    if(/факт о космосе/.test(c)){s.last='space';return{reply:pick(SPACE)};}
+    if(/факт о животных/.test(c)){s.last='animals';return{reply:pick(ANIMALS)};}
+    if(/факт/.test(c)){s.last='fact';return{reply:pick(FACTS)};}
+    if(/^еще|^ещё|другой/.test(c)){return{reply:pick(s.last==='joke'?JOKES:s.last==='space'?SPACE:s.last==='animals'?ANIMALS:FACTS)};}
+    if(/комплимент/.test(c))return{reply:pick(COMPLIMENTS)};
+    if(/совет/.test(c))return{reply:pick(ADVICE)};
+    if(/мотивируй/.test(c))return{reply:pick(MOTIVATE)};
+    if(/монетк/.test(c))return{reply:Math.random()<.5?'Орёл.':'Решка.'};
+    if(/кубик/.test(c))return{reply:'Выпало '+(1+Math.floor(Math.random()*6))+'.'};
+
+    if(/камень.*ножницы|ножницы.*бумага/.test(c)){
+      const hands=['камень','ножницы','бумага'],me=pick(hands),m=c.match(/(камень|ножницы|бумага)\s*$/),you=m?m[1]:null;
+      if(!you)return{reply:'Выбери: камень, ножницы или бумага.'};
+      if(me===you)return{reply:'Я выбрала '+me+'. Ничья.'};
+      const win=(you==='камень'&&me==='ножницы')||(you==='ножницы'&&me==='бумага')||(you==='бумага'&&me==='камень');
+      return{reply:'Я выбрала '+me+'. '+(win?'Ты выиграла.':'Я выиграла.')};
+    }
+    if(/загадк/.test(c)){s.riddle=pick(RIDDLES);return{reply:s.riddle.q};}
+    if(/^ответ/.test(c)&&s.riddle)return{reply:s.riddle.a};
+    if(/что посмотреть/.test(c)){const x=pick(MOVIES);return{reply:'Советую '+x[0]+': '+x[1]+'.'};}
+    if(/что приготовить|что съесть/.test(c)){const x=pick(DISHES);return{reply:'Можно приготовить '+x[0]+', '+x[1]+'.'};}
+    if(/идея подарка|что подарить/.test(c))return{reply:'Идея: '+pick(GIFTS)+'.'};
+    return{reply:'Могу рассказать анекдот, факт, загадку, предложить фильм, блюдо или подарок.'};
   }
+};
 
-  // калькулятор
-  if(/посчитай/.test(cmd)){const v=calcExpr(cmd.replace(/.*посчитай/,''));if(v===null)return{reply:'Не поняла выражение. Скажи, например: посчитай 25 умножить на 4.'};return{html:calcHtml(cmd.replace(/.*посчитай/,'').trim(),v),reply:'Равно '+v+'.'};}
-  if(/процент.*от/.test(cmd)){const n=allNums(cmd);if(n.length>=2){const v=n[0]*n[1]/100;return{html:calcHtml(n[0]+'% от '+n[1],v),reply:v+'.'};}return{reply:'Скажи, например: 20 процентов от 500.'};}
-  if(/прибавь.*процент/.test(cmd)){const n=allNums(cmd);if(n.length>=2){const v=n[1]*(1+n[0]/100);return{html:calcHtml(n[1]+' + '+n[0]+'%',Math.round(v*100)/100),reply:Math.round(v*100)/100+'.'};}return{reply:'Скажи: прибавь 20 процентов к 100.'};}
-  if(/раздели.*на.*человек/.test(cmd)){const n=allNums(cmd);if(n.length>=2&&n[1]){const v=Math.round(n[0]/n[1]*100)/100;return{html:calcHtml(n[0]+' / '+n[1],v+' на человека'),reply:'По '+v+' на каждого.'};}return{reply:'Скажи: раздели 1500 на 3 человек.'};}
-  if(/случайное число/.test(cmd)){const n=allNums(cmd);const a=n[0]||1,b=n[1]||100;const v=a+Math.floor(Math.random()*(b-a+1));return{html:card('Случайное','<div class="big">'+v+'</div><div class="sub">от '+a+' до '+b+'</div>'),reply:'Выпало '+v+'.'};}
-  if(/дюйм/.test(cmd)){const n=firstNum(cmd)||1;return{reply:(n/2.54).toFixed(2)+' дюймов.'};}
-  if(/фунт/.test(cmd)&&/кг|килограмм/.test(cmd)){const n=firstNum(cmd)||1;return{reply:(n*2.2046).toFixed(2)+' фунтов.'};}
-  if(/миль/.test(cmd)&&/км|километр/.test(cmd)){const n=firstNum(cmd)||1;return{reply:(n*0.6214).toFixed(2)+' миль.'};}
+};
 
-  // переводчик
-  if(/переведи|как по-английски/.test(cmd)){
-    const t=cmd.replace(/.*?(переведи|как по-английски)/,'').trim();if(!t)return{reply:'Что перевести?'};
-    const dir=/[а-яё]/.test(t)?'ru|en':'en|ru';
-    return{async:true,run:async()=>{
-      const tr=await translate(t,dir);if(!tr)return{reply:'Не смогла перевести.'};
-      return{html:textCard('Перевод',t+'\n\n➡️ '+tr),reply:tr};
-    }};
-  }
-
-  // знания
-  if(/в этот день/.test(cmd)){
-    return{async:true,run:async()=>{
-      const ev=await onThisDay();if(!ev.length)return{reply:'Не нашла события.'};
-      return{html:card('В этот день',ev.map(e=>'<div class="row"><span class="num">'+e.year+'</span><div class="t">'+e.text+'</div></div>').join('')),reply:'События этого дня на экране.'};
-    }};
-  }
-  if(/кто такой|кто такая|что такое|расскажи про|столица|население/.test(cmd)){
-    const q=cmd.replace(/.*(кто такой|кто такая|что такое|расскажи про|столица|население)/,'').trim();
+__modules["src/tools/knowledge.js"] = function(module, exports, __require, require) {
+const { wikiSummary, onThisDay } = __require("src/services/web.js");
+module.exports={
+  name:'knowledge',description:'Справочная информация',risk:'read',
+  async run(input){
+    const c=input.ctx.command;
+    if(/в этот день/.test(c)){const ev=await onThisDay();return ev.length?{reply:ev.slice(0,3).map(x=>x.year+': '+x.text).join('. ')}:{reply:'Не нашла события этого дня.'};}
+    const q=c.replace(/.*(кто такой|кто такая|что такое|расскажи про|столица|население)/,'').trim();
     if(!q)return{reply:'О чём рассказать?'};
-    return{async:true,run:async()=>{
-      const s=await wikiSummary(q);if(!s)return{reply:'Не нашла в Википедии.'};
-      return{html:textCard(s.title,s.text),reply:'Рассказываю про '+s.title+'. Текст на экране.'};
-    }};
+    const s=await wikiSummary(q);
+    return s?{reply:s.text.slice(0,950),remember:{lastReferencedObject:{type:'knowledge',title:s.title,text:s.text}}}:{reply:'Не нашла информацию.'};
   }
+};
 
-  // развлечения
-  if(/анекдот/.test(cmd)){lastFun='joke';return{html:textCard('Анекдот 😄',pick(JOKES)),reply:'Слушай анекдот.'};}
-  if(/факт о космосе/.test(cmd)){lastFun='space';return{html:textCard('Факт о космосе 🚀',pick(FACTS_SPACE)),reply:'Факт на экране.'};}
-  if(/факт о животных/.test(cmd)){lastFun='animals';return{html:textCard('Факт о животных 🐾',pick(FACTS_ANIMALS)),reply:'Факт на экране.'};}
-  if(/факт/.test(cmd)){lastFun='fact';return{html:textCard('Факт 🧠',pick(FACTS)),reply:'Факт на экране.'};}
-  if(/^ещё|еще один|другой/.test(cmd)){
-    if(lastFun==='joke')return{html:textCard('Анекдот 😄',pick(JOKES)),reply:'Ещё один.'};
-    if(lastFun==='space')return{html:textCard('Факт о космосе 🚀',pick(FACTS_SPACE)),reply:'Ещё.'};
-    if(lastFun==='animals')return{html:textCard('Факт о животных 🐾',pick(FACTS_ANIMALS)),reply:'Ещё.'};
-    return{html:textCard('Факт 🧠',pick(FACTS)),reply:'Ещё.'};
+};
+
+__modules["src/tools/lists.js"] = function(module, exports, __require, require) {
+const { rows } = __require("src/ui/cards.js");
+function findList(c, lists){for(const k of Object.keys(lists))if(c.includes(k))return k;return null;}
+module.exports = {
+  name:'lists', description:'Пользовательские списки', risk:'change',
+  async run(input, runtime){
+    const c=input.ctx.command,u=runtime.storage.ensureUser(input.ctx.userId),lists=u.lists;
+    if(/создай список/.test(c)){const n=c.replace(/.*создай список/,'').trim();if(!n)return{reply:'Как назвать список?'};lists[n]=lists[n]||[];runtime.storage.scheduleSave();return{reply:'Список «'+n+'» создан.'};}
+    if(/добавь в /.test(c)){
+      const rest=c.replace(/.*добавь в /,'');let name=findList(rest,lists),items='';
+      if(name)items=rest.slice(rest.indexOf(name)+name.length).replace(/^[:\s]+/,'');
+      else if(rest.includes(':')){name=rest.split(':')[0].trim();items=rest.split(':').slice(1).join(':').trim();}
+      if(!name)return{reply:'В какой список?'};if(!items)return{reply:'Что добавить?'};
+      lists[name]=lists[name]||[];items.split(/,| и /).map(x=>x.trim()).filter(Boolean).forEach(x=>lists[name].push({text:x,done:false}));
+      runtime.storage.scheduleSave();return{reply:'Добавила в список «'+name+'».'};
+    }
+    if(/покажи все списки/.test(c)){const flat=[];for(const [k,v] of Object.entries(lists)){flat.push('['+k+']');for(const x of v)flat.push((x.done?'✓ ':'')+x.text);}return{reply:Object.keys(lists).length?'Списки показала.':'Списков пока нет.',html:rows('Списки',flat)};}
+    if(/вычеркни/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0),k=findList(c,lists);if(k&&n&&lists[k][n-1]){lists[k][n-1].done=true;runtime.storage.scheduleSave();return{reply:'Вычеркнула.'};}return{reply:'Не нашла позицию.'};}
+
+    if(/удали \d+ из/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0),k=findList(c,lists);if(k&&n&&lists[k][n-1]){const x=lists[k].splice(n-1,1)[0];runtime.storage.scheduleSave();return{reply:'Удалила: '+x.text};}return{reply:'Не нашла позицию.'};}
+    if(/зачитай /.test(c)){const k=findList(c,lists);if(k)return{reply:'Зачитываю.',speakOnly:k+': '+lists[k].map((x,i)=>(i+1)+'. '+x.text).join('. ')};}
+    if(/покажи /.test(c)&&!/покажи все списки/.test(c)){const k=findList(c,lists);if(k)return{reply:'Список «'+k+'» показала.',html:rows(k,lists[k].map(x=>(x.done?'✓ ':'')+x.text))};}
+    if(/очисти список/.test(c)){const k=findList(c,lists);if(k){lists[k]=[];runtime.storage.scheduleSave();return{reply:'Список очищен.'};}return{reply:'Какой список очистить?'};}
+    if(/удали список/.test(c)){const k=c.replace(/.*удали список/,'').trim();if(lists[k]){delete lists[k];runtime.storage.scheduleSave();return{reply:'Список удалён.'};}return{reply:'Не нашла список.'};}
+    if(/сколько позиций/.test(c)){const k=findList(c,lists);return{k,reply:k?'Осталось позиций: '+lists[k].filter(x=>!x.done).length+'.':'В каком списке?'};}
+    return{reply:'Скажи: создай список…, добавь в список… или покажи все списки.'};
   }
-  if(/комплимент/.test(cmd))return{html:textCard('Комплимент 💙',pick(COMPLIMENTS)),reply:pick(COMPLIMENTS)};
-  if(/совет/.test(cmd))return{html:textCard('Совет 💡',pick(ADVICE)),reply:'Совет на экране.'};
-  if(/мотивируй/.test(cmd))return{html:textCard('Мотивация 🔥',pick(MOTIVATE)),reply:pick(MOTIVATE)};
-  if(/монетк/.test(cmd)){const v=Math.random()<0.5?'Орёл':'Решка';return{html:card('Монетка 🪙','<div class="big">'+v+'</div>'),reply:v+'!'};}
-  if(/кубик/.test(cmd)){const v=1+Math.floor(Math.random()*6);return{html:card('Кубик 🎲','<div class="big">'+v+'</div>'),reply:'Выпало '+v+'.'};}
-  if(/камень.*ножницы|ножницы.*бумага/.test(cmd)){
-    const hands=['камень','ножницы','бумага'];const me=pick(hands);
-    let you=null;hands.forEach(h=>{if(cmd.indexOf(h)!==-1&&cmd.lastIndexOf(h)>cmd.indexOf('бумага')-999)you=h;});
-    const m2=cmd.match(/(камень|ножницы|бумага)\s*$/);you=m2?m2[1]:null;
-    if(!you)return{html:card('Игра ✊','<div class="sub">Скажи: камень ножницы бумага И твой выбор, например «…бумага»</div>'),reply:'Выбери: камень, ножницы или бумага.'};
-    let res='Ничья!';if(me!==you){const win=(you==='камень'&&me==='ножницы')||(you==='ножницы'&&me==='бумага')||(you==='бумага'&&me==='камень');res=win?'Ты выиграл!':'Я выиграла!';}
-    return{html:card('Игра ✊','<div class="big">'+you+' vs '+me+'</div><div class="sub">'+res+'</div>'),reply:'Я показываю '+me+'. '+res};
+};
+
+};
+
+__modules["src/tools/notes.js"] = function(module, exports, __require, require) {
+const { rows } = __require("src/ui/cards.js");
+module.exports = {
+  name:'notes', description:'Заметки пользователя', risk:'change',
+  async run(input, runtime){
+    const c=input.ctx.command,u=runtime.storage.ensureUser(input.ctx.userId),notes=u.notes;
+    if(/^запиши/.test(c)){const t=c.replace(/^запиши/,'').trim();if(!t)return{reply:'Что записать?'};notes.push(t);runtime.storage.scheduleSave();return{reply:'Записала.'};}
+    if(/покажи заметки/.test(c))return{reply:notes.length?'Заметки показала.':'Заметок пока нет.',html:rows('Заметки',notes)};
+    if(/найди в заметках/.test(c)){const q=c.replace(/.*найди в заметках/,'').trim();const f=notes.filter(x=>x.includes(q));return{reply:f.length?'Нашла '+f.length+'.':'Не нашла.',html:rows('Найдено',f)};}
+    if(/зачитай заметки/.test(c))return{reply:notes.length?'Зачитываю.':'Заметок нет.',speakOnly:notes.join('. ')};
+    if(/удали заметку/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&notes[n-1]){notes.splice(n-1,1);runtime.storage.scheduleSave();return{reply:'Удалила.'};}return{reply:'Не нашла заметку.'};}
+    if(/очисти заметки/.test(c)){u.notes=[];runtime.storage.scheduleSave();return{reply:'Заметки очищены.'};}
+    return{reply:'Скажи: запиши…, покажи заметки или найди в заметках…'};
   }
-  if(/загадай загадку|загадк/.test(cmd)){lastRiddle=pick(RIDDLES);return{html:textCard('Загадка 🤔',lastRiddle.q),reply:'Слушай: '+lastRiddle.q};}
-  if(/^ответ/.test(cmd)&&lastRiddle)return{html:textCard('Ответ ✅',lastRiddle.a),reply:lastRiddle.a};
-  if(/что посмотреть/.test(cmd)){const m=pick(MOVIES);return{html:textCard('Сегодня смотрим 🎬',m[0]+' — '+m[1]),reply:'Советую: '+m[0]+'. '+m[1]+'.'};}
-  if(/что приготовить|что съесть/.test(cmd)){const d=pick(DISHES);return{html:textCard('Готовим 🍳',d[0]+' — '+d[1]),reply:'Приготовь: '+d[0]+'.'};}
-  if(/идея подарка|что подарить/.test(cmd))return{html:textCard('Подарок 🎁',pick(GIFTS)),reply:'Идея: '+pick(GIFTS)+'.'};
+};
 
-  // браузер
-  if(/найди фото/.test(cmd)){const q=cmd.replace(/.*найди фото/,'').trim()||'кот';return{async:true,run:async()=>{const imgs=await wikiImages(q);if(!imgs.length)return{reply:'Не нашла фото.'};return{html:imagesHtml(q,imgs),reply:'Фото на экране.'};}};}
-  if(/^найди|поищи|поиск/.test(cmd)){const q=cmd.replace(/^(найди|поищи|поиск)/,'').trim();if(!q)return{reply:'Что найти?'};return{async:true,run:async()=>{const results=await searchAll(q,0);if(!results.length)return{reply:'Не нашла результатов.'};lastSearch={query:q,page:0,results};return{html:searchHtml(q,results),reply:'Нашла. Результаты на экране.'};}};}
-  if(/покажи ещё/.test(cmd)){if(!lastSearch)return{reply:'Сначала найди.'};return{async:true,run:async()=>{const p=lastSearch.page+1;const results=await searchAll(lastSearch.query,p);if(!results.length)return{reply:'Больше нет.'};lastSearch.page=p;lastSearch.results=results;return{html:searchHtml(lastSearch.query,results),reply:'Следующая страница.'};}};}
-  if(/открой сайт/.test(cmd)){const name=cmd.replace(/.*открой сайт/,'').trim().replace(/\s+/g,'');return{async:true,run:async()=>{let url=null;if(/\./.test(name))url='https://'+name;else{const r=await searchAll(name+' официальный сайт',0);if(r.length)url=r[0].url;}if(!url)return{reply:'Не нашла сайт.'};const text=await readPage(url);if(!text)return{reply:'Не смогла открыть.'};reader={title:name,pages:splitPages(text),idx:0};return{html:readerHtml(),reply:'Открыла в режиме чтения.'};}};}
-  if(/^открой/.test(cmd)){const map={перв:1,втор:2,треть:3,четверт:4,пят:5,шест:6};let n=firstNum(cmd);if(!n){for(const k in map)if(cmd.indexOf(k)!==-1){n=map[k];break;}}if(!lastSearch||!n||!lastSearch.results[n-1])return{reply:'Сначала «найди …», потом «открой номер».'};const r=lastSearch.results[n-1];return{async:true,run:async()=>{const text=await readPage(r.url);if(!text)return{reply:'Не смогла открыть.'};reader={title:r.title,pages:splitPages(text),idx:0};return{html:readerHtml(),reply:'Текст на экране.'};}};}
-  if(/^дальше|^далее/.test(cmd)){if(!reader)return{reply:'Сначала открой: «открой 1».'};if(reader.idx<reader.pages.length-1){reader.idx++;return{html:readerHtml(),reply:'Дальше.'};}return{reply:'Конец текста.'};}
-  if(/назад к списку/.test(cmd)){if(!lastSearch)return{reply:'Списка нет.'};return{html:searchHtml(lastSearch.query,lastSearch.results),reply:'Список на экране.'};}
-  if(/^назад/.test(cmd)){if(!reader)return{reply:'Нечего листать.'};if(reader.idx>0){reader.idx--;return{html:readerHtml(),reply:'Назад.'};}return{reply:'Это начало.'};}
-  if(/^зачитай|прочитай вслух|озвучь/.test(cmd)){let t=null;if(reader)t=reader.pages[reader.idx];else if(lastSearch)t=lastSearch.results.map((r,i)=>(i+1)+'. '+r.title).join('. ');if(!t)return{reply:'Нечего зачитывать.'};return{speakOnly:t.slice(0,1000),reply:'Зачитываю.'};}
-  if(/стоп чтение|хватит читать|замолчи/.test(cmd))return{stopSpeak:true,reply:'Остановилась.'};
+};
 
-  return{html:card('Не поняла','<div class="sub">Команда: «'+cmd+'». Скажи «помощь».</div>'),reply:'Я пока не знаю такую команду. Скажи «помощь».'};
+__modules["src/tools/pc.js"] = function(module, exports, __require, require) {
+const APP_ALIASES = [
+  ['google chrome','chrome'],['хром','chrome'],['chrome','chrome'],
+  ['яндекс браузер','yandex'],['яндекс-браузер','yandex'],
+  ['телеграм','telegram'],['telegram','telegram'],
+  ['ворд','word'],['word','word'],
+  ['эксель','excel'],['excel','excel'],
+  ['блокнот','notepad'],['калькулятор','calculator'],
+  ['проводник','explorer']
+];
+
+function appFrom(text) {
+  for (const [phrase, app] of APP_ALIASES) if (text.includes(phrase)) return app;
+  if (text.includes('браузер')) return 'browser';
+  return null;
 }
-function findList(cmd){for(const k in db.lists)if(cmd.indexOf(k)!==-1)return k;return null;}
 
-function startPomoPhase(ms){
-  pomo.endsAt=Date.now()+ms;
-  pomo.t=setTimeout(()=>{
-    if(!pomo)return;
-    if(pomo.phase==='work'){const long=pomo.round>=4;pomo.phase='rest';startPomoPhase(long?15*60000:5*60000);send({html:pomoHtml(),speak:long?'Большой перерыв, 15 минут!':'Перерыв, 5 минут.'});}
-    else{if(pomo.round>=4){pomo=null;send({html:card('Помодоро','<div class="sub">Цикл завершён! 🎉</div>'),speak:'Помодоро завершён!'});return;}pomo.round++;pomo.phase='work';startPomoPhase(25*60000);send({html:pomoHtml(),speak:'Отдых окончен, за работу!'});}
+function resultReply(r, fallback) {
+  if (!r) return { reply:'Не получила ответ от компьютера.' };
+  if (r.ok === false) return { reply:r.message || 'Не получилось выполнить команду.' };
+  return { reply:r.message || fallback || 'Готово.' };
+}
+
+module.exports = {
+  name:'pc', description:'Безопасное управление Windows через локальный агент', risk:'read',
+  async run(input, runtime){
+    const c=input.ctx.command, bridge=runtime.pcBridge;
+
+    if(/статус компьютера|компьютер.*на связи|пк.*на связи/.test(c)){
+      const s=bridge.status();
+      if(!s.configured)return{reply:'Windows Agent ещё не настроен на сервере.'};
+      return{reply:s.online?'Компьютер на связи.':'Компьютер сейчас не на связи.'};
+    }
+
+    if(/^(открой|запусти|включи)\s+/.test(c)){
+      if(/загрузк/.test(c))return resultReply(await bridge.run('open_folder',{folder:'downloads'}),'Открыла загрузки.');
+      if(/документ/.test(c))return resultReply(await bridge.run('open_folder',{folder:'documents'}),'Открыла документы.');
+      if(/рабоч(ий|его)\s+стол/.test(c))return resultReply(await bridge.run('open_folder',{folder:'desktop'}),'Открыла рабочий стол.');
+      const app=appFrom(c);
+      if(app)return resultReply(await bridge.run('open_app',{app}),'Открыла программу.');
+    }
+
+    if(/последн.*(скачан|загруз)|что.*скачал|что.*загрузил/.test(c)){
+      return resultReply(await bridge.run('recent_downloads',{limit:5}),'Показала последние загрузки.');
+    }
+
+    if(/^(найди|поищи)\s+(файл|документ|папку)/.test(c)){
+      const q=c.replace(/^(найди|поищи)\s+(файл|документ|папку)\s*/,'').trim();
+      if(!q)return{reply:'Скажи название файла или папки.'};
+      return resultReply(await bridge.run('search_files',{query:q,limit:10}),'Поиск выполнила.');
+    }
+
+    if(/что сейчас открыто|какие окна открыты|покажи открытые окна/.test(c)){
+      return resultReply(await bridge.run('list_windows',{}),'Показала открытые окна.');
+    }
+
+    if(/информация о компьютере|что с компьютером|состояние компьютера|почему компьютер тормозит/.test(c)){
+      return resultReply(await bridge.run('system_status',{}),'Проверила компьютер.');
+    }
+
+    return{reply:'Команду для компьютера поняла не полностью. Скажи, например: «открой хром», «найди файл договор» или «что сейчас открыто».'};
+  }
+};
+
+};
+
+__modules["src/tools/tasks.js"] = function(module, exports, __require, require) {
+const { rows } = __require("src/ui/cards.js");
+module.exports = {
+  name:'tasks', description:'Задачи пользователя', risk:'change',
+  async run(input, runtime){
+    const c=input.ctx.command, u=runtime.storage.ensureUser(input.ctx.userId), tasks=u.tasks;
+    if(/добавь задачу/.test(c)){const t=c.replace(/.*добавь задачу/,'').trim();if(!t)return{reply:'Какую задачу добавить?'};tasks.push({text:t,done:false,star:false});runtime.storage.scheduleSave();return{reply:'Задача добавлена: '+t,html:rows('Задачи',tasks.map(x=>(x.done?'✓ ':'')+x.text))};}
+    if(/покажи важные/.test(c)){const f=tasks.filter(x=>x.star);return{reply:f.length?'Важные задачи показала.':'Важных задач нет.',html:rows('Важные задачи',f.map(x=>x.text))};}
+    if(/зачитай задачи/.test(c)){return{reply:tasks.length?'Зачитываю.':'Задач нет.',speakOnly:tasks.map((x,i)=>(i+1)+'. '+x.text).join('. ')};}
+    if(/покажи задачи|план на сегодня/.test(c))return{reply:tasks.length?'Задачи показала.':'Задач пока нет.',html:rows('Задачи',tasks.map(x=>(x.done?'✓ ':'')+x.text))};
+    if(/сколько задач/.test(c))return{reply:'Активных задач: '+tasks.filter(x=>!x.done).length+'.'};
+    if(/выполни/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&tasks[n-1]){tasks[n-1].done=true;runtime.storage.scheduleSave();return{reply:'Готово: '+tasks[n-1].text};}return{reply:'Не нашла задачу. Назови её номер.'};}
+    if(/удали задачу/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&tasks[n-1]){const t=tasks[n-1].text;tasks.splice(n-1,1);runtime.storage.scheduleSave();return{reply:'Удалила задачу: '+t};}return{reply:'Не нашла задачу.'};}
+    if(/очисти выполненные/.test(c)){u.tasks=tasks.filter(x=>!x.done);runtime.storage.scheduleSave();return{reply:'Выполненные задачи удалены.'};}
+    if(/важная/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&tasks[n-1]){tasks[n-1].star=!tasks[n-1].star;runtime.storage.scheduleSave();return{reply:'Отметку изменила.'};}return{reply:'Какую задачу отметить? Назови номер.'};}
+    return{reply:'Скажи: добавь задачу…, покажи задачи или выполни задачу номер…'};
+  }
+};
+
+};
+
+__modules["src/tools/time.js"] = function(module, exports, __require, require) {
+const { TZ } = __require("src/config.js");
+const { card } = __require("src/ui/cards.js");
+
+function now(){return new Date();}
+function fmtClock(d){return d.toLocaleTimeString('ru-RU',{timeZone:TZ,hour:'2-digit',minute:'2-digit'});}
+function fmtDate(d){return d.toLocaleDateString('ru-RU',{timeZone:TZ,day:'numeric',month:'long',year:'numeric'});}
+function fmtDay(d){return d.toLocaleDateString('ru-RU',{timeZone:TZ,weekday:'long'});}
+function isoWeek(d){const x=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=x.getUTCDay()||7;x.setUTCDate(x.getUTCDate()+4-day);const y=new Date(Date.UTC(x.getUTCFullYear(),0,1));return Math.ceil((((x-y)/86400000)+1)/7);}
+function firstNum(s){const m=String(s).match(/(\d+)/);return m?Number(m[1]):null;}
+function daysDiff(a,b){return Math.round((b-a)/86400000);}
+const MONTHS={января:0,февраля:1,марта:2,апреля:3,мая:4,июня:5,июля:6,августа:7,сентября:8,октября:9,ноября:10,декабря:11};
+function parseDateRu(s){
+  const m=String(s).match(/(\d{1,2})\s+(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря)/);
+  if(!m)return null;const d=Number(m[1]),mo=MONTHS[m[2]];let y=now().getFullYear();let dt=new Date(y,mo,d);const t=now();t.setHours(0,0,0,0);
+  if(/до/.test(s)&&dt<t)dt=new Date(y+1,mo,d);if(/прошло/.test(s)&&dt>t)dt=new Date(y-1,mo,d);return dt;
+}
+module.exports = {
+  name:'time_date',
+  description:'Время и даты',
+  risk:'read',
+  async run(input){
+    const c=input.ctx.command,d=now();
+    if(/который час|сколько времени|время сейчас/.test(c))return{reply:'Сейчас '+fmtClock(d)+'.'};
+    if(/какое число|какая дата/.test(c))return{reply:'Сегодня '+fmtDate(d)+'.'};
+    if(/день недели/.test(c))return{reply:'Сегодня '+fmtDay(d)+'.'};
+    if(/выходной/.test(c)){const w=d.getDay();return{reply:(w===0||w===6)?'Да, сегодня выходной.':'Нет, сегодня будний день.'};}
+    if(/неделя года/.test(c))return{reply:'Сейчас '+isoWeek(d)+'-я неделя года.'};
+    if(/время в мире/.test(c)){const z=[['Москва','Europe/Moscow'],['Нью-Йорк','America/New_York'],['Лондон','Europe/London'],['Токио','Asia/Tokyo'],['Дубай','Asia/Dubai']];return{reply:z.map(x=>x[0]+' '+d.toLocaleTimeString('ru-RU',{timeZone:x[1],hour:'2-digit',minute:'2-digit'})).join(', ')+'.'};}
+    if(/до нового года/.test(c)){const n=daysDiff(d,new Date(d.getFullYear()+1,0,1));return{reply:'До Нового года '+n+' дней.'};}
+    if(/какое число будет через/.test(c)){const n=firstNum(c);if(!n)return{reply:'Скажи, через сколько дней.'};const dt=new Date(Date.now()+n*86400000);return{reply:'Через '+n+' дней будет '+dt.toLocaleDateString('ru-RU',{day:'numeric',month:'long'})+'.'};}
+    if(/сколько/.test(c)&&/(прошло|до)/.test(c)){const dt=parseDateRu(c);if(!dt)return{reply:'Назови дату, например 15 августа.'};const n=/прошло/.test(c)?daysDiff(dt,d):daysDiff(d,dt);return{reply:(/прошло/.test(c)?'Прошло ':'Осталось ')+Math.abs(n)+' дней.'};}
+    return{reply:'Сейчас '+fmtClock(d)+'.'};
+  }
+};
+
+};
+
+__modules["src/tools/timer.js"] = function(module, exports, __require, require) {
+const states = new Map();
+function state(key){if(!states.has(key))states.set(key,{timer:null,reminders:[],nextReminderId:1,pomo:null,stopwatch:null});return states.get(key);}
+function parseDur(s){
+  const m=String(s).match(/(\d+)\s*(секунд|сек|минут|мин|час|часа|часов)/);
+  if(!m)return null;const n=Number(m[1]);if(m[2].startsWith('сек'))return n*1000;if(m[2].startsWith('мин'))return n*60000;return n*3600000;
+}
+function durationText(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+' минут '+(s%60)+' секунд';}
+function startPomo(st,runtime){
+  const ms=st.pomo.phase==='work'?25*60000:(st.pomo.round>=4?15*60000:5*60000);
+  st.pomo.endsAt=Date.now()+ms;
+  st.pomo.handle=setTimeout(()=>{
+    if(!st.pomo)return;
+    if(st.pomo.phase==='work'){
+      st.pomo.phase='rest';
+      runtime.sendView({speak:st.pomo.round>=4?'Большой перерыв, 15 минут.':'Перерыв, 5 минут.'});
+      startPomo(st,runtime);
+    }else{
+      if(st.pomo.round>=4){st.pomo=null;runtime.sendView({speak:'Помодоро завершён.'});return;}
+      st.pomo.round++;st.pomo.phase='work';runtime.sendView({speak:'Отдых окончен, за работу.'});startPomo(st,runtime);
+    }
   },ms);
 }
+module.exports={
+  name:'timer',description:'Таймеры, напоминания, помодоро и секундомер',risk:'change',
+  async run(input,runtime){
+    const c=input.ctx.command,st=state(input.ctx.userId);
 
-// ---------- HTTP ----------
-app.get('/events',(req,res)=>{
-  res.writeHead(200,{'Content-Type':'text/event-stream','Cache-Control':'no-cache','Connection':'keep-alive'});
-  if(lastView)res.write('data: '+JSON.stringify(lastView)+'\n\n');
-  clients.add(res);req.on('close',()=>clients.delete(res));
-});
-app.get('/alice',(req,res)=>res.json({status:'ok',text:'Сервер Алисы работает'}));
-app.head('/alice',(req,res)=>res.status(200).end());
-app.get('/debug', async (req, res) => {
-  const out = { hasToken: !!GH_TOKEN, tokenStart: GH_TOKEN ? GH_TOKEN.slice(0, 12) : null, repo: GH_REPO };
-  try {
-    const r = await fetch('https://api.github.com/repos/' + GH_REPO + '/contents/data.json', { headers: { Authorization: 'Bearer ' + GH_TOKEN, 'User-Agent': 'alice', Accept: 'application/vnd.github+json' } });
-    out.githubStatus = r.status;
-  } catch (e) { out.githubError = e.message; }
-  res.json(out);
-});
-app.post('/alice',async(req,res)=>{
-  const body=req.body||{};
-  const cmd=((body.request&&body.request.command)||'').toLowerCase().replace(/ё/g,'е').replace(/[.,!?;:"]/g,' ').trim();
-  let out;
-  try{out=route(cmd);}catch(e){out={reply:'Ошибка: '+e.message};}
-  try{if(out&&out.async)out=await out.run();}catch(e){out={reply:'Не получилось: '+e.message};}
-  if(out){
-    const p={};
-    if(out.html)p.html=out.html;
-    if(out.speakOnly)p.speak=out.speakOnly;
-    if(out.stopSpeak)p.stopSpeak=true;
-    if(Object.keys(p).length)send(p);
+    if(/останови таймер|стоп таймер/.test(c)){st.timer=null;return{reply:'Таймер остановлен.'};}
+    if(/сколько осталось/.test(c)){if(!st.timer)return{reply:'Таймер не запущен.'};return{reply:'Осталось '+durationText(st.timer-Date.now())+'.'};}
+    if(/^таймер|запусти таймер|таймер на/.test(c)){
+      const ms=parseDur(c);if(!ms)return{reply:'Скажи, например: таймер на 5 минут.'};
+      st.timer=Date.now()+ms;
+      setTimeout(()=>{if(st.timer&&Date.now()>=st.timer){st.timer=null;runtime.sendView({speak:'Таймер завершён.'});}},ms);
+      return{reply:'Таймер запущен.'};
+    }
+
+    if(/напомни/.test(c)){
+      const ms=parseDur(c);if(!ms)return{reply:'Скажи, например: напомни через 10 минут позвонить.'};
+      const text=c.replace(/.*напомни/,'').replace(/через\s*\d+\s*(секунд|сек|минут|мин|час[а-я]*)/,'').trim()||'Напоминание';
+      const r={id:st.nextReminderId++,endsAt:Date.now()+ms,text};st.reminders.push(r);
+      setTimeout(()=>{st.reminders=st.reminders.filter(x=>x.id!==r.id);runtime.sendView({speak:'Напоминаю: '+r.text});},ms);
+      return{reply:'Хорошо, напомню. В браузерной панели напоминание сработает автоматически.'};
+    }
+    if(/покажи напоминания/.test(c)){if(!st.reminders.length)return{reply:'Напоминаний нет.'};return{reply:st.reminders.map((x,i)=>(i+1)+'. '+x.text).join('. ')};}
+    if(/отмени напоминание/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&st.reminders[n-1]){const x=st.reminders.splice(n-1,1)[0];return{reply:'Отменила: '+x.text};}return{reply:'Не нашла такое напоминание.'};}
+
+    if(/стоп помодоро|останови помодоро/.test(c)){if(st.pomo&&st.pomo.handle)clearTimeout(st.pomo.handle);st.pomo=null;return{reply:'Помодоро остановлен.'};}
+    if(/помодоро/.test(c)){if(st.pomo&&st.pomo.handle)clearTimeout(st.pomo.handle);st.pomo={phase:'work',round:1};startPomo(st,runtime);return{reply:'Помодоро начат: 25 минут работы.'};}
+
+    if(/секундомер/.test(c)){
+      if(!st.stopwatch||!st.stopwatch.running){st.stopwatch={startAt:Date.now(),acc:st.stopwatch?st.stopwatch.acc||0:0,running:true};return{reply:'Секундомер запущен.'};}
+      const ms=st.stopwatch.acc+(Date.now()-st.stopwatch.startAt);st.stopwatch={acc:ms,running:false};return{reply:'Время: '+durationText(ms)+'.'};
+    }
+    return{reply:'Скажи: таймер на 5 минут, напомни через 10 минут…, помодоро или секундомер.'};
   }
-  res.json({version:'1.0',session:body.session||{},response:{text:(out&&out.reply)||'Готово.',end_session:false}});
-});
-app.get('/',(req,res)=>{
-  res.send('<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><title>Панель Алисы</title><style>'+
-    'body{font-family:Arial,sans-serif;background:#0f172a;color:#e2e8f0;text-align:center;padding:30px}'+
-    '.card{display:inline-block;background:#1e293b;padding:30px 50px;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.4);max-width:900px;text-align:left}'+
-    'h1{color:#7dd3fc;margin-top:0;font-size:26px}.big{font-size:64px;color:#fbbf24;text-align:center;margin:10px 0}'+
-    '.big2{font-size:28px;color:#fbbf24}.sub{color:#94a3b8;font-size:18px;text-align:center}'+
-    '.row{display:flex;gap:12px;align-items:center;margin:10px 0}.num{background:#334155;border-radius:8px;padding:4px 10px;font-size:20px;color:#7dd3fc}'+
-    '.t{font-size:20px}.done{text-decoration:line-through;opacity:.5}.d{color:#64748b;font-size:14px}.hint{color:#64748b;margin-top:16px;font-size:15px}'+
-    '.text{font-size:20px;line-height:1.6;max-height:60vh;overflow:auto}'+
-    '.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.grid img{width:100%;border-radius:8px}'+
-    '</style></head><body><div id="box"><div class="card"><h1>Панель Алисы</h1><div class="sub">Жду команду…</div></div></div><script>'+
-    'var box=document.getElementById("box");var tick=null;'+
-    'function speak(t){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="ru-RU";speechSynthesis.speak(u);}catch(e){}}'+
-    'function fmt(ms){var s=Math.ceil(ms/1000);var h=Math.floor(s/3600);var m=Math.floor(s%3600/60);var ss=s%60;function p(n){return(n<10?"0":"")+n}return h>0?p(h)+":"+p(m)+":"+p(ss):p(m)+":"+p(ss)}'+
-    'function startTicks(){if(tick)clearInterval(tick);tick=setInterval(function(){var els=document.querySelectorAll("[data-ends]");for(var i=0;i<els.length;i++){var el=els[i];var ms=+el.getAttribute("data-ends")-Date.now();if(ms<=0){el.textContent="00:00";var se=el.getAttribute("data-speakend");if(se&&!el.getAttribute("data-done")){el.setAttribute("data-done","1");speak(se);}}else{el.textContent=fmt(ms);}}},500);startTicks();}'+
-    'var es=new EventSource("/events");es.onmessage=function(e){var d=JSON.parse(e.data);if(d.speak)speak(d.speak);if(d.stopSpeak){try{speechSynthesis.cancel()}catch(e){}}if(d.html){box.innerHTML=d.html;startTicks();}};'+
-    '</script></body></html>');
+};
+
+};
+
+__modules["src/tools/translate.js"] = function(module, exports, __require, require) {
+const { translate } = __require("src/services/web.js");
+module.exports = {
+  name:'translate', description:'Перевод текста', risk:'read',
+  async run(input){
+    const c=input.ctx.command;
+    const t=c.replace(/.*?(переведи|как по-английски)/,'').trim();
+    if(!t)return{reply:'Что перевести?'};
+    const dir=/[а-яё]/.test(t)?'ru|en':'en|ru';
+    const tr=await translate(t,dir);
+    return{reply:tr||'Не смогла перевести.'};
+  }
+};
+
+};
+
+__modules["src/tools/weather.js"] = function(module, exports, __require, require) {
+const { geoCity, weatherFor, wmo, isRain } = __require("src/services/weather.js");
+const { card } = __require("src/ui/cards.js");
+function moonPhase(){const syn=29.53058867,known=Date.UTC(2000,0,6,18,14),days=(Date.now()-known)/86400000,ph=((days%syn)+syn)%syn,i=Math.floor(ph/syn*8+0.5)%8;return ['новолуние','растущий серп','первая четверть','растущая луна','полнолуние','убывающая луна','последняя четверть','убывающий серп'][i];}
+module.exports = {
+  name:'weather', description:'Погода и связанные данные', risk:'read',
+  async run(input, runtime){
+    const ctx=input.ctx,c=ctx.command,u=runtime.storage.ensureUser(ctx.userId);
+    if(/фаз.*луны/.test(c))return{reply:'Сейчас '+moonPhase()+'.'};
+    let city=u.city||'Москва';
+    const geo=ctx.entities.geo.find(x=>x.city);
+    if(geo&&geo.city) city=geo.city;
+    else {const m=c.match(/погода в\s+([а-яa-z\s-]+)$/i);if(m)city=m[1].trim();}
+    const g=await geoCity(city);if(!g)return{reply:'Не нашла город '+city+'.'};
+    if(geo||/погода в/.test(c)){u.city=g.name;runtime.storage.scheduleSave();}
+    const w=await weatherFor(g.latitude,g.longitude);
+    const cur=w.current;
+    const html=card('Погода: '+g.name,`<div class="big">${Math.round(cur.temperature_2m)}°</div><div class="sub">${wmo(cur.weather_code)}, ощущается как ${Math.round(cur.apparent_temperature)}°</div>`);
+    if(/будет дождь/.test(c))return{reply:(isRain(cur.weather_code)||isRain(w.daily.weather_code[0]))?'Да, вероятен дождь. Возьми зонт.':'Дождя не ожидается.',html};
+    if(/нужна куртка/.test(c))return{reply:cur.temperature_2m<8?'Да, лучше куртку. Сейчас '+Math.round(cur.temperature_2m)+'°.':'Сейчас '+Math.round(cur.temperature_2m)+'°, тёплая куртка не обязательна.',html};
+    if(/уф/.test(c))return{reply:'УФ-индекс сегодня: '+Math.round(w.daily.uv_index_max[0])+' из 11.',html};
+    if(/рассвет/.test(c))return{reply:'Рассвет в '+w.daily.sunrise[0].slice(11,16)+'.'};
+    if(/закат/.test(c))return{reply:'Закат в '+w.daily.sunset[0].slice(11,16)+'.'};
+    if(/прогноз на неделю/.test(c)){const lines=w.daily.time.map((d,i)=>d+': '+Math.round(w.daily.temperature_2m_min[i])+'…'+Math.round(w.daily.temperature_2m_max[i])+'°, '+wmo(w.daily.weather_code[i]));return{reply:'Прогноз на неделю показала.',html:card('Неделя: '+g.name,'<div class="text">'+lines.join('<br>')+'</div>')};}
+    return{reply:'В городе '+g.name+' сейчас '+Math.round(cur.temperature_2m)+'°, '+wmo(cur.weather_code)+'.',html};
+  }
+};
+
+};
+
+__modules["src/ui/cards.js"] = function(module, exports, __require, require) {
+function esc(v){
+  return String(v ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+function card(title, inner){return `<div class="card"><h1>${esc(title)}</h1>${inner}</div>`;}
+function textCard(title, text){return card(title, `<div class="text">${esc(text).replace(/\n/g,'<br>')}</div>`);}
+function rows(title, items){
+  return card(title, items.map((x,i)=>`<div class="row"><span class="num">${i+1}</span><div class="t">${esc(x)}</div></div>`).join(''));
+}
+function searchCard(q, results){
+  const body=results.map((r,i)=>{
+    let dom='';try{dom=new URL(r.url).hostname;}catch{}
+    return `<div class="row"><span class="num">${i+1}</span><div><div class="t">${esc(r.title)}</div><div class="d">${esc(dom)}</div></div></div>`;
+  }).join('');
+  return card(`Поиск: ${q}`, body + '<div class="hint">Можно сказать: «открой второй», «дальше», «назад»</div>');
+}
+module.exports = { esc, card, textCard, rows, searchCard };
+
+};
+
+__modules["src/ui/panel.js"] = function(module, exports, __require, require) {
+function panelHtml(version){
+return `<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><title>Smart Assistant</title>
+<style>
+body{font-family:Arial,sans-serif;background:#0f172a;color:#e2e8f0;text-align:center;padding:30px}
+.card{display:inline-block;background:#1e293b;padding:30px 50px;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.4);max-width:900px;text-align:left}
+h1{color:#7dd3fc;margin-top:0}.big{font-size:64px;color:#fbbf24;text-align:center}.sub{color:#94a3b8;font-size:18px}.row{display:flex;gap:12px;margin:10px 0}.num{background:#334155;border-radius:8px;padding:4px 10px;color:#7dd3fc}.t{font-size:20px}.d,.hint{color:#64748b}.text{font-size:20px;line-height:1.6}
+</style></head><body><div id="box"><div class="card"><h1>Smart Assistant ${version}</h1><div class="sub">Жду команду…</div></div></div>
+<script>
+const box=document.getElementById('box');
+function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ru-RU';speechSynthesis.speak(u);}catch(e){}}
+const es=new EventSource('/events');
+es.onmessage=e=>{const d=JSON.parse(e.data);if(d.html)box.innerHTML=d.html;if(d.speak)speak(d.speak);if(d.stopSpeak){try{speechSynthesis.cancel()}catch(e){}}};
+</script>
+</body></html>`;
+}
+module.exports={panelHtml};
+
+};
+
+__require('server.js');
+Библиотека
+/
+server_1.2.2_ГОТОВЫЙ_КОД.txt
+
+
+// SMART ASSISTANT CORE 1.2.2 — GENERATED DEPLOYMENT BUILD
+// Source architecture: modular package SMART_ASSISTANT_CORE_1.2.2_REGRESSION_CANDIDATE
+// This single file is generated only to make deployment to the existing GitHub/Render service simple.
+// Do not add secrets here. GH_TOKEN / GH_REPO / PC_AGENT_TOKEN remain Render environment variables.
+
+'use strict';
+const __modules = Object.create(null);
+const __cache = Object.create(null);
+function __require(id) {
+  if (__cache[id]) return __cache[id].exports;
+  const factory = __modules[id];
+  if (!factory) throw new Error('Bundled module not found: ' + id);
+  const module = { exports: {} };
+  __cache[id] = module;
+  factory(module, module.exports, __require, require);
+  return module.exports;
+}
+
+__modules["server.js"] = function(module, exports, __require, require) {
+const express = require('express');
+const { createApp } = __require("src/app.js");
+
+const app = createApp();
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`[Smart Assistant Core] listening on ${port}`);
 });
 
-loadDb();
-app.listen(process.env.PORT||3000,()=>console.log('Сервер запущен в облаке!'));
+};
+
+__modules["src/app.js"] = function(module, exports, __require, require) {
+const express = require('express');
+const { VERSION } = __require("src/config.js");
+const { buildRequestContext } = __require("src/core/request-context.js");
+const { ContextStore } = __require("src/core/context-store.js");
+const { ToolRegistry } = __require("src/core/tool-registry.js");
+const { route } = __require("src/core/router.js");
+const { GitHubStorage } = __require("src/storage/github-storage.js");
+const { panelHtml } = __require("src/ui/panel.js");
+const { PcBridge } = __require("src/pc/bridge.js");
+
+const timeTool = __require("src/tools/time.js");
+const timerTool = __require("src/tools/timer.js");
+const tasksTool = __require("src/tools/tasks.js");
+const listsTool = __require("src/tools/lists.js");
+const notesTool = __require("src/tools/notes.js");
+const weatherTool = __require("src/tools/weather.js");
+const calculatorTool = __require("src/tools/calculator.js");
+const translateTool = __require("src/tools/translate.js");
+const knowledgeTool = __require("src/tools/knowledge.js");
+const entertainmentTool = __require("src/tools/entertainment.js");
+const browserTool = __require("src/tools/browser.js");
+const pcTool = __require("src/tools/pc.js");
+
+function createApp() {
+  const app = express();
+  app.use(express.json({limit:'1mb'}));
+
+  const context = new ContextStore();
+  const storage = new GitHubStorage();
+  const registry = new ToolRegistry();
+  const pcBridge = new PcBridge();
+  [
+    timeTool,timerTool,tasksTool,listsTool,notesTool,weatherTool,
+    calculatorTool,translateTool,knowledgeTool,entertainmentTool,browserTool,pcTool
+  ].forEach(t=>registry.register(t));
+
+  const clients = new Set();
+  let lastView = null;
+
+  function sendView(p) {
+    lastView = p;
+    const data='data: '+JSON.stringify(p)+'\n\n';
+    for(const c of clients){try{c.write(data);}catch{}}
+  }
+
+  const runtime = { context, storage, registry, sendView, pcBridge };
+
+  storage.load().then(()=>console.log('[storage] loaded')).catch(e=>console.error('[storage]',e.message));
+  setInterval(()=>context.cleanup(),5*60*1000).unref();
+
+  app.get('/health',(req,res)=>res.json({
+    ok:true,
+    version:VERSION,
+    tools:registry.list().map(x=>x.name),
+    pc:pcBridge.status()
+  }));
+
+  app.get('/alice',(req,res)=>res.json({status:'ok',text:'Smart Assistant Core работает',version:VERSION}));
+  app.head('/alice',(req,res)=>res.status(200).end());
+
+  app.get('/events',(req,res)=>{
+    res.writeHead(200,{'Content-Type':'text/event-stream','Cache-Control':'no-cache','Connection':'keep-alive'});
+    if(lastView)res.write('data: '+JSON.stringify(lastView)+'\n\n');
+    clients.add(res);
+    req.on('close',()=>clients.delete(res));
+  });
+
+  // Без вывода любых секретов.
+  app.get('/debug',(req,res)=>res.json({
+    ok:true,
+    version:VERSION,
+    storageConfigured:!!process.env.GH_TOKEN,
+    repository:process.env.GH_REPO||'elmaltsewa-dev/alice-server',
+    registeredTools:registry.list()
+  }));
+
+  app.post('/pc/heartbeat',(req,res)=>{
+    if(!pcBridge.authorize(req))return res.status(401).json({ok:false});
+    const b=req.body||{},machine=String(b.machine||'home-pc');
+    pcBridge.heartbeat(machine,{hostname:b.hostname||'',user:b.user||'',version:b.version||''});
+    res.json({ok:true,serverTime:Date.now()});
+  });
+
+  app.get('/pc/poll',(req,res)=>{
+    if(!pcBridge.authorize(req))return res.status(401).json({ok:false});
+    const machine=String(req.query.machine||'home-pc');
+    pcBridge.heartbeat(machine,{});
+    res.json({ok:true,job:pcBridge.poll(machine)});
+  });
+
+  app.post('/pc/result',(req,res)=>{
+    if(!pcBridge.authorize(req))return res.status(401).json({ok:false});
+    const b=req.body||{};
+    pcBridge.complete(String(b.id||''),b.result||{ok:false,message:'Пустой результат'});
+    res.json({ok:true});
+  });
+
+  app.post('/alice',async(req,res)=>{
+    const body=req.body||{};
+    const ctx=buildRequestContext(body);
+    let out;
+    try{
+      out=await route(ctx,runtime);
+    }catch(e){
+      console.error('[alice]',e.stack||e.message);
+      out={reply:'Произошла внутренняя ошибка. Я записала её в журнал сервера.'};
+    }
+
+    if(out&&(out.html||out.speakOnly||out.stopSpeak)){
+      const view={};
+      if(out.html)view.html=out.html;
+      if(out.speakOnly)view.speak=out.speakOnly;
+      if(out.stopSpeak)view.stopSpeak=true;
+      sendView(view);
+    }
+
+    res.json({
+      version:'1.0',
+      session:body.session||{},
+      response:{
+        text:(out&&out.reply)||'Готово.',
+        end_session:false
+      }
+    });
+  });
+
+  app.get('/',(req,res)=>res.send(panelHtml(VERSION)));
+
+  return app;
+}
+
+module.exports={createApp};
+
+};
+
+__modules["src/config.js"] = function(module, exports, __require, require) {
+module.exports = {
+  VERSION: '1.2.2-regression-candidate',
+  TZ: process.env.TZ_NAME || 'Europe/Moscow',
+  GH_TOKEN: process.env.GH_TOKEN || '',
+  GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
+  STORAGE_FILE: process.env.STORAGE_FILE || 'data.json',
+  SESSION_TTL_MS: 30 * 60 * 1000,
+  USER_CONTEXT_TTL_MS: 24 * 60 * 60 * 1000,
+  PC_AGENT_TOKEN: process.env.PC_AGENT_TOKEN || '',
+  PC_AGENT_TTL_MS: 45 * 1000
+};
+
+};
+
+__modules["src/core/context-store.js"] = function(module, exports, __require, require) {
+const { SESSION_TTL_MS, USER_CONTEXT_TTL_MS } = __require("src/config.js");
+
+class ContextStore {
+  constructor() {
+    this.sessions = new Map();
+    this.users = new Map();
+  }
+
+  _touch(map, key, ttl, factory) {
+    const now = Date.now();
+    let item = map.get(key);
+    if (!item || now - item.updatedAt > ttl) {
+      item = { updatedAt: now, data: factory() };
+      map.set(key, item);
+    }
+    item.updatedAt = now;
+    return item.data;
+  }
+
+  session(id) {
+    return this._touch(this.sessions, id, SESSION_TTL_MS, () => ({
+      lastIntent: null,
+      lastTool: null,
+      lastResults: [],
+      selectedIndex: null,
+      pendingClarification: null,
+      lastReferencedObject: null
+    }));
+  }
+
+  user(id) {
+    return this._touch(this.users, id, USER_CONTEXT_TTL_MS, () => ({
+      lastIntent: null,
+      lastTool: null,
+      lastResults: [],
+      lastReferencedObject: null
+    }));
+  }
+
+  remember(ctx, patch) {
+    const s = this.session(ctx.sessionId);
+    const u = this.user(ctx.userId);
+    Object.assign(s, patch || {});
+    Object.assign(u, patch || {});
+  }
+
+  resolveOrdinal(text) {
+    const map = {
+      'перв': 1, 'втор': 2, 'трет': 3, 'четверт': 4, 'пят': 5,
+      'шест': 6, 'седьм': 7, 'восьм': 8, 'девят': 9, 'десят': 10
+    };
+    const m = String(text || '').match(/\b(\d{1,2})\b/);
+    if (m) return Number(m[1]);
+    for (const [stem, n] of Object.entries(map)) {
+      if (String(text || '').includes(stem)) return n;
+    }
+    return null;
+  }
+
+  resolveReference(ctx) {
+    const s = this.session(ctx.sessionId);
+    const u = this.user(ctx.userId);
+    return s.lastReferencedObject || u.lastReferencedObject || null;
+  }
+
+  cleanup() {
+    const now = Date.now();
+    for (const [k, v] of this.sessions) if (now - v.updatedAt > SESSION_TTL_MS) this.sessions.delete(k);
+    for (const [k, v] of this.users) if (now - v.updatedAt > USER_CONTEXT_TTL_MS) this.users.delete(k);
+  }
+}
+
+module.exports = { ContextStore };
+
+};
+
+__modules["src/core/intent-engine.js"] = function(module, exports, __require, require) {
+function includesAny(text, parts) {
+  return parts.some(p => text.includes(p));
+}
+
+function detectIntent(ctx, contextStore) {
+  const c = ctx.command;
+
+  if (!c) return { name: 'EMPTY', confidence: 1 };
+
+  if (/^(да|ага|подтверждаю|хорошо)$/.test(c)) return { name: 'CONFIRM_YES', confidence: 1 };
+  if (/^(нет|не надо|отмена|отмени)$/.test(c)) return { name: 'CONFIRM_NO', confidence: 1 };
+
+  if (/^(дальше|далее)$/.test(c)) return { name: 'CONTEXT_NEXT', confidence: .98 };
+  if (/^(назад|предыдущий|предыдущая)$/.test(c)) return { name: 'CONTEXT_PREV', confidence: .98 };
+  if (/^(перв|втор|трет|четверт|пят|шест|седьм|восьм|девят|\d+)/.test(c)) {
+    return { name: 'CONTEXT_SELECT', confidence: .9, index: contextStore.resolveOrdinal(c) };
+  }
+  if (/^(открой|покажи|прочитай|зачитай)\s+(его|ее|её|это|этот|эту|тот|ту)$/.test(c)) {
+    return { name: 'CONTEXT_ACT', confidence: .95 };
+  }
+
+  if (includesAny(c, ['не понимаю', 'что произошло', 'что случилось', 'помоги', 'что нажать', 'куда пропало', 'не могу открыть'])) {
+    return { name: 'HELP_ME', confidence: .92 };
+  }
+
+  if (/привет|здравствуй|добрый (день|вечер|утро)/.test(c)) return { name: 'GREETING', confidence: .98 };
+  if (/помощь|что ты умеешь/.test(c)) return { name: 'HELP', confidence: .98 };
+
+  if (/который час|сколько времени|время сейчас|какое число|какая дата|день недели|неделя года|до нового года|время в мире|какое число будет через|сколько.*(прошло|до)/.test(c)) {
+    return { name: 'TIME_DATE', confidence: .95 };
+  }
+
+  if (/таймер|напомни|напоминан|помодоро|секундомер|сколько осталось/.test(c)) {
+    return { name: 'TIMER', confidence: .95 };
+  }
+
+  if (/задач|план на сегодня|важная|важные|очисти выполненные|выполни/.test(c)) {
+    return { name: 'TASKS', confidence: .92 };
+  }
+
+  if (/создай список|добавь в |покажи все списки|вычеркни|очисти список|удали список|сколько позиций/.test(c)) {
+    return { name: 'LISTS', confidence: .92 };
+  }
+
+  if (/заметк|^запиши|найди в заметках/.test(c)) {
+    return { name: 'NOTES', confidence: .92 };
+  }
+
+  if (/погода|будет дождь|нужна куртка|уф|рассвет|закат|прогноз на неделю|фаз.*луны/.test(c)) {
+    return { name: 'WEATHER', confidence: .98 };
+  }
+
+  if (/посчитай|процент|случайное число|дюйм|килограмм|километр/.test(c)) {
+    return { name: 'CALCULATOR', confidence: .9 };
+  }
+
+  if (/переведи|как по-английски/.test(c)) {
+    return { name: 'TRANSLATE', confidence: .9 };
+  }
+
+  if (/в этот день|кто такой|кто такая|что такое|расскажи про|столица|население/.test(c)) {
+    return { name: 'KNOWLEDGE', confidence: .9 };
+  }
+
+  if (/анекдот|факт|комплимент|совет|мотивируй|монетк|кубик|камень.*ножницы|ножницы.*бумага|загадк|^ответ|^еще|^ещё|другой|что посмотреть|что приготовить|что съесть|идея подарка|что подарить/.test(c)) {
+    return { name: 'ENTERTAINMENT', confidence: .88 };
+  }
+
+  if (/компьютер|пк|программ|окн|файл|документ|папк|загрузк|рабочий стол|браузер|хром|телеграм|word|ворд|excel|эксель/.test(c)) {
+    return { name: 'PC', confidence: .82 };
+  }
+
+  if (/найди фото|^найди|^поищи|^поиск|покажи еще|покажи ещё|назад к списку|открой сайт|^открой|^зачитай|прочитай вслух|озвучь|стоп чтение|хватит читать|замолчи/.test(c)) {
+    return { name: 'BROWSER', confidence: .86 };
+  }
+
+  return { name: 'UNKNOWN', confidence: .2 };
+}
+
+module.exports = { detectIntent };
+
+};
+
+__modules["src/core/request-context.js"] = function(module, exports, __require, require) {
+function normalizeText(text) {
+  return String(text || '')
+    .toLowerCase()
+    .replace(/ё/g, 'е')
+    .replace(/[.,!?;:"]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function getUserId(body) {
+  const s = body.session || {};
+  return (s.user && s.user.user_id) ||
+    (s.application && s.application.application_id) ||
+    s.user_id ||
+    'anonymous';
+}
+
+function getSessionId(body) {
+  return (body.session && body.session.session_id) || 'no-session';
+}
+
+function indexEntities(body) {
+  const entities = (((body || {}).request || {}).nlu || {}).entities || [];
+  const out = { raw: entities, geo: [], datetime: [], number: [], fio: [] };
+  for (const e of entities) {
+    if (!e || !e.type) continue;
+    if (e.type === 'YANDEX.GEO') out.geo.push(e.value || {});
+    else if (e.type === 'YANDEX.DATETIME') out.datetime.push(e.value || {});
+    else if (e.type === 'YANDEX.NUMBER') out.number.push(e.value);
+    else if (e.type === 'YANDEX.FIO') out.fio.push(e.value || {});
+  }
+  return out;
+}
+
+function buildRequestContext(body) {
+  const request = (body && body.request) || {};
+  return {
+    rawBody: body || {},
+    userId: getUserId(body || {}),
+    sessionId: getSessionId(body || {}),
+    messageId: ((body || {}).session || {}).message_id || 0,
+    isNewSession: !!(((body || {}).session || {}).new),
+    command: normalizeText(request.command),
+    originalUtterance: String(request.original_utterance || request.command || '').trim(),
+    type: request.type || 'SimpleUtterance',
+    entities: indexEntities(body || {}),
+    intents: (((request.nlu || {}).intents) || {}),
+    meta: (body && body.meta) || {}
+  };
+}
+
+module.exports = { buildRequestContext, normalizeText };
+
+};
+
+__modules["src/core/router.js"] = function(module, exports, __require, require) {
+const { detectIntent } = __require("src/core/intent-engine.js");
+
+const MAP = {
+  TIME_DATE:'time_date',
+  TIMER:'timer',
+  TASKS:'tasks',
+  LISTS:'lists',
+  NOTES:'notes',
+  WEATHER:'weather',
+  CALCULATOR:'calculator',
+  TRANSLATE:'translate',
+  KNOWLEDGE:'knowledge',
+  ENTERTAINMENT:'entertainment',
+  BROWSER:'browser',
+  PC:'pc'
+};
+
+async function route(ctx, runtime) {
+  const intent = detectIntent(ctx, runtime.context);
+  runtime.context.remember(ctx,{lastIntent:intent.name});
+
+  if(intent.name==='EMPTY')return{reply:'Я слушаю.'};
+  if(intent.name==='GREETING')return{reply:'Привет. Я на связи.'};
+  if(intent.name==='HELP')return{reply:'Можно говорить обычными словами: задачи, заметки, списки, погода, поиск, расчёты. Контур компьютера подключается отдельным модулем.'};
+
+  if(intent.name==='HELP_ME'){
+    runtime.context.remember(ctx,{pendingClarification:{type:'pc_help'}});
+    return{reply:'Помогу. Скажи, что сейчас видишь на экране или что хотела сделать. Когда подключим Windows Agent, я смогу сама получить состояние окна.'};
+  }
+
+  if(intent.name==='CONTEXT_SELECT'){
+    const s=runtime.context.session(ctx.sessionId), n=intent.index;
+    if(!n||!s.lastResults[n-1])return{reply:'Сейчас нет такого результата.'};
+    const obj=s.lastResults[n-1];
+    runtime.context.remember(ctx,{selectedIndex:n,lastReferencedObject:obj});
+    return{reply:'Выбрала '+n+': '+(obj.title||obj.name||'результат')+'. Что сделать дальше?'};
+  }
+
+  if(intent.name==='CONTEXT_ACT'){
+    const obj=runtime.context.resolveReference(ctx);
+    if(!obj)return{reply:'Не поняла, о чём речь. Назови объект.'};
+    if(obj.url){
+      const synthetic={...ctx,command:'открой '+(runtime.context.session(ctx.sessionId).selectedIndex||1)};
+      return await runtime.registry.run('browser',{ctx:synthetic},runtime);
+    }
+    return{reply:'Помню объект, но для него пока нет такого действия.'};
+  }
+
+  if(intent.name==='CONTEXT_NEXT'||intent.name==='CONTEXT_PREV'){
+    const obj=runtime.context.resolveReference(ctx);
+    if(obj&&obj.type==='web'){
+      obj.page += intent.name==='CONTEXT_NEXT'?1:-1;
+      obj.page=Math.max(0,Math.min(obj.page,obj.pages.length-1));
+      runtime.context.remember(ctx,{lastReferencedObject:obj});
+      return{reply:obj.pages[obj.page].slice(0,950)};
+    }
+    return{reply:'Сейчас нечего листать.'};
+  }
+
+  if(intent.name==='CONFIRM_YES'||intent.name==='CONFIRM_NO'){
+    const s=runtime.context.session(ctx.sessionId);
+    if(!s.pendingClarification)return{reply:'Сейчас нечего подтверждать.'};
+    s.pendingClarification=null;
+    return{reply:intent.name==='CONFIRM_YES'?'Поняла.':'Хорошо, отменяю.'};
+  }
+
+  if(intent.name==='UNKNOWN'){
+    return{reply:'Я поняла слова, но пока не уверена, что именно нужно сделать. Скажи цель обычной фразой — например: «найди документ», «запиши заметку» или «помоги с компьютером».'};
+  }
+
+  const toolName=MAP[intent.name];
+  if(!toolName)return{reply:'Этот сценарий ещё не подключён.'};
+  const result=await runtime.registry.run(toolName,{ctx,intent},runtime);
+  runtime.context.remember(ctx,{lastTool:toolName,...(result.remember||{})});
+  return result;
+}
+
+module.exports = { route };
+
+};
+
+__modules["src/core/safety.js"] = function(module, exports, __require, require) {
+const RISK = {
+  READ: 'read',
+  CHANGE: 'change',
+  DANGEROUS: 'dangerous'
+};
+
+function requiresConfirmation(risk) {
+  return risk === RISK.DANGEROUS;
+}
+
+module.exports = { RISK, requiresConfirmation };
+
+};
+
+__modules["src/core/tool-registry.js"] = function(module, exports, __require, require) {
+class ToolRegistry {
+  constructor() {
+    this.tools = new Map();
+  }
+
+  register(tool) {
+    if (!tool || !tool.name || typeof tool.run !== 'function') {
+      throw new Error('Invalid tool registration');
+    }
+    if (this.tools.has(tool.name)) throw new Error(`Duplicate tool: ${tool.name}`);
+    this.tools.set(tool.name, tool);
+    return this;
+  }
+
+  has(name) { return this.tools.has(name); }
+  get(name) { return this.tools.get(name); }
+
+  async run(name, input, runtime) {
+    const tool = this.tools.get(name);
+    if (!tool) throw new Error(`Unknown tool: ${name}`);
+    return await tool.run(input || {}, runtime || {});
+  }
+
+  list() {
+    return Array.from(this.tools.values()).map(t => ({
+      name: t.name,
+      description: t.description || '',
+      risk: t.risk || 'read'
+    }));
+  }
+}
+
+module.exports = { ToolRegistry };
+
+};
+
+__modules["src/pc/bridge.js"] = function(module, exports, __require, require) {
+const { PC_AGENT_TOKEN, PC_AGENT_TTL_MS } = __require("src/config.js");
+
+class PcBridge {
+  constructor() {
+    this.agents = new Map();
+    this.jobs = [];
+    this.waiters = new Map();
+  }
+
+  configured() {
+    return !!PC_AGENT_TOKEN;
+  }
+
+  authorize(req) {
+    if (!PC_AGENT_TOKEN) return false;
+    return String(req.headers.authorization || '') === 'Bearer ' + PC_AGENT_TOKEN;
+  }
+
+  heartbeat(machine, meta = {}) {
+    const id = machine || 'home-pc';
+    this.agents.set(id, { lastSeen: Date.now(), meta });
+  }
+
+  online(machine = 'home-pc') {
+    const a = this.agents.get(machine);
+    return !!a && Date.now() - a.lastSeen <= PC_AGENT_TTL_MS;
+  }
+
+  status(machine = 'home-pc') {
+    const a = this.agents.get(machine);
+    return {
+      configured: this.configured(),
+      online: this.online(machine),
+      lastSeen: a ? a.lastSeen : null,
+      meta: a ? a.meta : null
+    };
+  }
+
+  enqueue(action, args = {}, machine = 'home-pc') {
+    const id = 'job_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+    const job = { id, machine, action, args, createdAt: Date.now() };
+    this.jobs.push(job);
+    return job;
+  }
+
+  poll(machine = 'home-pc') {
+    const i = this.jobs.findIndex(j => j.machine === machine);
+    if (i < 0) return null;
+    return this.jobs.splice(i, 1)[0];
+  }
+
+  waitResult(id, timeoutMs = 3000) {
+    return new Promise(resolve => {
+      const timer = setTimeout(() => {
+        this.waiters.delete(id);
+        resolve(null);
+      }, timeoutMs);
+      this.waiters.set(id, result => {
+        clearTimeout(timer);
+        this.waiters.delete(id);
+        resolve(result);
+      });
+    });
+  }
+
+  complete(id, result) {
+    const done = this.waiters.get(id);
+    if (done) done(result);
+    return !!done;
+  }
+
+  async run(action, args = {}, machine = 'home-pc') {
+    if (!this.configured()) return { ok:false, code:'NOT_CONFIGURED', message:'Windows Agent ещё не настроен.' };
+    if (!this.online(machine)) return { ok:false, code:'OFFLINE', message:'Компьютер сейчас не на связи. Возможно, он выключен или спит.' };
+    const job = this.enqueue(action, args, machine);
+    const result = await this.waitResult(job.id, 3000);
+    if (!result) return { ok:true, accepted:true, message:'Команду компьютеру передала.' };
+    return result;
+  }
+}
+
+module.exports = { PcBridge };
+
+};
+
+__modules["src/services/weather.js"] = function(module, exports, __require, require) {
+const WMO = {
+  0:'ясно',1:'в основном ясно',2:'переменная облачность',3:'пасмурно',
+  45:'туман',48:'туман',51:'морось',53:'морось',55:'морось',
+  61:'небольшой дождь',63:'дождь',65:'сильный дождь',
+  71:'небольшой снег',73:'снег',75:'сильный снег',
+  80:'ливень',81:'ливень',82:'сильный ливень',
+  85:'снегопад',86:'снегопад',95:'гроза',96:'гроза',99:'гроза'
+};
+
+function wmo(c){ return WMO[c] || ('код ' + c); }
+function isRain(c){ return (c>=51&&c<=67)||(c>=80&&c<=82)||(c>=95&&c<=99); }
+
+async function geoCity(name) {
+  try {
+    const r = await fetch('https://geocoding-api.open-meteo.com/v1/search?name=' +
+      encodeURIComponent(name) + '&count=1&language=ru&format=json');
+    const j = await r.json();
+    return j.results && j.results[0] ? j.results[0] : null;
+  } catch (e) {
+    console.error('[weather.geo]', e.message);
+    return null;
+  }
+}
+
+async function weatherFor(lat, lon) {
+  const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat +
+    '&longitude=' + lon +
+    '&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m' +
+    '&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max' +
+    '&timezone=auto&forecast_days=7';
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`Weather HTTP ${r.status}`);
+  return await r.json();
+}
+
+module.exports = { geoCity, weatherFor, wmo, isRain };
+
+};
+
+__modules["src/services/web.js"] = function(module, exports, __require, require) {
+function decode(s){return String(s).replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#039;/g,"'").replace(/&amp;/g,'&');}
+function strip(s){return decode(String(s).replace(/<[^>]+>/g,''));}
+
+async function ddgSearch(q,p){
+  try{
+    const r=await fetch('https://lite.duckduckgo.com/lite/?q='+encodeURIComponent(q)+(p?'&s='+(p*10):''),{headers:{'User-Agent':'Mozilla/5.0'}});
+    const h=await r.text();const out=[];const re=/<a[^>]+rel="nofollow"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+    let m;while((m=re.exec(h))&&out.length<6){const t=strip(m[2]).trim();if(m[1].startsWith('http')&&t&&!m[1].includes('duckduckgo'))out.push({title:t,url:m[1]});}
+    return out;
+  }catch(e){console.error('[search.ddg]',e.message);return[];}
+}
+
+async function ddgHtmlSearch(q,p){
+  try{
+    const r=await fetch('https://html.duckduckgo.com/html/?q='+encodeURIComponent(q)+(p?'&s='+(p*10):''),{headers:{'User-Agent':'Mozilla/5.0'}});
+    const h=await r.text();const out=[];const re=/<a[^>]+class="result__a"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+    let m;while((m=re.exec(h))&&out.length<6){let href=m[1];if(href.includes('uddg=')){try{href=decodeURIComponent(href.split('uddg=')[1].split('&')[0]);}catch{}}
+      const t=strip(m[2]).trim();if(href.startsWith('http')&&t)out.push({title:t,url:href});}
+    return out;
+  }catch(e){console.error('[search.ddgHtml]',e.message);return[];}
+}
+
+async function bingSearch(q){
+  try{
+    const r=await fetch('https://www.bing.com/search?q='+encodeURIComponent(q),{headers:{'User-Agent':'Mozilla/5.0','Accept-Language':'ru-RU,ru;q=0.9'}});
+    const h=await r.text();const out=[];const re=/<li class="b_algo"[\s\S]*?<a[^>]+href="(https?:\/\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+    let m;while((m=re.exec(h))&&out.length<6){const t=strip(m[2]).trim();if(t&&!m[1].includes('bing.com')&&!m[1].includes('microsoft.com'))out.push({title:t,url:m[1]});}
+    return out;
+  }catch(e){console.error('[search.bing]',e.message);return[];}
+}
+
+async function searchAll(q,p=0){let r=await ddgSearch(q,p);if(!r.length)r=await ddgHtmlSearch(q,p);if(!r.length)r=await bingSearch(q);return r;}
+
+async function readPage(url){
+  try{new URL(url);}catch{return null;}
+  try{
+    const r=await fetch('https://r.jina.ai/'+url,{headers:{'User-Agent':'Mozilla/5.0'}});
+    let t=await r.text();
+    t=t.replace(/!?\[([^\]]*)\]\([^)]*\)/g,'$1').replace(/[#>*`_]/g,'').replace(/\n{3,}/g,'\n\n');
+    if(t.length>300)return t.slice(0,20000);
+  }catch(e){console.error('[read.jina]',e.message);}
+  try{
+    const r=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0'}});
+    let h=await r.text();
+    h=h.replace(/<script[\s\S]*?<\/script>/gi,'').replace(/<style[\s\S]*?<\/style>/gi,'');
+    const parts=h.match(/<(p|h1|h2|h3|li)[^>]*>([\s\S]*?)<\/(p|h1|h2|h3|li)>/gi)||[];
+    return parts.map(strip).filter(x=>x.length>40).join('\n\n').slice(0,20000)||null;
+  }catch(e){console.error('[read.direct]',e.message);return null;}
+}
+
+function splitPages(t){
+  const pages=[];let cur='';
+  String(t||'').split(/\n+/).forEach(p=>{if((cur+p).length>1200&&cur){pages.push(cur.trim());cur='';}cur+=p+'\n';});
+  if(cur.trim())pages.push(cur.trim());
+  return pages.length?pages:[String(t||'')];
+}
+
+async function wikiSummary(q){
+  try{
+    const s=await fetch('https://ru.wikipedia.org/w/api.php?action=opensearch&search='+encodeURIComponent(q)+'&limit=1&format=json&origin=*');
+    const a=await s.json();const title=a[1]&&a[1][0];if(!title)return null;
+    const r=await fetch('https://ru.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title));
+    const j=await r.json();return j.extract?{title:j.title,text:j.extract}:null;
+  }catch(e){console.error('[wiki]',e.message);return null;}
+}
+
+async function translate(t,dir){
+  try{
+    const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(t)+'&langpair='+dir);
+    const j=await r.json();return j.responseData?j.responseData.translatedText:null;
+  }catch(e){console.error('[translate]',e.message);return null;}
+}
+
+
+async function wikiImages(q){
+  try{
+    const r=await fetch('https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch='+encodeURIComponent('filetype:bitmap '+q)+'&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url&iiurlwidth=480');
+    const j=await r.json();const pages=j.query&&j.query.pages?Object.values(j.query.pages):[];
+    pages.sort((a,b)=>(a.index||0)-(b.index||0));
+    return pages.map(p=>p.imageinfo&&p.imageinfo[0]?{thumb:p.imageinfo[0].thumburl}:null).filter(Boolean);
+  }catch(e){console.error('[images]',e.message);return[];}
+}
+async function onThisDay(){
+  try{
+    const d=new Date(),mm=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0');
+    const r=await fetch('https://ru.wikipedia.org/api/rest_v1/feed/onthisday/events/'+mm+'/'+dd);
+    const j=await r.json();return (j.events||[]).filter(e=>e.text&&e.year).slice(0,5);
+  }catch(e){console.error('[onThisDay]',e.message);return[];}
+}
+module.exports = { searchAll, readPage, splitPages, wikiSummary, translate, wikiImages, onThisDay };
+
+};
+
+__modules["src/storage/github-storage.js"] = function(module, exports, __require, require) {
+const crypto = require('crypto');
+const { GH_TOKEN, GH_REPO, STORAGE_FILE } = __require("src/config.js");
+
+function userKey(userId) {
+  return crypto.createHash('sha256').update(String(userId || 'anonymous')).digest('hex').slice(0, 24);
+}
+
+class GitHubStorage {
+  constructor() {
+    this.sha = null;
+    this.state = { schemaVersion: 2, users: {}, legacy: null, migratedTo: null };
+    this.saveTimer = null;
+  }
+
+  async load() {
+    if (!GH_TOKEN) return this.state;
+    try {
+      const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${STORAGE_FILE}`, {
+        headers: {
+          Authorization: `Bearer ${GH_TOKEN}`,
+          'User-Agent': 'alice-smart-assistant',
+          Accept: 'application/vnd.github+json'
+        }
+      });
+      if (r.status !== 200) return this.state;
+      const j = await r.json();
+      this.sha = j.sha;
+      const parsed = JSON.parse(Buffer.from(j.content, 'base64').toString('utf8'));
+
+      if (parsed && parsed.schemaVersion === 2 && parsed.users) {
+        this.state = parsed;
+      } else {
+        this.state = {
+          schemaVersion: 2,
+          users: {},
+          legacy: {
+            tasks: Array.isArray(parsed.tasks) ? parsed.tasks : [],
+            lists: parsed.lists && typeof parsed.lists === 'object' ? parsed.lists : {},
+            notes: Array.isArray(parsed.notes) ? parsed.notes : [],
+            city: parsed.city || 'Москва'
+          },
+          migratedTo: null
+        };
+      }
+    } catch (e) {
+      console.error('[storage.load]', e.message);
+    }
+    return this.state;
+  }
+
+  ensureUser(userId) {
+    const key = userKey(userId);
+    if (!this.state.users[key]) {
+      let seed = { tasks: [], lists: {}, notes: [], city: 'Москва', profile: {} };
+      if (this.state.legacy && !this.state.migratedTo) {
+        seed = { ...seed, ...this.state.legacy };
+        this.state.migratedTo = key;
+      }
+      this.state.users[key] = seed;
+    }
+    return this.state.users[key];
+  }
+
+  scheduleSave() {
+    if (!GH_TOKEN) return;
+    clearTimeout(this.saveTimer);
+    this.saveTimer = setTimeout(() => this.save().catch(e => console.error('[storage.save]', e.message)), 1200);
+  }
+
+  async save() {
+    if (!GH_TOKEN) return;
+    const body = {
+      message: 'smart-assistant data',
+      content: Buffer.from(JSON.stringify(this.state, null, 2)).toString('base64')
+    };
+    if (this.sha) body.sha = this.sha;
+
+    const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${STORAGE_FILE}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${GH_TOKEN}`,
+        'User-Agent': 'alice-smart-assistant',
+        'Content-Type': 'application/json',
+        Accept: 'application/vnd.github+json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!r.ok) throw new Error(`GitHub storage HTTP ${r.status}`);
+    const j = await r.json();
+    if (j.content && j.content.sha) this.sha = j.content.sha;
+  }
+}
+
+module.exports = { GitHubStorage, userKey };
+
+};
+
+__modules["src/tools/browser.js"] = function(module, exports, __require, require) {
+const { searchAll, readPage, splitPages, wikiImages } = __require("src/services/web.js");
+const { searchCard, textCard, card } = __require("src/ui/cards.js");
+
+function imageCard(q,imgs){return card('Фото: '+q,'<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">'+imgs.map(x=>'<img src="'+x.thumb+'" style="max-width:100%;border-radius:8px">').join('')+'</div>');}
+
+module.exports={
+  name:'browser',description:'Поиск, изображения и чтение веб-страниц',risk:'read',
+  async run(input,runtime){
+    const ctx=input.ctx,c=ctx.command,s=runtime.context.session(ctx.sessionId);
+
+    if(/найди фото/.test(c)){const q=c.replace(/.*найди фото/,'').trim()||'кот';const imgs=await wikiImages(q);return imgs.length?{reply:'Нашла фотографии.',html:imageCard(q,imgs)}:{reply:'Не нашла фото.'};}
+
+    if(/^найди|^поищи|^поиск/.test(c)){
+      const q=c.replace(/^(найди|поищи|поиск)/,'').trim();if(!q)return{reply:'Что найти?'};
+      const results=await searchAll(q,0);if(!results.length)return{reply:'Не нашла результатов.'};
+      runtime.context.remember(ctx,{lastIntent:'BROWSER',lastTool:'browser',lastResults:results,searchQuery:q,searchPage:0,selectedIndex:null});
+      return{reply:'Нашла '+results.length+' результатов.',html:searchCard(q,results)};
+    }
+
+    if(/покажи еще|покажи ещё/.test(c)){
+      if(!s.searchQuery)return{reply:'Сначала что-нибудь найди.'};
+      const page=(s.searchPage||0)+1,results=await searchAll(s.searchQuery,page);if(!results.length)return{reply:'Больше результатов не нашла.'};
+      runtime.context.remember(ctx,{lastResults:results,searchPage:page,selectedIndex:null});
+      return{reply:'Показала следующую страницу.',html:searchCard(s.searchQuery,results)};
+    }
+
+    if(/открой сайт/.test(c)){
+      const name=c.replace(/.*открой сайт/,'').trim().replace(/\s+/g,'');let url=null;
+      if(name.includes('.'))url='https://'+name;else{const r=await searchAll(name+' официальный сайт',0);if(r.length)url=r[0].url;}
+      if(!url)return{reply:'Не нашла сайт.'};
+      const text=await readPage(url);if(!text)return{reply:'Не смогла прочитать сайт.'};
+      const obj={type:'web',title:name,url,pages:splitPages(text),page:0};runtime.context.remember(ctx,{lastReferencedObject:obj});
+      return{reply:'Открыла сайт в режиме чтения.',html:textCard(name,obj.pages[0])};
+    }
+
+    if(/^открой/.test(c)){
+      const n=runtime.context.resolveOrdinal(c);if(!n||!s.lastResults[n-1])return{reply:'Назови номер результата, например: открой второй.'};
+      const r=s.lastResults[n-1],text=await readPage(r.url);if(!text)return{reply:'Не смогла прочитать страницу.'};
+      const obj={type:'web',title:r.title,url:r.url,pages:splitPages(text),page:0};runtime.context.remember(ctx,{lastReferencedObject:obj,selectedIndex:n});
+      return{reply:'Открыла '+r.title+'.',html:textCard(r.title,obj.pages[0])};
+    }
+
+    if(/назад к списку/.test(c)){if(!s.lastResults.length)return{reply:'Списка нет.'};return{reply:'Вернулась к результатам.',html:searchCard(s.searchQuery||'поиск',s.lastResults)};}
+
+    if(/^зачитай|прочитай вслух|озвучь/.test(c)){const obj=runtime.context.resolveReference(ctx);if(obj&&obj.type==='web')return{reply:'Зачитываю.',speakOnly:obj.pages[obj.page].slice(0,1000)};if(s.lastResults.length)return{reply:'Зачитываю результаты.',speakOnly:s.lastResults.map((x,i)=>(i+1)+'. '+x.title).join('. ')};return{reply:'Нечего зачитывать.'};}
+    if(/стоп чтение|хватит читать|замолчи/.test(c))return{reply:'Остановилась.',stopSpeak:true};
+
+    return{reply:'Скажи: найди …, затем открой второй.'};
+  }
+};
+
+};
+
+__modules["src/tools/calculator.js"] = function(module, exports, __require, require) {
+function nums(s){return (String(s).match(/\d+(?:[.,]\d+)?/g)||[]).map(x=>Number(x.replace(',','.')));}
+function calcExpr(s){
+  const t=String(s).replace(/плюс/g,'+').replace(/минус/g,'-').replace(/умножить/g,'*').replace(/разделить/g,'/').replace(/[хx×]/g,'*').replace(/:/g,'/').replace(/,/g,'.').replace(/[^0-9.+\-*/() ]/g,'');
+  if(!t.trim()||!/\d/.test(t))return null;
+  try{const v=Function('"use strict";return ('+t+')')();return typeof v==='number'&&isFinite(v)?Math.round(v*100)/100:null;}catch{return null;}
+}
+module.exports = {
+  name:'calculator', description:'Калькулятор', risk:'read',
+  async run(input){
+    const c=input.ctx.command;
+    if(/посчитай/.test(c)){const v=calcExpr(c.replace(/.*посчитай/,''));return{reply:v===null?'Не поняла выражение.':'Равно '+v+'.'};}
+    if(/процент.*от/.test(c)){const n=nums(c);if(n.length>=2)return{reply:String(Math.round((n[0]*n[1]/100)*100)/100)};}
+    if(/прибавь.*процент/.test(c)){const n=nums(c);if(n.length>=2){const v=n[1]*(1+n[0]/100);return{reply:String(Math.round(v*100)/100)};}}
+    if(/раздели.*на.*человек/.test(c)){const n=nums(c);if(n.length>=2&&n[1])return{reply:'По '+Math.round(n[0]/n[1]*100)/100+' на каждого.'};}
+    if(/случайное число/.test(c)){const n=nums(c),a=n[0]||1,b=n[1]||100;return{reply:'Выпало '+(a+Math.floor(Math.random()*(b-a+1)))+'.'};}
+    if(/дюйм/.test(c)){const n=nums(c)[0]||1;return{reply:(n/2.54).toFixed(2)+' дюймов.'};}
+    if(/килограмм/.test(c)){const n=nums(c)[0]||1;return{reply:(n*2.2046).toFixed(2)+' фунтов.'};}
+    if(/километр/.test(c)){const n=nums(c)[0]||1;return{reply:(n*0.6214).toFixed(2)+' миль.'};}
+    return{reply:'Скажи, например: посчитай 25 умножить на 4.'};
+  }
+};
+
+};
+
+__modules["src/tools/entertainment.js"] = function(module, exports, __require, require) {
+const JOKES=[
+'Программист ставит на ночь два стакана: один с водой — если захочет пить, второй пустой — если не захочет.',
+'Почему программисты путают Хэллоуин и Рождество? Потому что OCT 31 равно DEC 25.',
+'У программиста спрашивают: почему ты такой спокойный? У меня всё в try-catch.'
+];
+const FACTS=['Осьминоги имеют три сердца и голубую кровь.','Свет Солнца доходит до Земли примерно за восемь минут двадцать секунд.','На Венере день длиннее года.'];
+const SPACE=['Космос практически бесшумен: звуку нужна среда для распространения.','На Венере день длиннее года.'];
+const ANIMALS=['Сердце креветки находится в головогруди.','Тигры имеют полосатую кожу, а не только шерсть.'];
+const COMPLIMENTS=['С тобой любая задача становится проще.','Ты из тех людей, кто доводит дело до конца.'];
+const ADVICE=['Сделай сегодня одно маленькое дело, которое давно откладывал.','Прогуляйся пятнадцать минут без телефона.'];
+const MOTIVATE=['Большие дела начинаются с маленьких шагов.','Ошибки — это данные для следующей попытки.'];
+const MOVIES=[['Интерстеллар','космос, любовь и физика'],['Начало','сны внутри снов'],['Матрица','что реально?']];
+const DISHES=[['Паста карбонара','около двадцати минут'],['Овощное рагу','около тридцати минут'],['Сырники','около двадцати пяти минут']];
+const GIFTS=['Настольная игра','Термокружка','Книга','Фотоальбом'];
+const RIDDLES=[{q:'Что можно увидеть с закрытыми глазами?',a:'Сон'},{q:'Чем больше из неё берёшь, тем больше она становится?',a:'Яма'}];
+const states=new Map(),pick=a=>a[Math.floor(Math.random()*a.length)];
+function st(k){if(!states.has(k))states.set(k,{last:'fact',riddle:null});return states.get(k);}
+module.exports={
+  name:'entertainment',description:'Развлечения',risk:'read',
+  async run(input){
+    const c=input.ctx.command,s=st(input.ctx.userId);
+    if(/анекдот/.test(c)){s.last='joke';return{reply:pick(JOKES)};}
+    if(/факт о космосе/.test(c)){s.last='space';return{reply:pick(SPACE)};}
+    if(/факт о животных/.test(c)){s.last='animals';return{reply:pick(ANIMALS)};}
+    if(/факт/.test(c)){s.last='fact';return{reply:pick(FACTS)};}
+    if(/^еще|^ещё|другой/.test(c)){return{reply:pick(s.last==='joke'?JOKES:s.last==='space'?SPACE:s.last==='animals'?ANIMALS:FACTS)};}
+    if(/комплимент/.test(c))return{reply:pick(COMPLIMENTS)};
+    if(/совет/.test(c))return{reply:pick(ADVICE)};
+    if(/мотивируй/.test(c))return{reply:pick(MOTIVATE)};
+    if(/монетк/.test(c))return{reply:Math.random()<.5?'Орёл.':'Решка.'};
+    if(/кубик/.test(c))return{reply:'Выпало '+(1+Math.floor(Math.random()*6))+'.'};
+
+    if(/камень.*ножницы|ножницы.*бумага/.test(c)){
+      const hands=['камень','ножницы','бумага'],me=pick(hands),m=c.match(/(камень|ножницы|бумага)\s*$/),you=m?m[1]:null;
+      if(!you)return{reply:'Выбери: камень, ножницы или бумага.'};
+      if(me===you)return{reply:'Я выбрала '+me+'. Ничья.'};
+      const win=(you==='камень'&&me==='ножницы')||(you==='ножницы'&&me==='бумага')||(you==='бумага'&&me==='камень');
+      return{reply:'Я выбрала '+me+'. '+(win?'Ты выиграла.':'Я выиграла.')};
+    }
+    if(/загадк/.test(c)){s.riddle=pick(RIDDLES);return{reply:s.riddle.q};}
+    if(/^ответ/.test(c)&&s.riddle)return{reply:s.riddle.a};
+    if(/что посмотреть/.test(c)){const x=pick(MOVIES);return{reply:'Советую '+x[0]+': '+x[1]+'.'};}
+    if(/что приготовить|что съесть/.test(c)){const x=pick(DISHES);return{reply:'Можно приготовить '+x[0]+', '+x[1]+'.'};}
+    if(/идея подарка|что подарить/.test(c))return{reply:'Идея: '+pick(GIFTS)+'.'};
+    return{reply:'Могу рассказать анекдот, факт, загадку, предложить фильм, блюдо или подарок.'};
+  }
+};
+
+};
+
+__modules["src/tools/knowledge.js"] = function(module, exports, __require, require) {
+const { wikiSummary, onThisDay } = __require("src/services/web.js");
+module.exports={
+  name:'knowledge',description:'Справочная информация',risk:'read',
+  async run(input){
+    const c=input.ctx.command;
+    if(/в этот день/.test(c)){const ev=await onThisDay();return ev.length?{reply:ev.slice(0,3).map(x=>x.year+': '+x.text).join('. ')}:{reply:'Не нашла события этого дня.'};}
+    const q=c.replace(/.*(кто такой|кто такая|что такое|расскажи про|столица|население)/,'').trim();
+    if(!q)return{reply:'О чём рассказать?'};
+    const s=await wikiSummary(q);
+    return s?{reply:s.text.slice(0,950),remember:{lastReferencedObject:{type:'knowledge',title:s.title,text:s.text}}}:{reply:'Не нашла информацию.'};
+  }
+};
+
+};
+
+__modules["src/tools/lists.js"] = function(module, exports, __require, require) {
+const { rows } = __require("src/ui/cards.js");
+function findList(c, lists){for(const k of Object.keys(lists))if(c.includes(k))return k;return null;}
+module.exports = {
+  name:'lists', description:'Пользовательские списки', risk:'change',
+  async run(input, runtime){
+    const c=input.ctx.command,u=runtime.storage.ensureUser(input.ctx.userId),lists=u.lists;
+    if(/создай список/.test(c)){const n=c.replace(/.*создай список/,'').trim();if(!n)return{reply:'Как назвать список?'};lists[n]=lists[n]||[];runtime.storage.scheduleSave();return{reply:'Список «'+n+'» создан.'};}
+    if(/добавь в /.test(c)){
+      const rest=c.replace(/.*добавь в /,'');let name=findList(rest,lists),items='';
+      if(name)items=rest.slice(rest.indexOf(name)+name.length).replace(/^[:\s]+/,'');
+      else if(rest.includes(':')){name=rest.split(':')[0].trim();items=rest.split(':').slice(1).join(':').trim();}
+      if(!name)return{reply:'В какой список?'};if(!items)return{reply:'Что добавить?'};
+      lists[name]=lists[name]||[];items.split(/,| и /).map(x=>x.trim()).filter(Boolean).forEach(x=>lists[name].push({text:x,done:false}));
+      runtime.storage.scheduleSave();return{reply:'Добавила в список «'+name+'».'};
+    }
+    if(/покажи все списки/.test(c)){const flat=[];for(const [k,v] of Object.entries(lists)){flat.push('['+k+']');for(const x of v)flat.push((x.done?'✓ ':'')+x.text);}return{reply:Object.keys(lists).length?'Списки показала.':'Списков пока нет.',html:rows('Списки',flat)};}
+    if(/вычеркни/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0),k=findList(c,lists);if(k&&n&&lists[k][n-1]){lists[k][n-1].done=true;runtime.storage.scheduleSave();return{reply:'Вычеркнула.'};}return{reply:'Не нашла позицию.'};}
+
+    if(/удали \d+ из/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0),k=findList(c,lists);if(k&&n&&lists[k][n-1]){const x=lists[k].splice(n-1,1)[0];runtime.storage.scheduleSave();return{reply:'Удалила: '+x.text};}return{reply:'Не нашла позицию.'};}
+    if(/зачитай /.test(c)){const k=findList(c,lists);if(k)return{reply:'Зачитываю.',speakOnly:k+': '+lists[k].map((x,i)=>(i+1)+'. '+x.text).join('. ')};}
+    if(/покажи /.test(c)&&!/покажи все списки/.test(c)){const k=findList(c,lists);if(k)return{reply:'Список «'+k+'» показала.',html:rows(k,lists[k].map(x=>(x.done?'✓ ':'')+x.text))};}
+    if(/очисти список/.test(c)){const k=findList(c,lists);if(k){lists[k]=[];runtime.storage.scheduleSave();return{reply:'Список очищен.'};}return{reply:'Какой список очистить?'};}
+    if(/удали список/.test(c)){const k=c.replace(/.*удали список/,'').trim();if(lists[k]){delete lists[k];runtime.storage.scheduleSave();return{reply:'Список удалён.'};}return{reply:'Не нашла список.'};}
+    if(/сколько позиций/.test(c)){const k=findList(c,lists);return{k,reply:k?'Осталось позиций: '+lists[k].filter(x=>!x.done).length+'.':'В каком списке?'};}
+    return{reply:'Скажи: создай список…, добавь в список… или покажи все списки.'};
+  }
+};
+
+};
+
+__modules["src/tools/notes.js"] = function(module, exports, __require, require) {
+const { rows } = __require("src/ui/cards.js");
+module.exports = {
+  name:'notes', description:'Заметки пользователя', risk:'change',
+  async run(input, runtime){
+    const c=input.ctx.command,u=runtime.storage.ensureUser(input.ctx.userId),notes=u.notes;
+    if(/^запиши/.test(c)){const t=c.replace(/^запиши/,'').trim();if(!t)return{reply:'Что записать?'};notes.push(t);runtime.storage.scheduleSave();return{reply:'Записала.'};}
+    if(/покажи заметки/.test(c))return{reply:notes.length?'Заметки показала.':'Заметок пока нет.',html:rows('Заметки',notes)};
+    if(/найди в заметках/.test(c)){const q=c.replace(/.*найди в заметках/,'').trim();const f=notes.filter(x=>x.includes(q));return{reply:f.length?'Нашла '+f.length+'.':'Не нашла.',html:rows('Найдено',f)};}
+    if(/зачитай заметки/.test(c))return{reply:notes.length?'Зачитываю.':'Заметок нет.',speakOnly:notes.join('. ')};
+    if(/удали заметку/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&notes[n-1]){notes.splice(n-1,1);runtime.storage.scheduleSave();return{reply:'Удалила.'};}return{reply:'Не нашла заметку.'};}
+    if(/очисти заметки/.test(c)){u.notes=[];runtime.storage.scheduleSave();return{reply:'Заметки очищены.'};}
+    return{reply:'Скажи: запиши…, покажи заметки или найди в заметках…'};
+  }
+};
+
+};
+
+__modules["src/tools/pc.js"] = function(module, exports, __require, require) {
+const APP_ALIASES = [
+  ['google chrome','chrome'],['хром','chrome'],['chrome','chrome'],
+  ['яндекс браузер','yandex'],['яндекс-браузер','yandex'],
+  ['телеграм','telegram'],['telegram','telegram'],
+  ['ворд','word'],['word','word'],
+  ['эксель','excel'],['excel','excel'],
+  ['блокнот','notepad'],['калькулятор','calculator'],
+  ['проводник','explorer']
+];
+
+function appFrom(text) {
+  for (const [phrase, app] of APP_ALIASES) if (text.includes(phrase)) return app;
+  if (text.includes('браузер')) return 'browser';
+  return null;
+}
+
+function resultReply(r, fallback) {
+  if (!r) return { reply:'Не получила ответ от компьютера.' };
+  if (r.ok === false) return { reply:r.message || 'Не получилось выполнить команду.' };
+  return { reply:r.message || fallback || 'Готово.' };
+}
+
+module.exports = {
+  name:'pc', description:'Безопасное управление Windows через локальный агент', risk:'read',
+  async run(input, runtime){
+    const c=input.ctx.command, bridge=runtime.pcBridge;
+
+    if(/статус компьютера|компьютер.*на связи|пк.*на связи/.test(c)){
+      const s=bridge.status();
+      if(!s.configured)return{reply:'Windows Agent ещё не настроен на сервере.'};
+      return{reply:s.online?'Компьютер на связи.':'Компьютер сейчас не на связи.'};
+    }
+
+    if(/^(открой|запусти|включи)\s+/.test(c)){
+      if(/загрузк/.test(c))return resultReply(await bridge.run('open_folder',{folder:'downloads'}),'Открыла загрузки.');
+      if(/документ/.test(c))return resultReply(await bridge.run('open_folder',{folder:'documents'}),'Открыла документы.');
+      if(/рабоч(ий|его)\s+стол/.test(c))return resultReply(await bridge.run('open_folder',{folder:'desktop'}),'Открыла рабочий стол.');
+      const app=appFrom(c);
+      if(app)return resultReply(await bridge.run('open_app',{app}),'Открыла программу.');
+    }
+
+    if(/последн.*(скачан|загруз)|что.*скачал|что.*загрузил/.test(c)){
+      return resultReply(await bridge.run('recent_downloads',{limit:5}),'Показала последние загрузки.');
+    }
+
+    if(/^(найди|поищи)\s+(файл|документ|папку)/.test(c)){
+      const q=c.replace(/^(найди|поищи)\s+(файл|документ|папку)\s*/,'').trim();
+      if(!q)return{reply:'Скажи название файла или папки.'};
+      return resultReply(await bridge.run('search_files',{query:q,limit:10}),'Поиск выполнила.');
+    }
+
+    if(/что сейчас открыто|какие окна открыты|покажи открытые окна/.test(c)){
+      return resultReply(await bridge.run('list_windows',{}),'Показала открытые окна.');
+    }
+
+    if(/информация о компьютере|что с компьютером|состояние компьютера|почему компьютер тормозит/.test(c)){
+      return resultReply(await bridge.run('system_status',{}),'Проверила компьютер.');
+    }
+
+    return{reply:'Команду для компьютера поняла не полностью. Скажи, например: «открой хром», «найди файл договор» или «что сейчас открыто».'};
+  }
+};
+
+};
+
+__modules["src/tools/tasks.js"] = function(module, exports, __require, require) {
+const { rows } = __require("src/ui/cards.js");
+module.exports = {
+  name:'tasks', description:'Задачи пользователя', risk:'change',
+  async run(input, runtime){
+    const c=input.ctx.command, u=runtime.storage.ensureUser(input.ctx.userId), tasks=u.tasks;
+    if(/добавь задачу/.test(c)){const t=c.replace(/.*добавь задачу/,'').trim();if(!t)return{reply:'Какую задачу добавить?'};tasks.push({text:t,done:false,star:false});runtime.storage.scheduleSave();return{reply:'Задача добавлена: '+t,html:rows('Задачи',tasks.map(x=>(x.done?'✓ ':'')+x.text))};}
+    if(/покажи важные/.test(c)){const f=tasks.filter(x=>x.star);return{reply:f.length?'Важные задачи показала.':'Важных задач нет.',html:rows('Важные задачи',f.map(x=>x.text))};}
+    if(/зачитай задачи/.test(c)){return{reply:tasks.length?'Зачитываю.':'Задач нет.',speakOnly:tasks.map((x,i)=>(i+1)+'. '+x.text).join('. ')};}
+    if(/покажи задачи|план на сегодня/.test(c))return{reply:tasks.length?'Задачи показала.':'Задач пока нет.',html:rows('Задачи',tasks.map(x=>(x.done?'✓ ':'')+x.text))};
+    if(/сколько задач/.test(c))return{reply:'Активных задач: '+tasks.filter(x=>!x.done).length+'.'};
+    if(/выполни/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&tasks[n-1]){tasks[n-1].done=true;runtime.storage.scheduleSave();return{reply:'Готово: '+tasks[n-1].text};}return{reply:'Не нашла задачу. Назови её номер.'};}
+    if(/удали задачу/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&tasks[n-1]){const t=tasks[n-1].text;tasks.splice(n-1,1);runtime.storage.scheduleSave();return{reply:'Удалила задачу: '+t};}return{reply:'Не нашла задачу.'};}
+    if(/очисти выполненные/.test(c)){u.tasks=tasks.filter(x=>!x.done);runtime.storage.scheduleSave();return{reply:'Выполненные задачи удалены.'};}
+    if(/важная/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&tasks[n-1]){tasks[n-1].star=!tasks[n-1].star;runtime.storage.scheduleSave();return{reply:'Отметку изменила.'};}return{reply:'Какую задачу отметить? Назови номер.'};}
+    return{reply:'Скажи: добавь задачу…, покажи задачи или выполни задачу номер…'};
+  }
+};
+
+};
+
+__modules["src/tools/time.js"] = function(module, exports, __require, require) {
+const { TZ } = __require("src/config.js");
+const { card } = __require("src/ui/cards.js");
+
+function now(){return new Date();}
+function fmtClock(d){return d.toLocaleTimeString('ru-RU',{timeZone:TZ,hour:'2-digit',minute:'2-digit'});}
+function fmtDate(d){return d.toLocaleDateString('ru-RU',{timeZone:TZ,day:'numeric',month:'long',year:'numeric'});}
+function fmtDay(d){return d.toLocaleDateString('ru-RU',{timeZone:TZ,weekday:'long'});}
+function isoWeek(d){const x=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=x.getUTCDay()||7;x.setUTCDate(x.getUTCDate()+4-day);const y=new Date(Date.UTC(x.getUTCFullYear(),0,1));return Math.ceil((((x-y)/86400000)+1)/7);}
+function firstNum(s){const m=String(s).match(/(\d+)/);return m?Number(m[1]):null;}
+function daysDiff(a,b){return Math.round((b-a)/86400000);}
+const MONTHS={января:0,февраля:1,марта:2,апреля:3,мая:4,июня:5,июля:6,августа:7,сентября:8,октября:9,ноября:10,декабря:11};
+function parseDateRu(s){
+  const m=String(s).match(/(\d{1,2})\s+(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря)/);
+  if(!m)return null;const d=Number(m[1]),mo=MONTHS[m[2]];let y=now().getFullYear();let dt=new Date(y,mo,d);const t=now();t.setHours(0,0,0,0);
+  if(/до/.test(s)&&dt<t)dt=new Date(y+1,mo,d);if(/прошло/.test(s)&&dt>t)dt=new Date(y-1,mo,d);return dt;
+}
+module.exports = {
+  name:'time_date',
+  description:'Время и даты',
+  risk:'read',
+  async run(input){
+    const c=input.ctx.command,d=now();
+    if(/который час|сколько времени|время сейчас/.test(c))return{reply:'Сейчас '+fmtClock(d)+'.'};
+    if(/какое число|какая дата/.test(c))return{reply:'Сегодня '+fmtDate(d)+'.'};
+    if(/день недели/.test(c))return{reply:'Сегодня '+fmtDay(d)+'.'};
+    if(/выходной/.test(c)){const w=d.getDay();return{reply:(w===0||w===6)?'Да, сегодня выходной.':'Нет, сегодня будний день.'};}
+    if(/неделя года/.test(c))return{reply:'Сейчас '+isoWeek(d)+'-я неделя года.'};
+    if(/время в мире/.test(c)){const z=[['Москва','Europe/Moscow'],['Нью-Йорк','America/New_York'],['Лондон','Europe/London'],['Токио','Asia/Tokyo'],['Дубай','Asia/Dubai']];return{reply:z.map(x=>x[0]+' '+d.toLocaleTimeString('ru-RU',{timeZone:x[1],hour:'2-digit',minute:'2-digit'})).join(', ')+'.'};}
+    if(/до нового года/.test(c)){const n=daysDiff(d,new Date(d.getFullYear()+1,0,1));return{reply:'До Нового года '+n+' дней.'};}
+    if(/какое число будет через/.test(c)){const n=firstNum(c);if(!n)return{reply:'Скажи, через сколько дней.'};const dt=new Date(Date.now()+n*86400000);return{reply:'Через '+n+' дней будет '+dt.toLocaleDateString('ru-RU',{day:'numeric',month:'long'})+'.'};}
+    if(/сколько/.test(c)&&/(прошло|до)/.test(c)){const dt=parseDateRu(c);if(!dt)return{reply:'Назови дату, например 15 августа.'};const n=/прошло/.test(c)?daysDiff(dt,d):daysDiff(d,dt);return{reply:(/прошло/.test(c)?'Прошло ':'Осталось ')+Math.abs(n)+' дней.'};}
+    return{reply:'Сейчас '+fmtClock(d)+'.'};
+  }
+};
+
+};
+
+__modules["src/tools/timer.js"] = function(module, exports, __require, require) {
+const states = new Map();
+function state(key){if(!states.has(key))states.set(key,{timer:null,reminders:[],nextReminderId:1,pomo:null,stopwatch:null});return states.get(key);}
+function parseDur(s){
+  const m=String(s).match(/(\d+)\s*(секунд|сек|минут|мин|час|часа|часов)/);
+  if(!m)return null;const n=Number(m[1]);if(m[2].startsWith('сек'))return n*1000;if(m[2].startsWith('мин'))return n*60000;return n*3600000;
+}
+function durationText(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+' минут '+(s%60)+' секунд';}
+function startPomo(st,runtime){
+  const ms=st.pomo.phase==='work'?25*60000:(st.pomo.round>=4?15*60000:5*60000);
+  st.pomo.endsAt=Date.now()+ms;
+  st.pomo.handle=setTimeout(()=>{
+    if(!st.pomo)return;
+    if(st.pomo.phase==='work'){
+      st.pomo.phase='rest';
+      runtime.sendView({speak:st.pomo.round>=4?'Большой перерыв, 15 минут.':'Перерыв, 5 минут.'});
+      startPomo(st,runtime);
+    }else{
+      if(st.pomo.round>=4){st.pomo=null;runtime.sendView({speak:'Помодоро завершён.'});return;}
+      st.pomo.round++;st.pomo.phase='work';runtime.sendView({speak:'Отдых окончен, за работу.'});startPomo(st,runtime);
+    }
+  },ms);
+}
+module.exports={
+  name:'timer',description:'Таймеры, напоминания, помодоро и секундомер',risk:'change',
+  async run(input,runtime){
+    const c=input.ctx.command,st=state(input.ctx.userId);
+
+    if(/останови таймер|стоп таймер/.test(c)){st.timer=null;return{reply:'Таймер остановлен.'};}
+    if(/сколько осталось/.test(c)){if(!st.timer)return{reply:'Таймер не запущен.'};return{reply:'Осталось '+durationText(st.timer-Date.now())+'.'};}
+    if(/^таймер|запусти таймер|таймер на/.test(c)){
+      const ms=parseDur(c);if(!ms)return{reply:'Скажи, например: таймер на 5 минут.'};
+      st.timer=Date.now()+ms;
+      setTimeout(()=>{if(st.timer&&Date.now()>=st.timer){st.timer=null;runtime.sendView({speak:'Таймер завершён.'});}},ms);
+      return{reply:'Таймер запущен.'};
+    }
+
+    if(/напомни/.test(c)){
+      const ms=parseDur(c);if(!ms)return{reply:'Скажи, например: напомни через 10 минут позвонить.'};
+      const text=c.replace(/.*напомни/,'').replace(/через\s*\d+\s*(секунд|сек|минут|мин|час[а-я]*)/,'').trim()||'Напоминание';
+      const r={id:st.nextReminderId++,endsAt:Date.now()+ms,text};st.reminders.push(r);
+      setTimeout(()=>{st.reminders=st.reminders.filter(x=>x.id!==r.id);runtime.sendView({speak:'Напоминаю: '+r.text});},ms);
+      return{reply:'Хорошо, напомню. В браузерной панели напоминание сработает автоматически.'};
+    }
+    if(/покажи напоминания/.test(c)){if(!st.reminders.length)return{reply:'Напоминаний нет.'};return{reply:st.reminders.map((x,i)=>(i+1)+'. '+x.text).join('. ')};}
+    if(/отмени напоминание/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&st.reminders[n-1]){const x=st.reminders.splice(n-1,1)[0];return{reply:'Отменила: '+x.text};}return{reply:'Не нашла такое напоминание.'};}
+
+    if(/стоп помодоро|останови помодоро/.test(c)){if(st.pomo&&st.pomo.handle)clearTimeout(st.pomo.handle);st.pomo=null;return{reply:'Помодоро остановлен.'};}
+    if(/помодоро/.test(c)){if(st.pomo&&st.pomo.handle)clearTimeout(st.pomo.handle);st.pomo={phase:'work',round:1};startPomo(st,runtime);return{reply:'Помодоро начат: 25 минут работы.'};}
+
+    if(/секундомер/.test(c)){
+      if(!st.stopwatch||!st.stopwatch.running){st.stopwatch={startAt:Date.now(),acc:st.stopwatch?st.stopwatch.acc||0:0,running:true};return{reply:'Секундомер запущен.'};}
+      const ms=st.stopwatch.acc+(Date.now()-st.stopwatch.startAt);st.stopwatch={acc:ms,running:false};return{reply:'Время: '+durationText(ms)+'.'};
+    }
+    return{reply:'Скажи: таймер на 5 минут, напомни через 10 минут…, помодоро или секундомер.'};
+  }
+};
+
+};
+
+__modules["src/tools/translate.js"] = function(module, exports, __require, require) {
+const { translate } = __require("src/services/web.js");
+module.exports = {
+  name:'translate', description:'Перевод текста', risk:'read',
+  async run(input){
+    const c=input.ctx.command;
+    const t=c.replace(/.*?(переведи|как по-английски)/,'').trim();
+    if(!t)return{reply:'Что перевести?'};
+    const dir=/[а-яё]/.test(t)?'ru|en':'en|ru';
+    const tr=await translate(t,dir);
+    return{reply:tr||'Не смогла перевести.'};
+  }
+};
+
+};
+
+__modules["src/tools/weather.js"] = function(module, exports, __require, require) {
+const { geoCity, weatherFor, wmo, isRain } = __require("src/services/weather.js");
+const { card } = __require("src/ui/cards.js");
+function moonPhase(){const syn=29.53058867,known=Date.UTC(2000,0,6,18,14),days=(Date.now()-known)/86400000,ph=((days%syn)+syn)%syn,i=Math.floor(ph/syn*8+0.5)%8;return ['новолуние','растущий серп','первая четверть','растущая луна','полнолуние','убывающая луна','последняя четверть','убывающий серп'][i];}
+module.exports = {
+  name:'weather', description:'Погода и связанные данные', risk:'read',
+  async run(input, runtime){
+    const ctx=input.ctx,c=ctx.command,u=runtime.storage.ensureUser(ctx.userId);
+    if(/фаз.*луны/.test(c))return{reply:'Сейчас '+moonPhase()+'.'};
+    let city=u.city||'Москва';
+    const geo=ctx.entities.geo.find(x=>x.city);
+    if(geo&&geo.city) city=geo.city;
+    else {const m=c.match(/погода в\s+([а-яa-z\s-]+)$/i);if(m)city=m[1].trim();}
+    const g=await geoCity(city);if(!g)return{reply:'Не нашла город '+city+'.'};
+    if(geo||/погода в/.test(c)){u.city=g.name;runtime.storage.scheduleSave();}
+    const w=await weatherFor(g.latitude,g.longitude);
+    const cur=w.current;
+    const html=card('Погода: '+g.name,`<div class="big">${Math.round(cur.temperature_2m)}°</div><div class="sub">${wmo(cur.weather_code)}, ощущается как ${Math.round(cur.apparent_temperature)}°</div>`);
+    if(/будет дождь/.test(c))return{reply:(isRain(cur.weather_code)||isRain(w.daily.weather_code[0]))?'Да, вероятен дождь. Возьми зонт.':'Дождя не ожидается.',html};
+    if(/нужна куртка/.test(c))return{reply:cur.temperature_2m<8?'Да, лучше куртку. Сейчас '+Math.round(cur.temperature_2m)+'°.':'Сейчас '+Math.round(cur.temperature_2m)+'°, тёплая куртка не обязательна.',html};
+    if(/уф/.test(c))return{reply:'УФ-индекс сегодня: '+Math.round(w.daily.uv_index_max[0])+' из 11.',html};
+    if(/рассвет/.test(c))return{reply:'Рассвет в '+w.daily.sunrise[0].slice(11,16)+'.'};
+    if(/закат/.test(c))return{reply:'Закат в '+w.daily.sunset[0].slice(11,16)+'.'};
+    if(/прогноз на неделю/.test(c)){const lines=w.daily.time.map((d,i)=>d+': '+Math.round(w.daily.temperature_2m_min[i])+'…'+Math.round(w.daily.temperature_2m_max[i])+'°, '+wmo(w.daily.weather_code[i]));return{reply:'Прогноз на неделю показала.',html:card('Неделя: '+g.name,'<div class="text">'+lines.join('<br>')+'</div>')};}
+    return{reply:'В городе '+g.name+' сейчас '+Math.round(cur.temperature_2m)+'°, '+wmo(cur.weather_code)+'.',html};
+  }
+};
+
+};
+
+__modules["src/ui/cards.js"] = function(module, exports, __require, require) {
+function esc(v){
+  return String(v ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+function card(title, inner){return `<div class="card"><h1>${esc(title)}</h1>${inner}</div>`;}
+function textCard(title, text){return card(title, `<div class="text">${esc(text).replace(/\n/g,'<br>')}</div>`);}
+function rows(title, items){
+  return card(title, items.map((x,i)=>`<div class="row"><span class="num">${i+1}</span><div class="t">${esc(x)}</div></div>`).join(''));
+}
+function searchCard(q, results){
+  const body=results.map((r,i)=>{
+    let dom='';try{dom=new URL(r.url).hostname;}catch{}
+    return `<div class="row"><span class="num">${i+1}</span><div><div class="t">${esc(r.title)}</div><div class="d">${esc(dom)}</div></div></div>`;
+  }).join('');
+  return card(`Поиск: ${q}`, body + '<div class="hint">Можно сказать: «открой второй», «дальше», «назад»</div>');
+}
+module.exports = { esc, card, textCard, rows, searchCard };
+
+};
+
+__modules["src/ui/panel.js"] = function(module, exports, __require, require) {
+function panelHtml(version){
+return `<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><title>Smart Assistant</title>
+<style>
+body{font-family:Arial,sans-serif;background:#0f172a;color:#e2e8f0;text-align:center;padding:30px}
+.card{display:inline-block;background:#1e293b;padding:30px 50px;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.4);max-width:900px;text-align:left}
+h1{color:#7dd3fc;margin-top:0}.big{font-size:64px;color:#fbbf24;text-align:center}.sub{color:#94a3b8;font-size:18px}.row{display:flex;gap:12px;margin:10px 0}.num{background:#334155;border-radius:8px;padding:4px 10px;color:#7dd3fc}.t{font-size:20px}.d,.hint{color:#64748b}.text{font-size:20px;line-height:1.6}
+</style></head><body><div id="box"><div class="card"><h1>Smart Assistant ${version}</h1><div class="sub">Жду команду…</div></div></div>
+<script>
+const box=document.getElementById('box');
+function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ru-RU';speechSynthesis.speak(u);}catch(e){}}
+const es=new EventSource('/events');
+es.onmessage=e=>{const d=JSON.parse(e.data);if(d.html)box.innerHTML=d.html;if(d.speak)speak(d.speak);if(d.stopSpeak){try{speechSynthesis.cancel()}catch(e){}}};
+</script>
+</body></html>`;
+}
+module.exports={panelHtml};
+
+};
+
+__require('server.js');
