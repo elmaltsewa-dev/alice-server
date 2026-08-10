@@ -167,7 +167,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '1.2.5-pc-encoding-safe',
+  VERSION: '1.2.6-system-status',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -1114,7 +1114,39 @@ module.exports = {
     }
 
     if(/информация о компьютере|что с компьютером|состояние компьютера|почему компьютер тормозит/.test(c)){
-      return resultReply(await bridge.run('system_status',{}),'Проверила компьютер.');
+      const r = await bridge.run('system_status',{});
+      if(!r) return {reply:'Не получила ответ от компьютера.'};
+      if(r.ok === false) return resultReply(r,'Не получилось проверить компьютер.');
+
+      const d = r.data || {};
+      const parts = ['Компьютер на связи.'];
+
+      if(Number.isFinite(Number(d.cpuLoadPercent))){
+        parts.push('Процессор загружен примерно на '+Math.round(Number(d.cpuLoadPercent))+' процентов.');
+      }
+
+      if(Number.isFinite(Number(d.totalMemoryGB)) && Number.isFinite(Number(d.freeMemoryGB))){
+        const total = Number(d.totalMemoryGB);
+        const free = Number(d.freeMemoryGB);
+        const used = Math.max(0,total-free);
+        const pct = total>0 ? Math.round(used/total*100) : 0;
+        parts.push('Оперативная память: занято '+used.toFixed(1)+' из '+total.toFixed(1)+' гигабайт, '+pct+' процентов.');
+      }
+
+      if(Number.isFinite(Number(d.diskTotalGB)) && Number.isFinite(Number(d.diskFreeGB))){
+        parts.push('На диске C свободно '+Number(d.diskFreeGB).toFixed(1)+' из '+Number(d.diskTotalGB).toFixed(1)+' гигабайт.');
+      }
+
+      if(Number.isFinite(Number(d.uptimeHours))){
+        const h = Math.round(Number(d.uptimeHours));
+        parts.push('Windows работает без перезагрузки около '+h+' часов.');
+      }
+
+      if(parts.length===1){
+        parts.push('Связь с Windows есть, но подробные показатели агент пока не передал.');
+      }
+
+      return {reply:parts.join(' ')};
     }
 
     return{reply:'Команду для компьютера поняла не полностью. Скажи, например: «открой хром», «найди файл договор» или «что сейчас открыто».'};
