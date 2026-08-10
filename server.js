@@ -183,7 +183,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '1.4.0-windows-context-layer',
+  VERSION: '1.5.0-ui-automation-read',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -295,7 +295,7 @@ function detectIntent(ctx, contextStore) {
     return { name: 'CONTEXT_ACT', confidence: .95 };
   }
 
-  if (includesAny(c, ['не понимаю', 'что произошло', 'что случилось', 'помоги', 'что нажать', 'куда пропало', 'не могу открыть'])) {
+  if (includesAny(c, ['не понимаю', 'что произошло', 'что случилось', 'помоги', 'что нажать', 'куда нажать', 'что здесь нажать', 'куда пропало', 'не могу открыть'])) {
     return { name: 'HELP_ME', confidence: .92 };
   }
 
@@ -342,7 +342,7 @@ function detectIntent(ctx, contextStore) {
     return { name: 'ENTERTAINMENT', confidence: .88 };
   }
 
-  if (/компьютер|пк|программ|окн|файл|документ|папк|загрузк|рабочий стол|браузер|хром|телеграм|word|ворд|excel|эксель|что сейчас на экране|где я сейчас|в какой программе/.test(c)) {
+  if (/компьютер|пк|программ|окн|файл|документ|папк|загрузк|рабочий стол|браузер|хром|телеграм|word|ворд|excel|эксель|что сейчас на экране|где я сейчас|в какой программе|кнопк|ссылк|элемент|что написано|что здесь можно/.test(c)) {
     return { name: 'PC', confidence: .82 };
   }
 
@@ -1158,17 +1158,88 @@ function helpForActive(data){
   return 'Сейчас активно окно '+where+'. Я уже определила программу и заголовок окна. Скажи, что хотела сделать или что кажется неправильным.';
 }
 
+function uiType(v){
+  return String(v||'').replace(/^ControlType\./,'');
+}
+
+function uniqueNamed(items, typeNames){
+  const allowed=new Set(typeNames||[]);
+  const seen=new Set();
+  const out=[];
+  for(const x of (Array.isArray(items)?items:[])){
+    const name=cleanWindowText(x&&x.name);
+    const type=uiType(x&&x.type);
+    if(!name || (allowed.size && !allowed.has(type))) continue;
+    const key=(type+'|'+name).toLowerCase();
+    if(seen.has(key)) continue;
+    seen.add(key);
+    out.push({name,type,enabled:x.enabled!==false});
+  }
+  return out;
+}
+
+function summarizeUiSnapshot(data, mode='help'){
+  if(!data) return 'Не получила данные активного окна.';
+  const win=data.window||data;
+  const where=describeActiveWindow(win);
+  const elements=Array.isArray(data.elements)?data.elements:[];
+
+  const actions=uniqueNamed(elements,[
+    'Button','Hyperlink','MenuItem','TabItem','CheckBox','RadioButton',
+    'ComboBox','ListItem','TreeItem','SplitButton'
+  ]).filter(x=>x.enabled).slice(0,8);
+
+  const labels=uniqueNamed(elements,['Text','StatusBar']).slice(0,6);
+
+  if(mode==='actions'){
+    if(!actions.length){
+      return 'Сейчас активно окно '+where+'. Доступных именованных кнопок, ссылок или пунктов меню через Windows Automation не нашла.';
+    }
+    return 'Сейчас активно окно '+where+'. Вижу доступные элементы: '+actions.map(x=>x.name).join(', ')+'.';
+  }
+
+  if(mode==='text'){
+    if(!labels.length){
+      return 'Сейчас активно окно '+where+'. Отдельных текстовых подписей через Windows Automation не получила.';
+    }
+    return 'Сейчас активно окно '+where+'. Вижу текст: '+labels.map(x=>'«'+x.name+'»').join(', ')+'.';
+  }
+
+  const parts=['Сейчас активно окно '+where+'.'];
+  if(labels.length){
+    parts.push('На экране вижу: '+labels.slice(0,3).map(x=>'«'+x.name+'»').join(', ')+'.');
+  }
+  if(actions.length){
+    parts.push('Из доступных элементов вижу: '+actions.slice(0,6).map(x=>x.name).join(', ')+'.');
+  }
+  if(!labels.length && !actions.length){
+    parts.push('Windows Automation не отдала именованные элементы этого окна.');
+  }else{
+    parts.push('Скажи, чего именно хочешь добиться, и я подскажу безопасный следующий шаг.');
+  }
+  return parts.join(' ');
+}
+
 module.exports = {
   name:'pc', description:'Безопасное управление Windows через локальный агент', risk:'read',
   async run(input, runtime){
     const c=input.ctx.command, bridge=runtime.pcBridge;
 
     if(input.intent && input.intent.name==='HELP_ME'){
-      const r=await bridge.run('active_window',{});
-      if(!r) return {reply:'Компьютер на связи, но я не успела получить активное окно. Скажи, что хотела сделать.'};
-      if(r.ok===false) return {reply:'Компьютер на связи, но активное окно определить не удалось. Скажи, что сейчас видишь.'};
-      if(r.data) return {reply:helpForActive(r.data),remember:{lastPcContext:r.data}};
-      return {reply:'Компьютер на связи. Скажи, что хотела сделать или что сейчас видишь на экране.'};
+      const r=await bridge.run('inspect_ui',{maxNodes:180,maxElements:50,timeBudgetMs:1400});
+      if(r && r.ok!==false && r.data){
+        return {
+          reply:summarizeUiSnapshot(r.data,'help'),
+          remember:{lastPcContext:r.data.window||null}
+        };
+      }
+
+      const w=await bridge.run('active_window',{});
+      if(w && w.ok!==false && w.data){
+        return {reply:helpForActive(w.data),remember:{lastPcContext:w.data}};
+      }
+
+      return {reply:'Компьютер на связи, но я не успела прочитать активное окно. Скажи, что хотела сделать.'};
     }
 
     if(/статус компьютера|компьютер.*на связи|пк.*на связи/.test(c)){
@@ -1193,6 +1264,18 @@ module.exports = {
       const q=c.replace(/^(найди|поищи)\s+(файл|документ|папку)\s*/,'').trim();
       if(!q)return{reply:'Скажи название файла или папки.'};
       return resultReply(await bridge.run('search_files',{query:q,limit:10}),'Поиск выполнила.');
+    }
+
+    if(/какие кнопки|какие ссылки|что здесь можно нажать|что можно нажать|какие элементы/.test(c)){
+      const r=await bridge.run('inspect_ui',{maxNodes:180,maxElements:50,timeBudgetMs:1400});
+      if(!r || !r.data) return {reply:'Не успела прочитать элементы активного окна.'};
+      return {reply:summarizeUiSnapshot(r.data,'actions'),remember:{lastPcContext:r.data.window||null}};
+    }
+
+    if(/что написано в этом окне|что здесь написано|прочитай это окно|прочитай окно/.test(c)){
+      const r=await bridge.run('inspect_ui',{maxNodes:180,maxElements:50,timeBudgetMs:1400});
+      if(!r || !r.data) return {reply:'Не успела прочитать текст активного окна.'};
+      return {reply:summarizeUiSnapshot(r.data,'text'),remember:{lastPcContext:r.data.window||null}};
     }
 
     if(/что сейчас на экране|какое окно сейчас активно|какое окно открыто сейчас|где я сейчас|в какой программе я сейчас/.test(c)){
@@ -1260,7 +1343,7 @@ module.exports = {
       return {reply:parts.join(' ')};
     }
 
-    return{reply:'Команду для компьютера поняла не полностью. Скажи, например: «открой хром», «что сейчас на экране», «какие окна открыты», «найди файл договор» или просто «помоги».'};
+    return{reply:'Команду для компьютера поняла не полностью. Скажи, например: «открой хром», «что сейчас на экране», «какие кнопки здесь есть», «какие окна открыты», «найди файл договор» или просто «помоги».'};
   }
 };
 
