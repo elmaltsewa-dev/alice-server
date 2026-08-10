@@ -108,14 +108,14 @@ function createApp() {
 
   app.post('/pc/heartbeat',(req,res)=>{
     if(!pcBridge.authorize(req))return res.status(401).json({ok:false});
-    const b=req.body||{},machine=String(b.machine||'home-pc');
+    const b=req.body||{},machine=String(b.machine||'home-pc-v2');
     pcBridge.heartbeat(machine,{hostname:b.hostname||'',user:b.user||'',version:b.version||''});
     res.json({ok:true,serverTime:Date.now()});
   });
 
   app.get('/pc/poll',(req,res)=>{
     if(!pcBridge.authorize(req))return res.status(401).json({ok:false});
-    const machine=String(req.query.machine||'home-pc');
+    const machine=String(req.query.machine||'home-pc-v2');
     pcBridge.heartbeat(machine,{});
     res.json({ok:true,job:pcBridge.poll(machine)});
   });
@@ -167,7 +167,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '1.2.8-heartbeat-telemetry',
+  VERSION: '1.3.0-pc-v2-isolated',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -559,12 +559,12 @@ class PcBridge {
     });
   }
 
-  online(machine = 'home-pc') {
+  online(machine = 'home-pc-v2') {
     const a = this.agents.get(machine);
     return !!a && Date.now() - a.lastSeen <= PC_AGENT_TTL_MS;
   }
 
-  status(machine = 'home-pc') {
+  status(machine = 'home-pc-v2') {
     const a = this.agents.get(machine);
     return {
       configured: this.configured(),
@@ -574,14 +574,14 @@ class PcBridge {
     };
   }
 
-  enqueue(action, args = {}, machine = 'home-pc') {
+  enqueue(action, args = {}, machine = 'home-pc-v2') {
     const id = 'job_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
     const job = { id, machine, action, args, createdAt: Date.now() };
     this.jobs.push(job);
     return job;
   }
 
-  poll(machine = 'home-pc') {
+  poll(machine = 'home-pc-v2') {
     const i = this.jobs.findIndex(j => j.machine === machine);
     if (i < 0) return null;
     return this.jobs.splice(i, 1)[0];
@@ -607,7 +607,7 @@ class PcBridge {
     return !!done;
   }
 
-  async run(action, args = {}, machine = 'home-pc') {
+  async run(action, args = {}, machine = 'home-pc-v2') {
     if (!this.configured()) return { ok:false, code:'NOT_CONFIGURED', message:'Windows Agent ещё не настроен.' };
     if (!this.online(machine)) return { ok:false, code:'OFFLINE', message:'Компьютер сейчас не на связи. Возможно, он выключен или спит.' };
     const job = this.enqueue(action, args, machine);
