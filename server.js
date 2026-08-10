@@ -373,6 +373,8 @@ app.get('/events', (req, res) => {
   req.on('close', () => clients.delete(res));
 });
 
+app.get('/alice', (req, res) => res.json({ status: 'ok', text: 'Сервер Алисы работает' }));
+app.head('/alice', (req, res) => res.status(200).end());
 app.post('/alice', async (req, res) => {
   const body = req.body || {};
   let cmd = ((body.request && body.request.command) || '').toLowerCase().replace(/ё/g, 'е').replace(/[.,!?;:"]/g, ' ').trim();
