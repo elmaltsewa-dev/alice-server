@@ -430,6 +430,14 @@ app.post('/alice',async(req,res)=>{
   }
   res.json({version:'1.0',session:body.session||{},response:{text:(out&&out.reply)||'Готово.',end_session:false}});
 });
+app.get('/debug', async (req, res) => {
+  const out = { hasToken: !!GH_TOKEN, tokenStart: GH_TOKEN ? GH_TOKEN.slice(0, 12) : null, repo: GH_REPO };
+  try {
+    const r = await fetch('https://api.github.com/repos/' + GH_REPO + '/contents/data.json', { headers: { Authorization: 'Bearer ' + GH_TOKEN, 'User-Agent': 'alice', Accept: 'application/vnd.github+json' } });
+    out.githubStatus = r.status;
+  } catch (e) { out.githubError = e.message; }
+  res.json(out);
+});
 app.get('/',(req,res)=>{
   res.send('<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><title>Панель Алисы</title><style>'+
     'body{font-family:Arial,sans-serif;background:#0f172a;color:#e2e8f0;text-align:center;padding:30px}'+
