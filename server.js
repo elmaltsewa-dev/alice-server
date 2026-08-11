@@ -167,6 +167,10 @@ function validateAliceRequest(body){
 }
 
 function validateAliceUser(body){
+  // Optional second factor for a private skill. Disabled unless explicitly
+  // configured in Render. The private Yandex skill + exact skill_id remain
+  // the default access boundary so Station requests are not rejected by an
+  // unverified hardcoded user hash.
   if(!YANDEX_ALLOWED_USER_HASH)return null;
   const raw=String(body&&body.session&&body.session.user&&body.session.user.user_id||'');
   if(!raw)return 'NO_AUTHORIZED_USER';
@@ -425,7 +429,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '2.1.0-foundation-hardening-candidate',
+  VERSION: '2.1.1-station-auth-hotfix-candidate',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -436,7 +440,7 @@ module.exports = {
   PC_AGENT_TTL_MS: 45 * 1000,
   DATA_ENCRYPTION_KEY: process.env.DATA_ENCRYPTION_KEY || '',
   YANDEX_SKILL_ID: process.env.YANDEX_SKILL_ID || 'c2f72b52-4634-45c1-b74f-e7a533e0aaab',
-  YANDEX_ALLOWED_USER_HASH: process.env.YANDEX_ALLOWED_USER_HASH || 'a3de64fdc2eb15c76e9eb12175fcfcac143e133cab342a30abac2aaae6943eab',
+  YANDEX_ALLOWED_USER_HASH: process.env.YANDEX_ALLOWED_USER_HASH || '',
   ALICE_REQUEST_BUDGET_MS: Number(process.env.ALICE_REQUEST_BUDGET_MS || 3300),
   EXTERNAL_FETCH_TIMEOUT_MS: Number(process.env.EXTERNAL_FETCH_TIMEOUT_MS || 1300)
 };
