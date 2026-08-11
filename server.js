@@ -57,11 +57,11 @@ class CapabilityRegistry {
     if(!c)return null;
 
     const rules=[
-      ['browser.tabs',/\bвкладк|следующ(ая|ую) вклад|предыдущ(ая|ую) вклад/,'pc',.99],
+      ['browser.tabs',/вкладк|следующ(ая|ую) вклад|предыдущ(ая|ую) вклад/,'pc',.99],
       ['pc.windows',/\bокн(о|а|е|у)|предыдущее окно|следующее окно|переключись на/,'pc',.94],
       ['files.search',/\b(файл|документ|папк|загрузк|рабоч(ий|ем) стол)\b/,'pc',.93],
       ['clipboard',/буфер обмена|скопирован|вставь|скопируй/,'pc',.91],
-      ['audio',/громк|звук|без звука|пауза|следующий трек|предыдущий трек/,'pc',.91],
+      ['audio',/громк|громч|тиш|звук|без звука|пауза|следующий трек|предыдущий трек/,'pc',.93],
       ['system.settings',/диспетчер задач|параметр(ы|ов) windows|панель управления|диспетчер устройств|автозагрузк|bluetooth|блютуз/,'pc',.94],
       ['help.mode',/не понимаю|что произошло|что случилось|помоги|что нажать|куда нажать|куда пропало/,'pc',.98],
       ['pc.ui.read',/какие кнопки|что здесь написано|что можно нажать|прочитай окно/,'pc',.96],
@@ -286,7 +286,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '2.0.0-unified-core-candidate',
+  VERSION: '2.0.1-unified-router-regression-fix',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -452,7 +452,7 @@ function detectIntent(ctx, contextStore) {
     return { name: 'ENTERTAINMENT', confidence: .88 };
   }
 
-  if (/компьютер|пк|программ|окн|вкладк|файл|документ|папк|загрузк|рабочий стол|браузер|хром|телеграм|word|ворд|excel|эксель|буфер обмена|громк|звук|монитор|диспетчер задач|панель управления|bluetooth|блютуз|автозагрузк|безопасность windows|что сейчас на экране|где я сейчас|в какой программе|кнопк|ссылк|элемент|что написано|что здесь можно/.test(c)) {
+  if (/компьютер|пк|программ|окн|вкладк|файл|документ|папк|загрузк|рабочий стол|браузер|хром|телеграм|word|ворд|excel|эксель|буфер обмена|громк|громч|тиш|звук|монитор|диспетчер задач|панель управления|bluetooth|блютуз|автозагрузк|безопасность windows|что сейчас на экране|где я сейчас|в какой программе|кнопк|ссылк|элемент|что написано|что здесь можно/.test(c)) {
     return { name: 'PC', confidence: .82 };
   }
 
@@ -544,13 +544,19 @@ const MAP = {
 async function route(ctx, runtime) {
   let intent = detectIntent(ctx, runtime.context);
   const capMatch=runtime.capabilities&&runtime.capabilities.match(ctx.command);
-  if(capMatch && (
-      intent.name==='UNKNOWN' ||
-      (intent.name==='BROWSER' && capMatch.tool==='pc' && capMatch.confidence>=.90)
-    )){
+  if(capMatch){
     const reverse={pc:'PC',browser:'BROWSER',tasks:'TASKS',lists:'LISTS',notes:'NOTES',timer:'TIMER',
       weather:'WEATHER',calculator:'CALCULATOR',translate:'TRANSLATE',knowledge:'KNOWLEDGE'};
-    if(reverse[capMatch.tool]) intent={name:reverse[capMatch.tool],confidence:capMatch.confidence,capabilityId:capMatch.id};
+    const desired=reverse[capMatch.tool];
+    const legacyConfidence=Number(intent.confidence||0);
+    const shouldOverride=Boolean(desired) && (
+      intent.name==='UNKNOWN' ||
+      (intent.name==='BROWSER' && desired==='PC' && capMatch.confidence>=.90) ||
+      (desired==='PC' && capMatch.confidence>legacyConfidence)
+    );
+    if(shouldOverride){
+      intent={name:desired,confidence:capMatch.confidence,capabilityId:capMatch.id};
+    }
   }
   runtime.context.remember(ctx,{lastIntent:intent.name,lastCapability:intent.capabilityId||null});
 
@@ -1648,7 +1654,7 @@ module.exports = {
       return{reply:'Перешла на предыдущую вкладку.'};
     }
 
-    if(/^(открой|переключись|переключи|перейди|выбери).*\bвкладк/.test(c)){
+    if(/^(открой|переключись|переключи|перейди|выбери).*вкладк/.test(c)){
       const ordinal=runtime.context.resolveOrdinal(c);
       const target=cleanTabTarget(c);
 
@@ -1813,7 +1819,8 @@ module.exports = {
 
     // Generic application launcher. It searches Start Menu/App Paths instead of a fixed list.
     if(/^(открой|запусти)\s+/.test(c) &&
-       !/^(открой|запусти)\s+(сайт|страниц|файл|документ|папк|новую вкладк)/.test(c)){
+       !/^(открой|запусти)\s+(сайт|страниц|файл|документ|папк)/.test(c) &&
+       !/^(открой|запусти).*вкладк/.test(c)){
       const q=stripOpenVerb(c);
       const r=await bridge.run('open_app_generic',{query:q});
       if(!r)return{reply:'Не получила ответ от компьютера.'};
