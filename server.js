@@ -1,5 +1,5 @@
-// SMART ASSISTANT UNIFIED CORE 2.0.0 — DEPLOYMENT CANDIDATE
-// Source architecture: modular package SMART_ASSISTANT_CORE_1.2.2_REGRESSION_CANDIDATE
+// SMART ASSISTANT UNIFIED CORE 2.1.0 — FOUNDATION HARDENING CANDIDATE
+// Source lineage: 1.6.3 Station-safe -> 2.0/2.0.1 Unified Core -> 2.1 Foundation Hardening
 // This single file is generated only to make deployment to the existing GitHub/Render service simple.
 // Do not add secrets here. GH_TOKEN / GH_REPO / PC_AGENT_TOKEN remain Render environment variables.
 
@@ -31,68 +31,197 @@ app.listen(port, () => {
 
 
 __modules["src/core/capability-registry.js"] = function(module, exports, __require, require) {
-const CAPABILITIES = [{"id": "dialog.context", "title": "Диалог и контекст", "status": "working", "executor": "core", "risk": "read", "examples": ["помоги", "повтори", "что ты умеешь", "открой его", "вторую"]}, {"id": "pc.apps", "title": "Программы", "status": "working", "executor": "pc", "risk": "change", "examples": ["открой телеграм", "запусти ворд", "какие программы открыты", "переключись на блокнот"]}, {"id": "pc.windows", "title": "Окна Windows", "status": "working", "executor": "pc", "risk": "change", "examples": ["какие окна открыты", "что сейчас на экране", "переключись на телеграм", "предыдущее окно"]}, {"id": "browser.tabs", "title": "Вкладки браузера", "status": "working", "executor": "pc", "risk": "change", "examples": ["какие вкладки открыты", "открой вторую вкладку", "следующая вкладка", "открой новую вкладку"]}, {"id": "browser.navigation", "title": "Навигация браузера", "status": "working", "executor": "pc", "risk": "change", "examples": ["назад", "вперёд", "обнови страницу", "восстанови закрытую вкладку"]}, {"id": "browser.web", "title": "Поиск и веб-страницы", "status": "working", "executor": "browser", "risk": "read", "examples": ["найди в интернете", "открой сайт", "прочитай страницу", "открой второй результат"]}, {"id": "pc.ui.read", "title": "Чтение интерфейса", "status": "working", "executor": "pc", "risk": "read", "examples": ["какие кнопки здесь есть", "что здесь написано", "что можно нажать", "помоги"]}, {"id": "pc.ui.action", "title": "Подтверждённые действия интерфейса", "status": "working", "executor": "pc", "risk": "confirm", "examples": ["нажми ОК", "выбери вкладку настройки", "нажми назад"]}, {"id": "files.search", "title": "Поиск файлов и папок", "status": "working", "executor": "pc", "risk": "read", "examples": ["найди файл договор", "найди документ смета", "последние загрузки"]}, {"id": "files.open", "title": "Открытие файлов и папок", "status": "working", "executor": "pc", "risk": "change", "examples": ["открой загрузки", "открой документы", "открой второй файл"]}, {"id": "files.manage", "title": "Копирование, перемещение, переименование, папки", "status": "guarded", "executor": "pc", "risk": "confirm", "examples": ["создай папку", "переименуй файл", "скопируй документ", "перемести файл"]}, {"id": "files.delete", "title": "Удаление и восстановление", "status": "guarded", "executor": "pc", "risk": "dangerous", "examples": ["удали файл", "восстанови из корзины"]}, {"id": "documents.office", "title": "Word / Excel / PDF / документы", "status": "unified", "executor": "pc-ui", "risk": "confirm", "examples": ["открой документ", "сохрани документ", "распечатай", "переключи лист"]}, {"id": "archives", "title": "ZIP/RAR и архивы", "status": "unified", "executor": "pc-ui", "risk": "confirm", "examples": ["распакуй архив", "покажи содержимое архива"]}, {"id": "clipboard", "title": "Буфер обмена", "status": "working", "executor": "pc", "risk": "private", "examples": ["что в буфере обмена", "скопируй этот текст", "очисти буфер"]}, {"id": "audio", "title": "Звук и медиа на ПК", "status": "working", "executor": "pc", "risk": "change", "examples": ["сделай громче", "выключи звук", "пауза", "следующий трек"]}, {"id": "screen", "title": "Экран и мониторы", "status": "working", "executor": "pc", "risk": "read", "examples": ["сколько мониторов", "какое разрешение"]}, {"id": "keyboard", "title": "Клавиатурные действия", "status": "working", "executor": "pc", "risk": "confirm", "examples": ["нажми escape", "нажми control s", "переключись на предыдущее окно"]}, {"id": "printer", "title": "Принтер и печать", "status": "unified", "executor": "pc-ui", "risk": "confirm", "examples": ["какой принтер выбран", "открой очередь печати", "распечатай документ"]}, {"id": "devices", "title": "USB, Bluetooth, камера, микрофон", "status": "unified", "executor": "pc-ui", "risk": "read", "examples": ["какие устройства подключены", "открой bluetooth", "проверь микрофон"]}, {"id": "vpn.app", "title": "VPN-программа как приложение", "status": "unified", "executor": "pc-ui", "risk": "confirm", "examples": ["открой outline", "подключи outline", "отключи outline"]}, {"id": "telegram", "title": "Telegram", "status": "unified", "executor": "pc-ui", "risk": "confirm", "examples": ["открой телеграм", "найди чат", "отправь сообщение"]}, {"id": "mail.calendar", "title": "Почта и календарь через интерфейс", "status": "unified", "executor": "browser-ui", "risk": "confirm", "examples": ["открой почту", "найди письмо", "открой календарь", "создай событие"]}, {"id": "tasks", "title": "Задачи", "status": "working", "executor": "tasks", "risk": "change", "examples": ["добавь задачу", "что у меня на сегодня", "отметь выполненной"]}, {"id": "lists", "title": "Списки", "status": "working", "executor": "lists", "risk": "change", "examples": ["создай список", "добавь в список", "прочитай список"]}, {"id": "notes", "title": "Заметки", "status": "working", "executor": "notes", "risk": "change", "examples": ["запиши заметку", "найди в заметках", "прочитай заметки"]}, {"id": "timers", "title": "Таймеры, секундомер, Pomodoro", "status": "working", "executor": "timer", "risk": "change", "examples": ["поставь таймер", "секундомер", "помодоро"]}, {"id": "time.date", "title": "Время и дата", "status": "working", "executor": "time_date", "risk": "read", "examples": ["который час", "какое сегодня число", "время в токио"]}, {"id": "weather", "title": "Погода", "status": "working", "executor": "weather", "risk": "read", "examples": ["погода сегодня", "будет дождь", "прогноз на неделю"]}, {"id": "calculator", "title": "Калькулятор и единицы", "status": "working", "executor": "calculator", "risk": "read", "examples": ["посчитай", "сколько процентов", "переведи километры в мили"]}, {"id": "translate", "title": "Перевод", "status": "working", "executor": "translate", "risk": "read", "examples": ["переведи на английский", "как по английски"]}, {"id": "knowledge", "title": "Справочная информация", "status": "working", "executor": "knowledge", "risk": "read", "examples": ["что такое", "кто такой", "расскажи про"]}, {"id": "news", "title": "Новости и актуальный поиск", "status": "source-needed", "executor": "external", "risk": "read", "examples": ["последние новости", "что нового"]}, {"id": "media.youtube", "title": "YouTube и медиа в браузере", "status": "unified", "executor": "browser-ui", "risk": "change", "examples": ["открой youtube", "найди видео", "пауза", "полный экран"]}, {"id": "system.settings", "title": "Системные разделы Windows", "status": "working", "executor": "pc", "risk": "change", "examples": ["открой диспетчер задач", "открой параметры", "открой устройства", "открой автозагрузку"]}, {"id": "software.install", "title": "Установка/удаление/обновление программ", "status": "guarded", "executor": "pc-ui", "risk": "dangerous", "examples": ["установи программу", "удали программу", "обнови программу"]}, {"id": "security", "title": "Безопасность Windows", "status": "unified", "executor": "pc-ui", "risk": "read", "examples": ["открой безопасность windows", "что означает предупреждение"]}, {"id": "help.mode", "title": "Режим «Помоги мне»", "status": "working", "executor": "pc-ui", "risk": "read", "examples": ["помоги", "я не понимаю что произошло", "что мне нажать", "куда всё пропало"]}, {"id": "history.undo", "title": "История действий и отмена", "status": "unified", "executor": "core-pc", "risk": "confirm", "examples": ["что ты только что сделала", "отмени последнее", "верни закрытую вкладку"]}, {"id": "multi.step", "title": "Многошаговые сценарии", "status": "unified", "executor": "planner", "risk": "confirm", "examples": ["найди договор и открой его", "открой загрузки и найди последний pdf"]}];
+const CAPABILITIES = [{"id":"dialog.context","title":"Диалог и контекст","executor":"core","risk":"read","examples":["повтори","что ты умеешь","открой его","вторую","отмена"],"implementation":"partial","legacyStatus":"working"},{"id":"pc.apps","title":"Программы","executor":"pc","risk":"change","examples":["открой блокнот","запусти ворд","какие программы открыты","переключись на блокнот"],"implementation":"partial","legacyStatus":"working"},{"id":"pc.windows","title":"Окна Windows","executor":"pc","risk":"change","examples":["какие окна открыты","что сейчас на экране","переключись на телеграм","предыдущее окно"],"implementation":"partial","legacyStatus":"working"},{"id":"browser.tabs","title":"Вкладки браузера","executor":"pc","risk":"change","examples":["какие вкладки открыты","открой вторую вкладку","следующая вкладка","открой новую вкладку"],"implementation":"partial","legacyStatus":"working"},{"id":"browser.navigation","title":"Навигация браузера","executor":"pc","risk":"change","examples":["назад","вперёд","обнови страницу","восстанови закрытую вкладку"],"implementation":"partial","legacyStatus":"working"},{"id":"browser.web","title":"Поиск и веб-страницы","executor":"browser","risk":"read","examples":["найди в интернете","открой сайт","прочитай страницу","открой второй результат"],"implementation":"partial","legacyStatus":"working"},{"id":"pc.ui.read","title":"Чтение интерфейса","executor":"pc","risk":"read","examples":["какие кнопки здесь есть","что здесь написано","что можно нажать","прочитай активное окно"],"implementation":"partial","legacyStatus":"working"},{"id":"pc.ui.action","title":"Подтверждённые действия интерфейса","executor":"pc","risk":"confirm","examples":["нажми ОК","выбери вкладку настройки","нажми назад"],"implementation":"partial","legacyStatus":"working"},{"id":"files.search","title":"Поиск файлов и папок","executor":"pc","risk":"read","examples":["найди файл договор","найди документ смета","последние загрузки"],"implementation":"partial","legacyStatus":"working"},{"id":"files.open","title":"Открытие файлов и папок","executor":"pc","risk":"change","examples":["открой загрузки","открой документы","открой второй файл"],"implementation":"partial","legacyStatus":"working"},{"id":"files.manage","title":"Копирование, перемещение, переименование, папки","executor":"pc","risk":"confirm","examples":["создай папку","переименуй файл","скопируй документ","перемести файл"],"implementation":"planned","legacyStatus":"guarded"},{"id":"files.delete","title":"Удаление и восстановление","executor":"pc","risk":"dangerous","examples":["удали файл","восстанови из корзины"],"implementation":"planned","legacyStatus":"guarded"},{"id":"documents.office","title":"Word / Excel / PDF / документы","executor":"pc-ui","risk":"confirm","examples":["открой документ","сохрани документ","распечатай","переключи лист"],"implementation":"planned","legacyStatus":"unified"},{"id":"archives","title":"ZIP/RAR и архивы","executor":"pc-ui","risk":"confirm","examples":["распакуй архив","покажи содержимое архива"],"implementation":"planned","legacyStatus":"unified"},{"id":"clipboard","title":"Буфер обмена","executor":"pc","risk":"private","examples":["что в буфере обмена","скопируй этот текст","очисти буфер"],"implementation":"partial","legacyStatus":"working","exampleStatus":{"скопируй этот текст":"planned"}},{"id":"audio","title":"Звук и медиа на ПК","executor":"pc","risk":"change","examples":["сделай громче","выключи звук","пауза","следующий трек"],"implementation":"partial","legacyStatus":"working"},{"id":"screen","title":"Экран и мониторы","executor":"pc","risk":"read","examples":["сколько мониторов","какое разрешение"],"implementation":"partial","legacyStatus":"working"},{"id":"keyboard","title":"Клавиатурные действия","executor":"pc","risk":"confirm","examples":["нажми escape","нажми control s","переключись на предыдущее окно"],"implementation":"planned","legacyStatus":"working"},{"id":"printer","title":"Принтер и печать","executor":"pc-ui","risk":"confirm","examples":["какой принтер выбран","открой очередь печати","распечатай документ"],"implementation":"planned","legacyStatus":"unified"},{"id":"devices","title":"USB, Bluetooth, камера, микрофон","executor":"pc-ui","risk":"read","examples":["какие usb устройства подключены","проверь микрофон","проверь камеру"],"implementation":"planned","legacyStatus":"unified"},{"id":"bluetooth","title":"Bluetooth","executor":"pc","risk":"change","examples":["открой bluetooth","открой настройки bluetooth"],"implementation":"partial","legacyStatus":"unified"},{"id":"vpn.app","title":"VPN-программа как приложение","executor":"pc-ui","risk":"confirm","examples":["открой outline","подключи outline","отключи outline"],"implementation":"partial","legacyStatus":"unified","exampleStatus":{"подключи outline":"planned","отключи outline":"planned"}},{"id":"telegram","title":"Telegram","executor":"pc-ui","risk":"confirm","examples":["открой телеграм","найди чат","отправь сообщение"],"implementation":"partial","legacyStatus":"unified","exampleStatus":{"найди чат":"planned","отправь сообщение":"planned"}},{"id":"mail.calendar","title":"Почта и календарь через интерфейс","executor":"browser-ui","risk":"confirm","examples":["открой почту","найди письмо","открой календарь","создай событие"],"implementation":"planned","legacyStatus":"unified"},{"id":"tasks","title":"Задачи","executor":"tasks","risk":"change","examples":["добавь задачу","что у меня на сегодня","отметь выполненной"],"implementation":"partial","legacyStatus":"working"},{"id":"lists","title":"Списки","executor":"lists","risk":"change","examples":["создай список","добавь в список","прочитай список"],"implementation":"partial","legacyStatus":"working"},{"id":"notes","title":"Заметки","executor":"notes","risk":"change","examples":["запиши заметку","найди в заметках","прочитай заметки"],"implementation":"partial","legacyStatus":"working"},{"id":"timers","title":"Таймеры, секундомер, Pomodoro","executor":"timer","risk":"change","examples":["поставь таймер","секундомер","помодоро"],"implementation":"partial","legacyStatus":"working"},{"id":"time.date","title":"Время и дата","executor":"time_date","risk":"read","examples":["который час","какое сегодня число","время в токио"],"implementation":"partial","legacyStatus":"working"},{"id":"weather","title":"Погода","executor":"weather","risk":"read","examples":["погода сегодня","будет дождь","прогноз на неделю"],"implementation":"partial","legacyStatus":"working"},{"id":"calculator","title":"Калькулятор и единицы","executor":"calculator","risk":"read","examples":["посчитай","сколько процентов","переведи километры в мили"],"implementation":"partial","legacyStatus":"working"},{"id":"translate","title":"Перевод","executor":"translate","risk":"read","examples":["переведи на английский","как по английски"],"implementation":"partial","legacyStatus":"working"},{"id":"knowledge","title":"Справочная информация","executor":"knowledge","risk":"read","examples":["что такое","кто такой","расскажи про"],"implementation":"partial","legacyStatus":"working"},{"id":"news","title":"Новости и актуальный поиск","executor":"external","risk":"read","examples":["последние новости","что нового"],"implementation":"external","legacyStatus":"source-needed"},{"id":"media.youtube","title":"YouTube и медиа в браузере","executor":"browser-ui","risk":"change","examples":["открой youtube","найди видео на youtube","включи полный экран youtube"],"implementation":"partial","legacyStatus":"unified"},{"id":"system.settings","title":"Системные разделы Windows","executor":"pc","risk":"change","examples":["открой диспетчер задач","открой параметры","открой устройства","открой автозагрузку"],"implementation":"partial","legacyStatus":"working"},{"id":"software.install","title":"Установка/удаление/обновление программ","executor":"pc-ui","risk":"dangerous","examples":["установи программу","удали программу","обнови программу"],"implementation":"blocked","legacyStatus":"guarded"},{"id":"security","title":"Безопасность Windows","executor":"pc-ui","risk":"read","examples":["открой безопасность windows","что означает предупреждение"],"implementation":"partial","legacyStatus":"unified","exampleStatus":{"что означает предупреждение":"planned"}},{"id":"help.mode","title":"Режим «Помоги мне»","executor":"pc-ui","risk":"read","examples":["помоги","я не понимаю что произошло","что мне нажать","куда всё пропало"],"implementation":"partial","legacyStatus":"working"},{"id":"history.undo","title":"История действий и отмена","executor":"core-pc","risk":"confirm","examples":["что ты только что сделала","отмени последнее","верни закрытую вкладку"],"implementation":"planned","legacyStatus":"unified"},{"id":"multi.step","title":"Многошаговые сценарии","executor":"planner","risk":"confirm","examples":["найди договор и открой его","открой загрузки и найди последний pdf"],"implementation":"planned","legacyStatus":"unified"},{"id":"pc.status","title":"Доступность компьютера","implementation":"implemented","executor":"pc","risk":"read","examples":["компьютер на связи","статус компьютера"]},{"id":"app.diagnostics","title":"Диагностика ошибок Windows и программ без сетевой/ресурсной диагностики","implementation":"planned","executor":"pc-ui","risk":"read","examples":["программа не запускается","файл не открывается","нет звука","принтер не печатает"]},{"id":"windows.info","title":"Информация о Windows и обновлениях","implementation":"planned","executor":"pc","risk":"read","examples":["какая версия windows","есть ли обновления windows"]},{"id":"storage.drives","title":"Диски, накопители и безопасное извлечение без проверки свободного места","implementation":"planned","executor":"pc","risk":"confirm","examples":["какие диски подключены","безопасно извлеки флешку"]},{"id":"phone.pc","title":"Телефон ↔ ПК","implementation":"planned","executor":"pc-ui","risk":"confirm","examples":["открой фотографии с телефона","найди файлы с телефона"]},{"id":"mouse","title":"Мышь и прокрутка","implementation":"planned","executor":"pc-ui","risk":"confirm","examples":["прокрути вниз","двойной клик","правый клик"]},{"id":"maps.routes","title":"Карты и маршруты","implementation":"planned","executor":"external-ui","risk":"read","examples":["открой карту","покажи маршрут"]},{"id":"games.steam","title":"Steam и запуск игр","implementation":"planned","executor":"pc","risk":"confirm","examples":["открой steam","запусти игру"]},{"id":"remote.report","title":"Удалённая помощь и технический отчёт","implementation":"planned","executor":"pc","risk":"read","examples":["сделай технический отчёт","что у меня произошло"]},{"id":"entertainment","title":"Развлечения","implementation":"partial","executor":"entertainment","risk":"read","examples":["расскажи анекдот","скажи факт","брось кубик"]}];
+const MASTER_PLAN = [{"n":1,"title":"Базовый диалог","decision":"approved","implementation":"partial"},{"n":2,"title":"Состояние компьютера: только online/offline; CPU/RAM/disk/uptime/температуры/GPU/battery/processes исключены","decision":"approved_with_exclusions","implementation":"implemented"},{"n":3,"title":"Программы","decision":"approved","implementation":"partial"},{"n":4,"title":"Окна Windows","decision":"approved","implementation":"partial"},{"n":5,"title":"Вкладки браузера; «где у меня был YouTube?» исключено","decision":"approved_with_exclusions","implementation":"partial"},{"n":6,"title":"Браузер и интернет","decision":"approved","implementation":"partial"},{"n":7,"title":"Чтение интерфейса Windows","decision":"approved","implementation":"partial"},{"n":8,"title":"Управление интерфейсом","decision":"approved","implementation":"partial"},{"n":9,"title":"Режим «Помоги мне»","decision":"approved","implementation":"partial"},{"n":10,"title":"Ошибки Windows и программ без сетевой/free-space диагностики","decision":"approved_with_exclusions","implementation":"planned"},{"n":11,"title":"Файлы и папки","decision":"approved","implementation":"partial"},{"n":12,"title":"Документы / Word","decision":"approved","implementation":"planned"},{"n":13,"title":"Excel","decision":"approved","implementation":"planned"},{"n":14,"title":"PDF","decision":"approved","implementation":"planned"},{"n":15,"title":"Архивы","decision":"approved","implementation":"planned"},{"n":16,"title":"Буфер обмена","decision":"approved","implementation":"partial"},{"n":17,"title":"Экран","decision":"approved","implementation":"partial"},{"n":18,"title":"Мышь и клавиатура","decision":"approved","implementation":"planned"},{"n":19,"title":"Звук","decision":"approved","implementation":"partial"},{"n":20,"title":"Камера и микрофон","decision":"approved","implementation":"planned"},{"n":21,"title":"Принтер","decision":"approved","implementation":"planned"},{"n":22,"title":"Сеть","decision":"excluded","implementation":"excluded"},{"n":23,"title":"VPN как приложение / Outline","decision":"approved","implementation":"planned"},{"n":24,"title":"Windows: версия, настройки, обновления, служебные разделы","decision":"approved","implementation":"partial"},{"n":25,"title":"Автозагрузка","decision":"approved","implementation":"partial"},{"n":26,"title":"Процессы: list/heavy CPU/RAM исключены; hung-app close/PID/explain process остаются","decision":"approved_with_exclusions","implementation":"planned"},{"n":27,"title":"Диски и накопители: free-space диагностика исключена; остальные операции остаются","decision":"approved_with_exclusions","implementation":"planned"},{"n":28,"title":"USB и устройства","decision":"approved","implementation":"planned"},{"n":29,"title":"Bluetooth","decision":"approved","implementation":"partial"},{"n":30,"title":"Телефон ↔ ПК","decision":"approved","implementation":"planned"},{"n":31,"title":"Telegram","decision":"approved","implementation":"planned"},{"n":32,"title":"Почта","decision":"approved","implementation":"planned"},{"n":33,"title":"Календарь","decision":"approved","implementation":"planned"},{"n":34,"title":"Заметки","decision":"approved","implementation":"partial"},{"n":35,"title":"Задачи","decision":"approved","implementation":"partial"},{"n":36,"title":"Списки","decision":"approved","implementation":"partial"},{"n":37,"title":"Таймеры, секундомер, Pomodoro","decision":"approved","implementation":"partial"},{"n":38,"title":"Напоминания внутри помощника","decision":"approved","implementation":"partial"},{"n":39,"title":"Время и дата","decision":"approved","implementation":"partial"},{"n":40,"title":"Погода","decision":"approved","implementation":"partial"},{"n":41,"title":"Калькулятор","decision":"approved","implementation":"partial"},{"n":42,"title":"Конвертация единиц","decision":"approved","implementation":"partial"},{"n":43,"title":"Перевод","decision":"approved","implementation":"partial"},{"n":44,"title":"Справочная информация","decision":"approved","implementation":"partial"},{"n":45,"title":"Поиск в интернете","decision":"approved","implementation":"partial"},{"n":46,"title":"Новости","decision":"approved","implementation":"external"},{"n":47,"title":"Карты / маршруты","decision":"approved","implementation":"planned"},{"n":48,"title":"Медиа на ПК","decision":"approved","implementation":"partial"},{"n":49,"title":"YouTube","decision":"approved","implementation":"planned"},{"n":50,"title":"Игры / Steam","decision":"approved","implementation":"planned"},{"n":51,"title":"Установка программ","decision":"approved","implementation":"blocked"},{"n":52,"title":"Удаление программ","decision":"approved","implementation":"blocked"},{"n":53,"title":"Обновление программ","decision":"approved","implementation":"planned"},{"n":54,"title":"Безопасность Windows","decision":"approved","implementation":"partial"},{"n":55,"title":"Пароли и приватные данные","decision":"approved","implementation":"partial"},{"n":56,"title":"Удалённая помощь / технический отчёт","decision":"approved","implementation":"planned"},{"n":57,"title":"История действий помощника","decision":"approved","implementation":"planned"},{"n":58,"title":"Отмена / Undo","decision":"approved","implementation":"planned"},{"n":59,"title":"Сценарии из нескольких действий","decision":"approved","implementation":"planned"},{"n":60,"title":"Естественные команды","decision":"approved","implementation":"partial"},{"n":61,"title":"Ранее существующие функции / regression compatibility","decision":"approved","implementation":"partial"},{"n":62,"title":"Не включать: crypto, currencies, child mode, auto purchases/payments, arbitrary PowerShell, unsafe coordinate clicks, send without confirm","decision":"excluded_policy","implementation":"enforced_partial"}];
 
+function norm(v){
+  return String(v||'').toLowerCase().replace(/ё/g,'е').replace(/[.,!?;:"«»]/g,' ').replace(/\s+/g,' ').trim();
+}
+const EXACT = new Map();
+for(const cap of CAPABILITIES){
+  for(const example of (cap.examples||[])){
+    const k=norm(example);
+    if(!k || EXACT.has(k))continue;
+    const explicit=cap.exampleStatus&&cap.exampleStatus[example];
+    const actionStatus=explicit || (
+      cap.implementation==='partial' || cap.implementation==='implemented'
+        ? 'implemented'
+        : cap.implementation
+    );
+    EXACT.set(k,{id:cap.id,actionStatus});
+  }
+}
 class CapabilityRegistry {
   constructor(items) {
     this.items = Array.isArray(items) ? items.slice() : [];
+    this.byIdMap=new Map(this.items.map(x=>[x.id,x]));
   }
-
-  list() {
-    return this.items.map(x=>({...x}));
-  }
-
-  byId(id) {
-    return this.items.find(x=>x.id===id)||null;
-  }
-
+  list() { return this.items.map(x=>({...x})); }
+  masterPlan() { return MASTER_PLAN.map(x=>({...x})); }
+  byId(id) { return this.byIdMap.get(id)||null; }
   summary() {
     const out={};
-    for(const x of this.items) out[x.status]=(out[x.status]||0)+1;
+    for(const x of this.items) out[x.implementation]=(out[x.implementation]||0)+1;
     return out;
   }
-
+  exact(command){
+    const hit=EXACT.get(norm(command));
+    if(!hit)return null;
+    const capability=this.byId(hit.id);
+    return capability?{capability,actionStatus:hit.actionStatus}:null;
+  }
   match(command) {
-    const c=String(command||'').toLowerCase().trim();
+    const c=norm(command);
     if(!c)return null;
-
+    const exact=this.exact(c);
+    if(exact)return {
+      id:exact.capability.id,
+      tool:exact.capability.executor,
+      confidence:1,
+      capability:exact.capability,
+      exact:true,
+      actionStatus:exact.actionStatus
+    };
     const rules=[
-      ['browser.tabs',/вкладк|следующ(ая|ую) вклад|предыдущ(ая|ую) вклад/,'pc',.99],
-      ['pc.windows',/\bокн(о|а|е|у)|предыдущее окно|следующее окно|переключись на/,'pc',.94],
-      ['files.search',/\b(файл|документ|папк|загрузк|рабоч(ий|ем) стол)\b/,'pc',.93],
-      ['clipboard',/буфер обмена|скопирован|вставь|скопируй/,'pc',.91],
-      ['audio',/громк|громч|тиш|звук|без звука|пауза|следующий трек|предыдущий трек/,'pc',.93],
-      ['system.settings',/диспетчер задач|параметр(ы|ов) windows|панель управления|диспетчер устройств|автозагрузк|bluetooth|блютуз/,'pc',.94],
-      ['help.mode',/не понимаю|что произошло|что случилось|помоги|что нажать|куда нажать|куда пропало/,'pc',.98],
-      ['pc.ui.read',/какие кнопки|что здесь написано|что можно нажать|прочитай окно/,'pc',.96],
-      ['pc.apps',/^(открой|запусти|переключись на)\s+[^/]+$/,'pc',.70],
-      ['browser.web',/сайт|в интернете|в интернете|поищи|поиск|https?:|www\./,'browser',.88],
-      ['tasks',/задач/,'tasks',.90],
-      ['lists',/\bспис(ок|ка)\b/,'lists',.88],
-      ['notes',/заметк|запиши/,'notes',.88],
-      ['timers',/таймер|секундомер|помодоро|напомни/,'timer',.90],
-      ['weather',/погод|дожд|прогноз/,'weather',.94],
-      ['calculator',/посчитай|процент|переведи .* (метр|километр|килограмм|дюйм|градус)/,'calculator',.85],
-      ['translate',/переведи|как по-английски|как на английском/,'translate',.90],
-      ['knowledge',/что такое|кто такой|кто такая|расскажи про/,'knowledge',.82]
-    ];
+      // Destructive/managed domains first so generic "file/app" patterns do not
+      // accidentally execute a partial capability.
+      ['software.install',/^(установи|удали|обнови|деинсталлируй)\s+(програм|прилож)/,'pc-ui',.999],
+      ['files.delete',/удали\s+(файл|папк)|восстанови.*корзин/,'pc',.998],
+      ['files.manage',/создай\s+папк|переименуй\s+(файл|папк)|скопируй\s+(файл|документ|папк)|перемести\s+(файл|документ|папк)/,'pc',.997],
+      ['archives',/распакуй\s+архив|содержимое\s+архив|создай\s+архив|zip|rar/,'pc-ui',.995],
+      ['mail.calendar',/найди\s+письмо|отправь\s+письмо|открой\s+почт|открой\s+календар|создай\s+событ/,'browser-ui',.994],
+      ['telegram',/найди\s+чат|отправь\s+сообщение|открой\s+телеграм/,'pc-ui',.994],
+      ['vpn.app',/(подключи|отключи|открой)\s+outline/,'pc-ui',.994],
+      ['media.youtube',/(youtube|ютуб)/,'browser-ui',.994],
+      ['printer',/очеред.*печат|какой\s+принтер|распечат|печать\s+документ/,'pc-ui',.993],
+      ['devices',/(usb|юсб).*устройств|проверь\s+(микрофон|камер)|камер.*работ|микрофон.*работ/,'pc-ui',.992],
+      ['bluetooth',/(bluetooth|блютуз)/,'pc',.992],
+      ['storage.drives',/какие\s+диски\s+подключ|извлек.*флеш|флешк|накопител/,'pc',.991],
+      ['phone.pc',/(телефон).*(фото|файл)|фотограф.*с\s+телефон|файл.*с\s+телефон/,'pc-ui',.991],
+      ['games.steam',/(steam|стим|запусти\s+игр)/,'pc',.990],
+      ['maps.routes',/(открой\s+карт|покажи\s+маршрут|построй\s+маршрут)/,'external-ui',.990],
+      ['remote.report',/(техническ.*отчет|техническ.*отчёт|что\s+у\s+меня\s+произошло)/,'pc',.990],
+      ['app.diagnostics',/(программ.*не\s+запуска|файл.*не\s+откры|нет\s+звука|принтер.*не\s+печат)/,'pc-ui',.989],
+      ['windows.info',/(версия\s+windows|обновлен.*windows|обновлен.*виндовс)/,'pc',.989],
+      ['history.undo',/(что\s+ты\s+только\s+что\s+сделал|отмени\s+последн|верни\s+закрытую\s+вкладк)/,'core-pc',.989],
+      ['multi.step',/\s+и\s+(открой|найди|распечат|сохрани|переключ)/,'planner',.988],
+      ['documents.office',/(сохрани\s+документ|переключи\s+лист|открой\s+(word|ворд|excel|эксель|pdf)|создай\s+(документ|таблиц))/,'pc-ui',.987],
+      ['keyboard',/нажми\s+(escape|esc|enter|tab|control|ctrl|alt)|горяч.*клавиш/,'pc',.986],
+      ['mouse',/(прокрути|двойной\s+клик|правый\s+клик|колесик|колёсик)/,'pc-ui',.986],
+      ['security',/(безопасность\s+windows|защитник\s+windows|предупрежден.*безопас)/,'pc-ui',.985],
 
+      ['browser.tabs',/вкладк|следующ(ая|ую)\s+вклад|предыдущ(ая|ую)\s+вклад/,'pc',.980],
+      ['browser.navigation',/^(назад|вперед|обнови страницу|обновить страницу|восстанови закрытую вкладку)$/,'pc',.980],
+      ['pc.windows',/окн(о|а|е|у)|предыдущее окно|следующее окно|переключись на/,'pc',.970],
+      ['clipboard',/буфер обмена|что скопировано|очисти буфер|(?:^|\s)буфер(?:\s|$)/,'pc',.969],
+      ['audio',/громк|громч|тиш|звук|без звука|пауза|следующий трек|предыдущий трек/,'pc',.968],
+      ['system.settings',/диспетчер задач|параметры windows|панель управления|диспетчер устройств|автозагрузк/,'pc',.967],
+      ['help.mode',/не понимаю|что произошло|что случилось|помоги|что мне нажать|что нажать|куда нажать|куда .*пропал|не могу открыть/,'pc',.966],
+      ['pc.ui.read',/какие кнопки|что здесь написано|что можно нажать|прочитай (окно|активное окно)/,'pc',.965],
+      ['tasks',/задач|что у меня на сегодня|отметь выполненной|очисти выполненные/,'tasks',.960],
+      ['lists',/спис(ок|ка)|вычеркни/,'lists',.959],
+      ['notes',/заметк|^запиши/,'notes',.958],
+      ['timers',/таймер|секундомер|помодоро|напомни/,'timer',.957],
+      ['time.date',/который час|сколько времени|какое .*число|какая дата|день недели|время в [а-яa-z-]+/,'time_date',.956],
+      ['weather',/погода|будет дождь|прогноз|рассвет|закат|фаз.*луны|(?:^|\s)(уф|ультрафиолет)(?:\s|$)/,'weather',.955],
+      ['calculator',/посчитай|процент|случайное число|дюйм|килограмм|километр/,'calculator',.950],
+      ['translate',/переведи|как по[- ]английски/,'translate',.949],
+      ['knowledge',/что такое|кто такой|кто такая|расскажи про|столица|население/,'knowledge',.948],
+      ['entertainment',/анекдот|брось кубик|скажи факт|загадк|что посмотреть|что приготовить/,'entertainment',.947],
+      ['pc.status',/(компьютер|пк).*(на связи)|статус компьютера|состояние компьютера/,'pc',.946],
+      ['files.search',/(найди|поищи|последн).*(файл|документ|папк|загрузк)|последние загрузки/,'pc',.940],
+      ['files.open',/^(открой|покажи)\s+(загрузки|документы|рабочий стол|второй файл|третий файл)/,'pc',.939],
+      ['screen',/(сколько|какие).*(монитор)|разрешение\s+экрана|какое\s+разрешение/,'pc',.938],
+      ['pc.apps',/^(открой|запусти)\s+[^/]+$/,'pc',.700],
+      ['browser.web',/сайт|в интернете|поищи|поиск|прочитай страницу|https?:|www\./,'browser',.880]
+    ];
     let best=null;
     for(const [id,re,tool,confidence] of rules){
       if(re.test(c) && (!best || confidence>best.confidence)){
-        best={id,tool,confidence,capability:this.byId(id)};
+        best={id,tool,confidence,capability:this.byId(id),exact:false};
       }
     }
     return best;
   }
 }
-
-module.exports={CapabilityRegistry,CAPABILITIES};
+module.exports={CapabilityRegistry,CAPABILITIES,MASTER_PLAN};
 };
+
+
+
+__modules["src/core/alice-protocol.js"] = function(module, exports, __require, require) {
+const crypto = require("crypto");
+const { YANDEX_SKILL_ID, YANDEX_ALLOWED_USER_HASH, ALICE_REQUEST_BUDGET_MS } = __require("src/config.js");
+
+function validateAliceRequest(body){
+  if(!body || typeof body!=='object')return 'EMPTY_BODY';
+  if(String(body.version||'')!=='1.0')return 'BAD_VERSION';
+  const request=body.request||{};
+  const session=body.session||{};
+  const allowed=new Set(['SimpleUtterance','ButtonPressed','Show.Pull']);
+  if(!allowed.has(String(request.type||'')))return 'BAD_REQUEST_TYPE';
+  if(!String(session.session_id||''))return 'NO_SESSION_ID';
+  if(!String(session.skill_id||''))return 'NO_SKILL_ID';
+  if(YANDEX_SKILL_ID && String(session.skill_id)!==YANDEX_SKILL_ID)return 'SKILL_ID_MISMATCH';
+  return null;
+}
+
+function validateAliceUser(body){
+  if(!YANDEX_ALLOWED_USER_HASH)return null;
+  const raw=String(body&&body.session&&body.session.user&&body.session.user.user_id||'');
+  if(!raw)return 'NO_AUTHORIZED_USER';
+  const got=crypto.createHash('sha256').update(raw,'utf8').digest();
+  let want;
+  try{want=Buffer.from(String(YANDEX_ALLOWED_USER_HASH),'hex');}catch{return 'BAD_USER_ALLOWLIST';}
+  if(want.length!==got.length)return 'BAD_USER_ALLOWLIST';
+  return crypto.timingSafeEqual(got,want)?null:'USER_NOT_ALLOWED';
+}
+
+function isLaunchOnly(command){
+  const c=String(command||'').trim().toLowerCase().replace(/ё/g,'е');
+  if(!c)return true;
+  return /^(запусти|открой|запустить|открыть)\s+(навык\s+)?(мой помощник|компьютерный помощник елены)$/.test(c);
+}
+
+function buildAliceResponse(out){
+  const reply=String((out&&out.reply)||'Готово.').trim()||'Готово.';
+  const voice=String((out&&(out.voiceText||out.speakOnly))||reply).trim()||reply;
+  return {
+    response:{
+      text:reply.slice(0,1800),
+      tts:voice.slice(0,2200),
+      end_session:false
+    },
+    version:'1.0'
+  };
+}
+
+async function runWithBudget(factory, elapsedMs=0){
+  const remaining=Math.max(250,ALICE_REQUEST_BUDGET_MS-Number(elapsedMs||0));
+  let timer=null;
+  try{
+    return await Promise.race([
+      Promise.resolve().then(factory),
+      new Promise(resolve=>{
+        timer=setTimeout(()=>resolve({
+          reply:'Команда заняла слишком много времени. Я не считаю действие выполненным. Попробуй ещё раз.',
+          timeout:true
+        }),remaining);
+      })
+    ]);
+  } finally {
+    if(timer)clearTimeout(timer);
+  }
+}
+
+module.exports={validateAliceRequest,validateAliceUser,isLaunchOnly,buildAliceResponse,runWithBudget};
+};
+
 
 __modules["src/app.js"] = function(module, exports, __require, require) {
 const express = require('express');
 const { VERSION } = __require("src/config.js");
+const { validateAliceRequest, validateAliceUser, isLaunchOnly, buildAliceResponse, runWithBudget } = __require("src/core/alice-protocol.js");
 const { buildRequestContext } = __require("src/core/request-context.js");
 const { ContextStore } = __require("src/core/context-store.js");
 const { ToolRegistry } = __require("src/core/tool-registry.js");
@@ -117,7 +246,25 @@ const pcTool = __require("src/tools/pc.js");
 
 function createApp() {
   const app = express();
+
+  // Earliest possible request marker. It intentionally logs no body, token,
+  // IP address or user content; it exists so transport failures can be
+  // distinguished from JSON/protocol failures.
+  app.use((req,res,next)=>{
+    if(req.path==='/alice' && req.method==='POST'){
+      console.log('[alice-in]',Date.now());
+    }
+    next();
+  });
+
   app.use(express.json({limit:'1mb'}));
+  app.use((err,req,res,next)=>{
+    if(err && req.path==='/alice'){
+      console.warn('[alice][reject]','json_parse_error');
+      return res.status(400).json({ok:false,error:'invalid_json'});
+    }
+    next(err);
+  });
 
   const context = new ContextStore();
   const storage = new GitHubStorage();
@@ -146,8 +293,7 @@ function createApp() {
   app.get('/health',(req,res)=>{
     const s=pcBridge.status();
     const safeMeta=s.meta ? {
-      version:s.meta.version||null,
-      telemetry:s.meta.telemetry||null
+      version:s.meta.version||null
     } : null;
     res.json({
       ok:true,
@@ -158,6 +304,7 @@ function createApp() {
         count:capabilities.list().length,
         summary:capabilities.summary()
       },
+      storage:storage.securityStatus(),
       pc:{
         configured:s.configured,
         online:s.online,
@@ -171,7 +318,8 @@ function createApp() {
     ok:true,
     version:VERSION,
     principle:'one_yandex_skill_one_server_one_windows_agent',
-    capabilities:capabilities.list()
+    capabilities:capabilities.list(),
+    masterPlan:capabilities.masterPlan()
   }));
 
   app.get('/alice',(req,res)=>res.json({status:'ok',text:'Smart Assistant Core работает',version:VERSION}));
@@ -184,31 +332,20 @@ function createApp() {
     req.on('close',()=>clients.delete(res));
   });
 
-  // Без вывода любых секретов.
-  app.get('/debug',(req,res)=>res.json({
-    ok:true,
-    version:VERSION,
-    storageConfigured:!!process.env.GH_TOKEN,
-    repository:process.env.GH_REPO||'elmaltsewa-dev/alice-server',
-    registeredTools:registry.list()
-  }));
-
   app.post('/pc/heartbeat',(req,res)=>{
     if(!pcBridge.authorize(req))return res.status(401).json({ok:false});
     const b=req.body||{},machine=String(b.machine||'home-pc-v2');
     const meta={version:String(b.version||'')};
-    if(b.telemetry && typeof b.telemetry==='object'){
-      meta.telemetry=b.telemetry;
-    }
     pcBridge.heartbeat(machine,meta);
     res.json({ok:true,serverTime:Date.now()});
   });
 
-  app.get('/pc/poll',(req,res)=>{
+  app.get('/pc/poll',async(req,res)=>{
     if(!pcBridge.authorize(req))return res.status(401).json({ok:false});
     const machine=String(req.query.machine||'home-pc-v2');
     pcBridge.heartbeat(machine,{});
-    res.json({ok:true,job:pcBridge.poll(machine)});
+    const job=await pcBridge.pollWait(machine,900);
+    res.json({ok:true,job});
   });
 
   app.post('/pc/result',(req,res)=>{
@@ -223,56 +360,58 @@ function createApp() {
     const body=req.body||{};
     const request=body.request||{};
     const session=body.session||{};
+    const traceId=String(session.session_id||'no-session').slice(0,12)+'-'+String(session.message_id??'x');
+
+    const validation=validateAliceRequest(body);
+    if(validation){
+      console.warn('[alice][reject]',traceId,validation);
+      return res.status(validation==='SKILL_ID_MISMATCH'?403:400).json({ok:false,error:'invalid_alice_request'});
+    }
 
     // Yandex Dialogs health-check. Keep this path synchronous and minimal.
     if(String(request.original_utterance||'').trim().toLowerCase()==='ping'){
-      const text='Мой помощник на связи.';
-      console.log('[alice] ping',Date.now()-started+'ms');
-      return res.status(200).json({
-        response:{text,tts:text,end_session:false},
-        version:'1.0'
-      });
+      const out={reply:'Мой помощник на связи.'};
+      console.log('[alice]',traceId,'ping',Date.now()-started+'ms');
+      return res.status(200).json(buildAliceResponse(out));
     }
 
-    // First launch from Station must never depend on tools, GitHub or Windows Agent.
-    if(session.new===true){
-      const text='Мой помощник на связи. Что сделать на компьютере?';
-      console.log('[alice] new-session',Date.now()-started+'ms');
-      return res.status(200).json({
-        response:{text,tts:text,end_session:false},
-        version:'1.0'
-      });
+    const userValidation=validateAliceUser(body);
+    if(userValidation){
+      console.warn('[alice][reject]',traceId,userValidation);
+      return res.status(403).json({ok:false,error:'user_not_allowed'});
     }
 
     const ctx=buildRequestContext(body);
+
+    // A plain launch gets an immediate answer. A direct first-turn command is NOT discarded.
+    if(session.new===true && isLaunchOnly(ctx.command)){
+      const out={reply:'Мой помощник на связи. Что сделать на компьютере?'};
+      console.log('[alice]',traceId,'new-session',Date.now()-started+'ms');
+      return res.status(200).json(buildAliceResponse(out));
+    }
+
     let out;
     try{
-      out=await route(ctx,runtime);
+      out=await runWithBudget(()=>route(ctx,runtime),Date.now()-started);
     }catch(e){
-      console.error('[alice]',e.stack||e.message);
+      console.error('[alice]',traceId,e.stack||e.message);
       out={reply:'Произошла внутренняя ошибка. Попробуй ещё раз.'};
     }
 
-    if(out&&(out.html||out.speakOnly||out.stopSpeak)){
+    if(out&&(out.html||out.speakOnly||out.voiceText||out.stopSpeak)){
       const view={};
       if(out.html)view.html=out.html;
       if(out.speakOnly)view.speak=out.speakOnly;
+      else if(out.voiceText)view.speak=out.voiceText;
       if(out.stopSpeak)view.stopSpeak=true;
       sendView(view);
     }
 
-    const text=String((out&&out.reply)||'Готово.').slice(0,1024);
-    console.log('[alice]',ctx.command||'<empty>',Date.now()-started+'ms');
+    const traceIntent=context.session(ctx.sessionId).lastIntent||'handled';
+    console.log('[alice]',traceId,traceIntent,Date.now()-started+'ms',
+      out&&out.timeout?'deadline':'');
 
-    // Strict Yandex Dialogs response schema.
-    return res.status(200).json({
-      response:{
-        text,
-        tts:text,
-        end_session:false
-      },
-      version:'1.0'
-    });
+    return res.status(200).json(buildAliceResponse(out));
   });
 
   app.get('/',(req,res)=>res.send(panelHtml(VERSION)));
@@ -286,7 +425,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '2.0.1-unified-router-regression-fix',
+  VERSION: '2.1.0-foundation-hardening-candidate',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -294,7 +433,12 @@ module.exports = {
   SESSION_TTL_MS: 30 * 60 * 1000,
   USER_CONTEXT_TTL_MS: 24 * 60 * 60 * 1000,
   PC_AGENT_TOKEN: process.env.PC_AGENT_TOKEN || '',
-  PC_AGENT_TTL_MS: 45 * 1000
+  PC_AGENT_TTL_MS: 45 * 1000,
+  DATA_ENCRYPTION_KEY: process.env.DATA_ENCRYPTION_KEY || '',
+  YANDEX_SKILL_ID: process.env.YANDEX_SKILL_ID || 'c2f72b52-4634-45c1-b74f-e7a533e0aaab',
+  YANDEX_ALLOWED_USER_HASH: process.env.YANDEX_ALLOWED_USER_HASH || 'a3de64fdc2eb15c76e9eb12175fcfcac143e133cab342a30abac2aaae6943eab',
+  ALICE_REQUEST_BUDGET_MS: Number(process.env.ALICE_REQUEST_BUDGET_MS || 3300),
+  EXTERNAL_FETCH_TIMEOUT_MS: Number(process.env.EXTERNAL_FETCH_TIMEOUT_MS || 1300)
 };
 
 };
@@ -326,7 +470,10 @@ class ContextStore {
       lastResults: [],
       selectedIndex: null,
       pendingClarification: null,
-      lastReferencedObject: null
+      pendingStack: [],
+      lastReferencedObject: null,
+      lastUserCommand: null,
+      actionHistory: []
     }));
   }
 
@@ -335,15 +482,38 @@ class ContextStore {
       lastIntent: null,
       lastTool: null,
       lastResults: [],
-      lastReferencedObject: null
+      lastReferencedObject: null,
+      lastUserCommand: null,
+      actionHistory: []
     }));
   }
 
   remember(ctx, patch) {
     const s = this.session(ctx.sessionId);
     const u = this.user(ctx.userId);
-    Object.assign(s, patch || {});
-    Object.assign(u, patch || {});
+    const p = { ...(patch || {}) };
+
+    // Pending clarification is session-scoped. Never leak it into the user
+    // context, otherwise a new Alice session can inherit a stale confirmation.
+    if (Object.prototype.hasOwnProperty.call(p, 'pendingClarification')) {
+      const nextPending = p.pendingClarification;
+      delete p.pendingClarification;
+      this.setPending(ctx, nextPending);
+    }
+
+    Object.assign(s, p);
+
+    // Persist only cross-session conversational references. Window/tab/file
+    // enumerations and confirmation state belong to one live session.
+    const sessionOnly = new Set([
+      'pendingStack','selectedIndex','lastPcWindows','lastBrowserTabs',
+      'lastFileResults','lastAppCandidates','lastPcContext'
+    ]);
+    const userPatch = {};
+    for (const [k, v] of Object.entries(p)) {
+      if (!sessionOnly.has(k)) userPatch[k] = v;
+    }
+    Object.assign(u, userPatch);
   }
 
   resolveOrdinal(text) {
@@ -366,6 +536,58 @@ class ContextStore {
     const s = this.session(ctx.sessionId);
     const u = this.user(ctx.userId);
     return s.lastReferencedObject || u.lastReferencedObject || null;
+  }
+
+  setPending(ctx, pending) {
+    const s=this.session(ctx.sessionId);
+    if(!Array.isArray(s.pendingStack))s.pendingStack=[];
+
+    if(!pending){
+      s.pendingClarification=null;
+      s.pendingStack=[];
+      return null;
+    }
+
+    // Preserve the previous live clarification only when a genuinely nested
+    // clarification is created.
+    if(s.pendingClarification){
+      s.pendingStack.push(s.pendingClarification);
+      if(s.pendingStack.length>5)s.pendingStack.splice(0,s.pendingStack.length-5);
+    }
+
+    s.pendingClarification={...pending,createdAt:Number(pending.createdAt||Date.now())};
+    return s.pendingClarification;
+  }
+
+  peekPending(ctx) {
+    const s=this.session(ctx.sessionId);
+    return s.pendingClarification||null;
+  }
+
+  clearPending(ctx, restorePrevious=true) {
+    const s=this.session(ctx.sessionId);
+    const current=s.pendingClarification||null;
+    s.pendingClarification=(restorePrevious && Array.isArray(s.pendingStack) && s.pendingStack.length)
+      ? s.pendingStack.pop()
+      : null;
+    if(!restorePrevious && Array.isArray(s.pendingStack))s.pendingStack=[];
+    return current;
+  }
+
+  clearAllPending(ctx) {
+    return this.clearPending(ctx,false);
+  }
+
+  recordAction(ctx, action) {
+    const s=this.session(ctx.sessionId);
+    if(!Array.isArray(s.actionHistory))s.actionHistory=[];
+    s.actionHistory.push({...action,at:Date.now()});
+    if(s.actionHistory.length>20)s.actionHistory.splice(0,s.actionHistory.length-20);
+  }
+
+  lastAction(ctx) {
+    const s=this.session(ctx.sessionId);
+    return Array.isArray(s.actionHistory)&&s.actionHistory.length?s.actionHistory[s.actionHistory.length-1]:null;
   }
 
   cleanup() {
@@ -391,6 +613,7 @@ function detectIntent(ctx, contextStore) {
 
   if (/^(да|ага|подтверждаю|хорошо)$/.test(c)) return { name: 'CONFIRM_YES', confidence: 1 };
   if (/^(нет|не надо|отмена|отмени)$/.test(c)) return { name: 'CONFIRM_NO', confidence: 1 };
+  if (/^(повтори|повтори еще раз|повтори ещё раз)$/.test(c)) return { name: 'REPEAT', confidence: 1 };
 
   if (/^(нажми|кликни|щёлкни|щелкни|выбери)\s+/.test(c)) {
     return { name: 'PC', confidence: .99 };
@@ -405,14 +628,14 @@ function detectIntent(ctx, contextStore) {
     return { name: 'CONTEXT_ACT', confidence: .95 };
   }
 
-  if (includesAny(c, ['не понимаю', 'что произошло', 'что случилось', 'помоги', 'что нажать', 'куда нажать', 'что здесь нажать', 'куда пропало', 'не могу открыть'])) {
+  if (includesAny(c, ['не понимаю', 'что произошло', 'что случилось', 'помоги', 'что нажать', 'что мне нажать', 'куда нажать', 'что здесь нажать', 'куда пропало', 'куда все пропало', 'не могу открыть'])) {
     return { name: 'HELP_ME', confidence: .92 };
   }
 
   if (/привет|здравствуй|добрый (день|вечер|утро)/.test(c)) return { name: 'GREETING', confidence: .98 };
   if (/помощь|что ты умеешь/.test(c)) return { name: 'HELP', confidence: .98 };
 
-  if (/который час|сколько времени|время сейчас|какое число|какая дата|день недели|неделя года|до нового года|время в мире|какое число будет через|сколько.*(прошло|до)/.test(c)) {
+  if (/который час|сколько времени|время сейчас|какое( сегодня)? число|какая дата|день недели|неделя года|до нового года|время в мире|время в [а-яa-z-]+|какое число будет через|сколько.*(прошло|до)/.test(c)) {
     return { name: 'TIME_DATE', confidence: .95 };
   }
 
@@ -432,7 +655,7 @@ function detectIntent(ctx, contextStore) {
     return { name: 'NOTES', confidence: .92 };
   }
 
-  if (/погода|будет дождь|нужна куртка|уф|рассвет|закат|прогноз на неделю|фаз.*луны/.test(c)) {
+  if (/погода|будет дождь|нужна куртка|(?:^|\s)(уф|ультрафиолет)(?:\s|$)|рассвет|закат|прогноз на неделю|фаз.*луны/.test(c)) {
     return { name: 'WEATHER', confidence: .98 };
   }
 
@@ -440,7 +663,7 @@ function detectIntent(ctx, contextStore) {
     return { name: 'CALCULATOR', confidence: .9 };
   }
 
-  if (/переведи|как по-английски/.test(c)) {
+  if (/переведи|как по[- ]английски/.test(c)) {
     return { name: 'TRANSLATE', confidence: .9 };
   }
 
@@ -525,6 +748,7 @@ module.exports = { buildRequestContext, normalizeText };
 
 __modules["src/core/router.js"] = function(module, exports, __require, require) {
 const { detectIntent } = __require("src/core/intent-engine.js");
+const { classifyCommand } = __require("src/core/safety.js");
 
 const MAP = {
   TIME_DATE:'time_date',
@@ -545,25 +769,41 @@ async function route(ctx, runtime) {
   let intent = detectIntent(ctx, runtime.context);
   const capMatch=runtime.capabilities&&runtime.capabilities.match(ctx.command);
   if(capMatch){
-    const reverse={pc:'PC',browser:'BROWSER',tasks:'TASKS',lists:'LISTS',notes:'NOTES',timer:'TIMER',
-      weather:'WEATHER',calculator:'CALCULATOR',translate:'TRANSLATE',knowledge:'KNOWLEDGE'};
-    const desired=reverse[capMatch.tool];
-    const legacyConfidence=Number(intent.confidence||0);
-    const shouldOverride=Boolean(desired) && (
-      intent.name==='UNKNOWN' ||
-      (intent.name==='BROWSER' && desired==='PC' && capMatch.confidence>=.90) ||
-      (desired==='PC' && capMatch.confidence>legacyConfidence)
-    );
-    if(shouldOverride){
-      intent={name:desired,confidence:capMatch.confidence,capabilityId:capMatch.id};
+    const executor=String(capMatch.tool||'');
+    const reverse={
+      pc:'PC','pc-ui':'PC','core-pc':'PC',
+      browser:'BROWSER','browser-ui':'PC',
+      tasks:'TASKS',lists:'LISTS',notes:'NOTES',timer:'TIMER',
+      weather:'WEATHER',calculator:'CALCULATOR',translate:'TRANSLATE',
+      knowledge:'KNOWLEDGE',entertainment:'ENTERTAINMENT'
+    };
+    const desired=reverse[executor];
+    const cap=capMatch.capability||{};
+    if(cap.id==='help.mode'){
+      intent={name:'HELP_ME',confidence:capMatch.confidence,capabilityId:cap.id};
+    }else if(desired && (capMatch.exact || intent.name==='UNKNOWN' ||
+      capMatch.confidence>Number(intent.confidence||0) ||
+      (intent.name==='CONTEXT_PREV' && cap.id==='browser.navigation'))){
+      intent={name:desired,confidence:capMatch.confidence,capabilityId:cap.id};
     }
   }
-  runtime.context.remember(ctx,{lastIntent:intent.name,lastCapability:intent.capabilityId||null});
+
+  if(!['CONFIRM_YES','CONFIRM_NO','REPEAT'].includes(intent.name) && ctx.command){
+    runtime.context.remember(ctx,{lastUserCommand:ctx.command});
+  }
+  runtime.context.remember(ctx,{lastIntent:intent.name,lastCapability:intent.capabilityId||(capMatch&&capMatch.id)||null});
 
   if(intent.name==='EMPTY')return{reply:'Я слушаю.'};
   if(intent.name==='GREETING')return{reply:'Привет. Я на связи.'};
   if(intent.name==='HELP'){
     return{reply:'Говори обычными словами. Я умею работать с программами, окнами и вкладками, файлами, интерфейсом Windows, браузером, заметками, задачами, списками, погодой, расчётами и другими подключёнными функциями. Если команда неоднозначна, я уточню.'};
+  }
+
+  if(intent.name==='REPEAT'){
+    const s=runtime.context.session(ctx.sessionId);
+    const last=String(s.lastUserCommand||'').trim();
+    if(!last)return{reply:'Пока нечего повторять.'};
+    return await route({...ctx,command:last,isRepeat:true},runtime);
   }
 
   if(intent.name==='HELP_ME'){
@@ -579,7 +819,7 @@ async function route(ctx, runtime) {
       const items=Array.isArray(s.lastFileResults)?s.lastFileResults:[];
       if(!n||!items[n-1])return{reply:'Такого файла в последнем списке нет.'};
       const item=items[n-1];
-      s.pendingClarification=null;
+      runtime.context.clearAllPending(ctx);
       const r=await runtime.pcBridge.run('open_path',{path:item.path});
       if(!r||r.ok===false)return{reply:'Не получилось открыть «'+String(item.name||'файл')+'».'};
       runtime.context.remember(ctx,{lastReferencedObject:{type:'file',...item}});
@@ -590,7 +830,7 @@ async function route(ctx, runtime) {
       const items=Array.isArray(s.lastPcWindows)?s.lastPcWindows:[];
       if(!n||!items[n-1])return{reply:'Такого окна в последнем списке нет.'};
       const item=items[n-1];
-      s.pendingClarification=null;
+      runtime.context.clearAllPending(ctx);
       const r=await runtime.pcBridge.run('switch_window',{processId:item.processId});
       if(!r||r.ok===false)return{reply:'Не получилось переключиться на это окно.'};
       return{reply:'Переключилась на «'+String(item.title||item.process||'окно')+'».'};
@@ -600,7 +840,7 @@ async function route(ctx, runtime) {
       const items=Array.isArray(s.lastAppCandidates)?s.lastAppCandidates:[];
       if(!n||!items[n-1])return{reply:'Такой программы в последнем списке нет.'};
       const item=items[n-1];
-      s.pendingClarification=null;
+      runtime.context.clearAllPending(ctx);
       // Shortcut path is under Start Menu and can be launched as a path only by the agent's generic resolver.
       const r=await runtime.pcBridge.run('open_app_generic',{query:item.name});
       if(!r||r.ok===false)return{reply:'Не получилось открыть «'+String(item.name||'программу')+'».'};
@@ -615,7 +855,7 @@ async function route(ctx, runtime) {
 
       const tab=tabs[n-1];
       const pending=s.pendingClarification;
-      s.pendingClarification=null;
+      runtime.context.clearAllPending(ctx);
 
       const r=await runtime.pcBridge.run('activate_browser_tab',{
         index:n,
@@ -666,14 +906,22 @@ async function route(ctx, runtime) {
   }
 
   if(intent.name==='CONFIRM_YES'||intent.name==='CONFIRM_NO'){
-    const s=runtime.context.session(ctx.sessionId);
-    const pending=s.pendingClarification;
+    const pending=runtime.context.peekPending(ctx);
     if(!pending)return{reply:'Сейчас нечего подтверждать.'};
+    runtime.context.clearPending(ctx);
 
-    s.pendingClarification=null;
+    if(pending.createdAt && Date.now()-pending.createdAt>45000){
+      runtime.context.clearAllPending(ctx);
+      return{reply:'Подтверждение уже устарело. Повтори исходную команду.'};
+    }
 
     if(intent.name==='CONFIRM_NO'){
+      runtime.context.clearAllPending(ctx);
       return{reply:pending.type==='pc_ui_action'?'Хорошо, не нажимаю.':'Хорошо, отменяю.'};
+    }
+
+    if(pending.type==='destructive_command'){
+      return await route({...ctx,command:pending.command,confirmedDangerous:true},runtime);
     }
 
     if(pending.type==='pc_ui_action'){
@@ -686,15 +934,41 @@ async function route(ctx, runtime) {
           NOT_FOUND:'Элемент уже не найден. Ничего не нажала.',
           AMBIGUOUS:'На экране несколько одинаковых элементов. Ничего не нажала.',
           NOT_SUPPORTED:'Этот элемент пока нельзя безопасно нажать через Windows Automation.',
-          BLOCKED:'Это действие пока заблокировано из соображений безопасности.',
+          BLOCKED:'Это действие заблокировано из соображений безопасности.',
+          BLOCKED_CONTEXT:'Контекст окна изменился и теперь похож на удаление, установку, отправку или другое опасное действие. Ничего не нажала.',
+          RESULT_TIMEOUT:'Команду передала, но компьютер не успел подтвердить результат. Я не считаю нажатие выполненным.',
           FAILED:'Не получилось выполнить нажатие. Ничего повторно не нажимаю.'
         };
         return{reply:errors[code]||'Не получилось выполнить нажатие. Ничего повторно не нажимаю.'};
       }
+      runtime.context.recordAction(ctx,{type:'pc_ui_action',label:pending.label,args:pending.args});
       return{reply:'Готово. Нажала «'+String(pending.label||'элемент')+'».'};
     }
 
     return{reply:'Поняла.'};
+  }
+
+  const safety=classifyCommand(ctx.command);
+  if(safety.requiresConfirmation && !ctx.confirmedDangerous){
+    runtime.context.setPending(ctx,{
+      type:'destructive_command',
+      command:ctx.command,
+      reason:safety.reason
+    });
+    return{reply:'Это действие удалит или очистит данные. Подтвердить выполнение?'};
+  }
+
+  if(capMatch && capMatch.capability){
+    const impl=String(capMatch.actionStatus||capMatch.capability.implementation||'');
+    if(impl==='planned'){
+      return{reply:'Эта возможность есть в утверждённом плане, но исполнитель для неё ещё не подключён.'};
+    }
+    if(impl==='blocked'){
+      return{reply:'Эта операция предусмотрена, но пока заблокирована до завершения усиленной проверки безопасности.'};
+    }
+    if(impl==='external'){
+      return{reply:'Для этой возможности нужен отдельный актуальный источник данных. Сейчас он ещё не подключён.'};
+    }
   }
 
   if(intent.name==='UNKNOWN'){
@@ -716,14 +990,46 @@ __modules["src/core/safety.js"] = function(module, exports, __require, require) 
 const RISK = {
   READ: 'read',
   CHANGE: 'change',
+  CONFIRM: 'confirm',
   DANGEROUS: 'dangerous'
 };
 
-function requiresConfirmation(risk) {
-  return risk === RISK.DANGEROUS;
+function normalize(v){return String(v||'').toLowerCase().replace(/ё/g,'е').replace(/\s+/g,' ').trim();}
+
+function classifyCommand(command){
+  const c=normalize(command);
+  const destructive=[
+    /удали задачу/,
+    /очисти выполненные/,
+    /удали\s+\d+\s+из/,
+    /очисти список/,
+    /удали список/,
+    /удали заметку/,
+    /очисти заметки/,
+    /очисти буфер обмена/
+  ];
+  if(destructive.some(re=>re.test(c))){
+    return {risk:RISK.DANGEROUS,requiresConfirmation:true,reason:'destructive_user_data'};
+  }
+  return {risk:RISK.CHANGE,requiresConfirmation:false,reason:null};
 }
 
-module.exports = { RISK, requiresConfirmation };
+function dangerousUiContext(target, window, labels){
+  const text=[
+    target&&target.name,
+    window&&window.title,
+    ...(Array.isArray(labels)?labels:[])
+  ].filter(Boolean).join(' ').toLowerCase().replace(/ё/g,'е');
+
+  const risky=/удал|delete|remove|стер|format|формат|сброс|reset|factory|деинстал|uninstall|оплат|платеж|купить|purchase|pay|заказать|отправить|send|publish|опубликов|перезагруз|restart|выключ|shutdown|установ|install|очистк.*диск|безвозврат/;
+  return risky.test(text);
+}
+
+function requiresConfirmation(risk) {
+  return risk === RISK.DANGEROUS || risk === RISK.CONFIRM;
+}
+
+module.exports = { RISK, requiresConfirmation, classifyCommand, dangerousUiContext };
 
 };
 
@@ -748,6 +1054,11 @@ class ToolRegistry {
   async run(name, input, runtime) {
     const tool = this.tools.get(name);
     if (!tool) throw new Error(`Unknown tool: ${name}`);
+    const risk=String(tool.risk||'read');
+    const ctx=(input&&input.ctx)||{};
+    if(risk==='dangerous' && !ctx.confirmedDangerous){
+      return {reply:'Это опасное действие требует отдельного подтверждения.',policyBlocked:true};
+    }
     return await tool.run(input || {}, runtime || {});
   }
 
@@ -765,6 +1076,7 @@ module.exports = { ToolRegistry };
 };
 
 __modules["src/pc/bridge.js"] = function(module, exports, __require, require) {
+const crypto = require("crypto");
 const { PC_AGENT_TOKEN, PC_AGENT_TTL_MS } = __require("src/config.js");
 
 class PcBridge {
@@ -772,15 +1084,17 @@ class PcBridge {
     this.agents = new Map();
     this.jobs = [];
     this.waiters = new Map();
+    this.pollWaiters = new Map();
   }
 
-  configured() {
-    return !!PC_AGENT_TOKEN;
-  }
+  configured() { return !!PC_AGENT_TOKEN; }
 
   authorize(req) {
     if (!PC_AGENT_TOKEN) return false;
-    return String(req.headers.authorization || '') === 'Bearer ' + PC_AGENT_TOKEN;
+    const got=Buffer.from(String(req.headers.authorization||''),'utf8');
+    const want=Buffer.from('Bearer '+PC_AGENT_TOKEN,'utf8');
+    if(got.length!==want.length)return false;
+    return crypto.timingSafeEqual(got,want);
   }
 
   heartbeat(machine, meta = {}) {
@@ -810,20 +1124,47 @@ class PcBridge {
   enqueue(action, args = {}, machine = 'home-pc-v2') {
     const id = 'job_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
     const job = { id, machine, action, args, createdAt: Date.now() };
-    this.jobs.push(job);
+    const waiting=this.pollWaiters.get(machine);
+    if(waiting){
+      this.pollWaiters.delete(machine);
+      waiting(job);
+    }else{
+      this.jobs.push(job);
+    }
     return job;
   }
 
   poll(machine = 'home-pc-v2') {
     const now=Date.now();
-    // Never execute an old UI command after reconnect/sleep.
     this.jobs=this.jobs.filter(j=>now-j.createdAt<=10000);
     const i = this.jobs.findIndex(j => j.machine === machine);
     if (i < 0) return null;
     return this.jobs.splice(i, 1)[0];
   }
 
-  waitResult(id, timeoutMs = 2200) {
+  pollWait(machine='home-pc-v2', timeoutMs=900){
+    const immediate=this.poll(machine);
+    if(immediate)return Promise.resolve(immediate);
+    return new Promise(resolve=>{
+      let done=false;
+      const finish=job=>{
+        if(done)return;
+        done=true;
+        clearTimeout(timer);
+        if(this.pollWaiters.get(machine)===finish)this.pollWaiters.delete(machine);
+        resolve(job||null);
+      };
+      const timer=setTimeout(()=>finish(null),timeoutMs);
+      const previous=this.pollWaiters.get(machine);
+      if(previous){
+        this.pollWaiters.delete(machine);
+        try{previous(null);}catch{}
+      }
+      this.pollWaiters.set(machine,finish);
+    });
+  }
+
+  waitResult(id, timeoutMs = 2800) {
     return new Promise(resolve => {
       const timer = setTimeout(() => {
         this.waiters.delete(id);
@@ -844,12 +1185,20 @@ class PcBridge {
   }
 
   async run(action, args = {}, machine = 'home-pc-v2') {
-    if (!this.configured()) return { ok:false, code:'NOT_CONFIGURED', message:'Windows Agent ещё не настроен.' };
-    if (!this.online(machine)) return { ok:false, code:'OFFLINE', message:'Компьютер сейчас не на связи. Возможно, он выключен или спит.' };
+    if (!this.configured()) return { ok:false, code:'NOT_CONFIGURED', state:'rejected' };
+    if (!this.online(machine)) return { ok:false, code:'OFFLINE', state:'rejected' };
     const job = this.enqueue(action, args, machine);
-    const result = await this.waitResult(job.id, 2200);
-    if (!result) return { ok:true, accepted:true, message:'Команду компьютеру передала.' };
-    return result;
+    const result = await this.waitResult(job.id, 2800);
+    if (!result) {
+      return {
+        ok:false,
+        code:'RESULT_TIMEOUT',
+        state:'timeout_unknown',
+        accepted:true,
+        message:'Agent did not confirm completion before deadline.'
+      };
+    }
+    return { ...result, state:result.ok===false?'completed_error':'completed_ok' };
   }
 }
 
@@ -857,7 +1206,36 @@ module.exports = { PcBridge };
 
 };
 
-__modules["src/services/weather.js"] = function(module, exports, __require, require) {
+
+__modules["src/core/http.js"] = function(module, exports, __require, require) {
+const { EXTERNAL_FETCH_TIMEOUT_MS } = __require("src/config.js");
+
+async function fetchWithTimeout(url, options={}, timeoutMs=EXTERNAL_FETCH_TIMEOUT_MS){
+  const controller=new AbortController();
+  const parentSignal=options&&options.signal;
+  let parentAbort=null;
+  if(parentSignal){
+    if(parentSignal.aborted)controller.abort();
+    else{
+      parentAbort=()=>controller.abort();
+      parentSignal.addEventListener('abort',parentAbort,{once:true});
+    }
+  }
+  const timer=setTimeout(()=>controller.abort(),Math.max(250,Number(timeoutMs)||EXTERNAL_FETCH_TIMEOUT_MS));
+  try{
+    return await globalThis.fetch(url,{...(options||{}),signal:controller.signal});
+  } finally {
+    clearTimeout(timer);
+    if(parentSignal&&parentAbort)parentSignal.removeEventListener('abort',parentAbort);
+  }
+}
+
+module.exports={fetchWithTimeout};
+};
+
+
+__modules["src/services/weather.js"] = function(module, exports, __require, require) {const { fetchWithTimeout } = __require("src/core/http.js");
+
 const WMO = {
   0:'ясно',1:'в основном ясно',2:'переменная облачность',3:'пасмурно',
   45:'туман',48:'туман',51:'морось',53:'морось',55:'морось',
@@ -872,7 +1250,7 @@ function isRain(c){ return (c>=51&&c<=67)||(c>=80&&c<=82)||(c>=95&&c<=99); }
 
 async function geoCity(name) {
   try {
-    const r = await fetch('https://geocoding-api.open-meteo.com/v1/search?name=' +
+    const r = await fetchWithTimeout('https://geocoding-api.open-meteo.com/v1/search?name=' +
       encodeURIComponent(name) + '&count=1&language=ru&format=json');
     const j = await r.json();
     return j.results && j.results[0] ? j.results[0] : null;
@@ -888,7 +1266,7 @@ async function weatherFor(lat, lon) {
     '&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m' +
     '&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max' +
     '&timezone=auto&forecast_days=7';
-  const r = await fetch(url);
+  const r = await fetchWithTimeout(url);
   if (!r.ok) throw new Error(`Weather HTTP ${r.status}`);
   return await r.json();
 }
@@ -897,13 +1275,37 @@ module.exports = { geoCity, weatherFor, wmo, isRain };
 
 };
 
-__modules["src/services/web.js"] = function(module, exports, __require, require) {
+__modules["src/services/web.js"] = function(module, exports, __require, require) {const { fetchWithTimeout } = __require("src/core/http.js");
+
 function decode(s){return String(s).replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#039;/g,"'").replace(/&amp;/g,'&');}
 function strip(s){return decode(String(s).replace(/<[^>]+>/g,''));}
 
+function isSafePublicUrl(raw){
+  let u;
+  try{u=new URL(raw);}catch{return false;}
+  if(!['http:','https:'].includes(u.protocol))return false;
+  const h=String(u.hostname||'').toLowerCase().replace(/^\[|\]$/g,'');
+  if(!h || h==='localhost' || h.endsWith('.localhost') || h.endsWith('.local'))return false;
+
+  // Reject private/link-local IP literals. Hostname DNS rebinding is outside
+  // this lightweight reader's trust model, so the direct fallback remains
+  // read-only and tightly timed.
+  if(/^(\d{1,3}\.){3}\d{1,3}$/.test(h)){
+    const p=h.split('.').map(Number);
+    if(p.some(x=>x<0||x>255))return false;
+    if(p[0]===10 || p[0]===127 || p[0]===0)return false;
+    if(p[0]===169&&p[1]===254)return false;
+    if(p[0]===172&&p[1]>=16&&p[1]<=31)return false;
+    if(p[0]===192&&p[1]===168)return false;
+    if(p[0]===100&&p[1]>=64&&p[1]<=127)return false;
+  }
+  if(h==='::1' || h.startsWith('fc') || h.startsWith('fd') || h.startsWith('fe80:'))return false;
+  return true;
+}
+
 async function ddgSearch(q,p){
   try{
-    const r=await fetch('https://lite.duckduckgo.com/lite/?q='+encodeURIComponent(q)+(p?'&s='+(p*10):''),{headers:{'User-Agent':'Mozilla/5.0'}});
+    const r=await fetchWithTimeout('https://lite.duckduckgo.com/lite/?q='+encodeURIComponent(q)+(p?'&s='+(p*10):''),{headers:{'User-Agent':'Mozilla/5.0'}});
     const h=await r.text();const out=[];const re=/<a[^>]+rel="nofollow"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
     let m;while((m=re.exec(h))&&out.length<6){const t=strip(m[2]).trim();if(m[1].startsWith('http')&&t&&!m[1].includes('duckduckgo'))out.push({title:t,url:m[1]});}
     return out;
@@ -912,7 +1314,7 @@ async function ddgSearch(q,p){
 
 async function ddgHtmlSearch(q,p){
   try{
-    const r=await fetch('https://html.duckduckgo.com/html/?q='+encodeURIComponent(q)+(p?'&s='+(p*10):''),{headers:{'User-Agent':'Mozilla/5.0'}});
+    const r=await fetchWithTimeout('https://html.duckduckgo.com/html/?q='+encodeURIComponent(q)+(p?'&s='+(p*10):''),{headers:{'User-Agent':'Mozilla/5.0'}});
     const h=await r.text();const out=[];const re=/<a[^>]+class="result__a"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
     let m;while((m=re.exec(h))&&out.length<6){let href=m[1];if(href.includes('uddg=')){try{href=decodeURIComponent(href.split('uddg=')[1].split('&')[0]);}catch{}}
       const t=strip(m[2]).trim();if(href.startsWith('http')&&t)out.push({title:t,url:href});}
@@ -922,25 +1324,29 @@ async function ddgHtmlSearch(q,p){
 
 async function bingSearch(q){
   try{
-    const r=await fetch('https://www.bing.com/search?q='+encodeURIComponent(q),{headers:{'User-Agent':'Mozilla/5.0','Accept-Language':'ru-RU,ru;q=0.9'}});
+    const r=await fetchWithTimeout('https://www.bing.com/search?q='+encodeURIComponent(q),{headers:{'User-Agent':'Mozilla/5.0','Accept-Language':'ru-RU,ru;q=0.9'}});
     const h=await r.text();const out=[];const re=/<li class="b_algo"[\s\S]*?<a[^>]+href="(https?:\/\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
     let m;while((m=re.exec(h))&&out.length<6){const t=strip(m[2]).trim();if(t&&!m[1].includes('bing.com')&&!m[1].includes('microsoft.com'))out.push({title:t,url:m[1]});}
     return out;
   }catch(e){console.error('[search.bing]',e.message);return[];}
 }
 
-async function searchAll(q,p=0){let r=await ddgSearch(q,p);if(!r.length)r=await ddgHtmlSearch(q,p);if(!r.length)r=await bingSearch(q);return r;}
+async function searchAll(q,p=0){
+  const all=await Promise.all([ddgSearch(q,p),ddgHtmlSearch(q,p),bingSearch(q)]);
+  for(const r of all)if(Array.isArray(r)&&r.length)return r;
+  return [];
+}
 
 async function readPage(url){
-  try{new URL(url);}catch{return null;}
+  if(!isSafePublicUrl(url))return null;
   try{
-    const r=await fetch('https://r.jina.ai/'+url,{headers:{'User-Agent':'Mozilla/5.0'}});
+    const r=await fetchWithTimeout('https://r.jina.ai/'+url,{headers:{'User-Agent':'Mozilla/5.0'}});
     let t=await r.text();
     t=t.replace(/!?\[([^\]]*)\]\([^)]*\)/g,'$1').replace(/[#>*`_]/g,'').replace(/\n{3,}/g,'\n\n');
     if(t.length>300)return t.slice(0,20000);
   }catch(e){console.error('[read.jina]',e.message);}
   try{
-    const r=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0'}});
+    const r=await fetchWithTimeout(url,{headers:{'User-Agent':'Mozilla/5.0'}});
     let h=await r.text();
     h=h.replace(/<script[\s\S]*?<\/script>/gi,'').replace(/<style[\s\S]*?<\/style>/gi,'');
     const parts=h.match(/<(p|h1|h2|h3|li)[^>]*>([\s\S]*?)<\/(p|h1|h2|h3|li)>/gi)||[];
@@ -957,16 +1363,16 @@ function splitPages(t){
 
 async function wikiSummary(q){
   try{
-    const s=await fetch('https://ru.wikipedia.org/w/api.php?action=opensearch&search='+encodeURIComponent(q)+'&limit=1&format=json&origin=*');
+    const s=await fetchWithTimeout('https://ru.wikipedia.org/w/api.php?action=opensearch&search='+encodeURIComponent(q)+'&limit=1&format=json&origin=*');
     const a=await s.json();const title=a[1]&&a[1][0];if(!title)return null;
-    const r=await fetch('https://ru.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title));
+    const r=await fetchWithTimeout('https://ru.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title));
     const j=await r.json();return j.extract?{title:j.title,text:j.extract}:null;
   }catch(e){console.error('[wiki]',e.message);return null;}
 }
 
 async function translate(t,dir){
   try{
-    const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(t)+'&langpair='+dir);
+    const r=await fetchWithTimeout('https://api.mymemory.translated.net/get?q='+encodeURIComponent(t)+'&langpair='+dir);
     const j=await r.json();return j.responseData?j.responseData.translatedText:null;
   }catch(e){console.error('[translate]',e.message);return null;}
 }
@@ -974,7 +1380,7 @@ async function translate(t,dir){
 
 async function wikiImages(q){
   try{
-    const r=await fetch('https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch='+encodeURIComponent('filetype:bitmap '+q)+'&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url&iiurlwidth=480');
+    const r=await fetchWithTimeout('https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch='+encodeURIComponent('filetype:bitmap '+q)+'&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url&iiurlwidth=480');
     const j=await r.json();const pages=j.query&&j.query.pages?Object.values(j.query.pages):[];
     pages.sort((a,b)=>(a.index||0)-(b.index||0));
     return pages.map(p=>p.imageinfo&&p.imageinfo[0]?{thumb:p.imageinfo[0].thumburl}:null).filter(Boolean);
@@ -983,7 +1389,7 @@ async function wikiImages(q){
 async function onThisDay(){
   try{
     const d=new Date(),mm=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0');
-    const r=await fetch('https://ru.wikipedia.org/api/rest_v1/feed/onthisday/events/'+mm+'/'+dd);
+    const r=await fetchWithTimeout('https://ru.wikipedia.org/api/rest_v1/feed/onthisday/events/'+mm+'/'+dd);
     const j=await r.json();return (j.events||[]).filter(e=>e.text&&e.year).slice(0,5);
   }catch(e){console.error('[onThisDay]',e.message);return[];}
 }
@@ -992,101 +1398,185 @@ module.exports = { searchAll, readPage, splitPages, wikiSummary, translate, wiki
 };
 
 __modules["src/storage/github-storage.js"] = function(module, exports, __require, require) {
+const { fetchWithTimeout } = __require("src/core/http.js");
 const crypto = require('crypto');
-const { GH_TOKEN, GH_REPO, STORAGE_FILE } = __require("src/config.js");
+const {
+  GH_TOKEN, GH_REPO, STORAGE_FILE, DATA_ENCRYPTION_KEY, PC_AGENT_TOKEN
+} = __require("src/config.js");
+
+const AAD=Buffer.from('smart-assistant-storage-v3','utf8');
 
 function userKey(userId) {
   return crypto.createHash('sha256').update(String(userId || 'anonymous')).digest('hex').slice(0, 24);
 }
 
+function storageSecret(){
+  return String(DATA_ENCRYPTION_KEY||PC_AGENT_TOKEN||'');
+}
+
+function deriveKey(){
+  const secret=storageSecret();
+  if(!secret)return null;
+  return crypto.createHash('sha256')
+    .update('storage-v3\0'+secret+'\0'+String(GH_REPO||''))
+    .digest();
+}
+
+function encryptState(state){
+  const key=deriveKey();
+  if(!key)throw new Error('STORAGE_ENCRYPTION_KEY_MISSING');
+  const iv=crypto.randomBytes(12);
+  const cipher=crypto.createCipheriv('aes-256-gcm',key,iv);
+  cipher.setAAD(AAD);
+  const plaintext=Buffer.from(JSON.stringify(state),'utf8');
+  const data=Buffer.concat([cipher.update(plaintext),cipher.final()]);
+  const tag=cipher.getAuthTag();
+  return {
+    schemaVersion:3,
+    encrypted:true,
+    alg:'aes-256-gcm',
+    iv:iv.toString('base64'),
+    tag:tag.toString('base64'),
+    data:data.toString('base64')
+  };
+}
+
+function decryptState(envelope){
+  const key=deriveKey();
+  if(!key)throw new Error('STORAGE_ENCRYPTION_KEY_MISSING');
+  if(!envelope || envelope.schemaVersion!==3 || envelope.encrypted!==true ||
+     envelope.alg!=='aes-256-gcm')throw new Error('BAD_STORAGE_ENVELOPE');
+  const decipher=crypto.createDecipheriv(
+    'aes-256-gcm',key,Buffer.from(String(envelope.iv||''),'base64')
+  );
+  decipher.setAAD(AAD);
+  decipher.setAuthTag(Buffer.from(String(envelope.tag||''),'base64'));
+  const plain=Buffer.concat([
+    decipher.update(Buffer.from(String(envelope.data||''),'base64')),
+    decipher.final()
+  ]).toString('utf8');
+  return JSON.parse(plain);
+}
+
+function normalizeState(parsed){
+  if(parsed && parsed.schemaVersion===2 && parsed.users){
+    return parsed;
+  }
+  return {
+    schemaVersion:2,
+    users:{},
+    legacy:{
+      tasks:Array.isArray(parsed&&parsed.tasks)?parsed.tasks:[],
+      lists:parsed&&parsed.lists&&typeof parsed.lists==='object'?parsed.lists:{},
+      notes:Array.isArray(parsed&&parsed.notes)?parsed.notes:[],
+      city:(parsed&&parsed.city)||'Москва'
+    },
+    migratedTo:null
+  };
+}
+
 class GitHubStorage {
   constructor() {
     this.sha = null;
-    this.state = { schemaVersion: 2, users: {}, legacy: null, migratedTo: null };
+    this.state = { schemaVersion:2, users:{}, legacy:null, migratedTo:null };
     this.saveTimer = null;
+    this.needsEncryptionMigration=false;
+    this.encryptionReady=!!deriveKey();
   }
 
   async load() {
     if (!GH_TOKEN) return this.state;
     try {
-      const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${STORAGE_FILE}`, {
+      const r = await fetchWithTimeout(`https://api.github.com/repos/${GH_REPO}/contents/${STORAGE_FILE}`, {
         headers: {
-          Authorization: `Bearer ${GH_TOKEN}`,
-          'User-Agent': 'alice-smart-assistant',
-          Accept: 'application/vnd.github+json'
+          Authorization:`Bearer ${GH_TOKEN}`,
+          'User-Agent':'alice-smart-assistant',
+          Accept:'application/vnd.github+json'
         }
-      });
+      },5000);
       if (r.status !== 200) return this.state;
-      const j = await r.json();
-      this.sha = j.sha;
-      const parsed = JSON.parse(Buffer.from(j.content, 'base64').toString('utf8'));
+      const j=await r.json();
+      this.sha=j.sha;
+      const file=JSON.parse(Buffer.from(j.content,'base64').toString('utf8'));
 
-      if (parsed && parsed.schemaVersion === 2 && parsed.users) {
-        this.state = parsed;
-      } else {
-        this.state = {
-          schemaVersion: 2,
-          users: {},
-          legacy: {
-            tasks: Array.isArray(parsed.tasks) ? parsed.tasks : [],
-            lists: parsed.lists && typeof parsed.lists === 'object' ? parsed.lists : {},
-            notes: Array.isArray(parsed.notes) ? parsed.notes : [],
-            city: parsed.city || 'Москва'
-          },
-          migratedTo: null
-        };
+      if(file && file.schemaVersion===3 && file.encrypted===true){
+        this.state=normalizeState(decryptState(file));
+      }else{
+        // Backward-compatible one-way migration from the legacy plaintext file.
+        // Future saves are encrypted; this cannot erase old Git history.
+        this.state=normalizeState(file||{});
+        this.needsEncryptionMigration=true;
+        if(this.encryptionReady){
+          setTimeout(()=>this.save().catch(e=>console.error('[storage.migrate]',e.message)),500).unref?.();
+        }else{
+          console.warn('[storage] plaintext legacy loaded but encrypted persistence is disabled: no encryption key');
+        }
       }
     } catch (e) {
-      console.error('[storage.load]', e.message);
+      // Do not log decrypted content or secret-derived material.
+      console.error('[storage.load]', String(e&&e.message||'storage_error'));
     }
     return this.state;
   }
 
   ensureUser(userId) {
-    const key = userKey(userId);
-    if (!this.state.users[key]) {
-      let seed = { tasks: [], lists: {}, notes: [], city: 'Москва', profile: {} };
-      if (this.state.legacy && !this.state.migratedTo) {
-        seed = { ...seed, ...this.state.legacy };
-        this.state.migratedTo = key;
+    const key=userKey(userId);
+    if(!this.state.users[key]){
+      let seed={tasks:[],lists:{},notes:[],city:'Москва',profile:{}};
+      if(this.state.legacy && !this.state.migratedTo){
+        seed={...seed,...this.state.legacy};
+        this.state.migratedTo=key;
       }
-      this.state.users[key] = seed;
+      this.state.users[key]=seed;
     }
     return this.state.users[key];
   }
 
   scheduleSave() {
-    if (!GH_TOKEN) return;
+    if(!GH_TOKEN || !this.encryptionReady)return;
     clearTimeout(this.saveTimer);
-    this.saveTimer = setTimeout(() => this.save().catch(e => console.error('[storage.save]', e.message)), 1200);
+    this.saveTimer=setTimeout(
+      ()=>this.save().catch(e=>console.error('[storage.save]',String(e&&e.message||'storage_error'))),
+      1200
+    );
   }
 
   async save() {
-    if (!GH_TOKEN) return;
-    const body = {
-      message: 'smart-assistant data',
-      content: Buffer.from(JSON.stringify(this.state, null, 2)).toString('base64')
+    if(!GH_TOKEN)return;
+    if(!this.encryptionReady)throw new Error('STORAGE_ENCRYPTION_KEY_MISSING');
+
+    const envelope=encryptState(this.state);
+    const body={
+      message:'smart-assistant encrypted data',
+      content:Buffer.from(JSON.stringify(envelope,null,2),'utf8').toString('base64')
     };
-    if (this.sha) body.sha = this.sha;
+    if(this.sha)body.sha=this.sha;
 
-    const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${STORAGE_FILE}`, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${GH_TOKEN}`,
-        'User-Agent': 'alice-smart-assistant',
-        'Content-Type': 'application/json',
-        Accept: 'application/vnd.github+json'
+    const r=await fetchWithTimeout(`https://api.github.com/repos/${GH_REPO}/contents/${STORAGE_FILE}`,{
+      method:'PUT',
+      headers:{
+        Authorization:`Bearer ${GH_TOKEN}`,
+        'User-Agent':'alice-smart-assistant',
+        'Content-Type':'application/json',
+        Accept:'application/vnd.github+json'
       },
-      body: JSON.stringify(body)
-    });
+      body:JSON.stringify(body)
+    },5000);
+    if(!r.ok)throw new Error(`GitHub storage HTTP ${r.status}`);
+    const j=await r.json();
+    if(j.content&&j.content.sha)this.sha=j.content.sha;
+    this.needsEncryptionMigration=false;
+  }
 
-    if (!r.ok) throw new Error(`GitHub storage HTTP ${r.status}`);
-    const j = await r.json();
-    if (j.content && j.content.sha) this.sha = j.content.sha;
+  securityStatus(){
+    return {
+      encryptedPersistence:this.encryptionReady,
+      format:'aes-256-gcm-v3'
+    };
   }
 }
 
-module.exports = { GitHubStorage, userKey };
+module.exports={GitHubStorage,userKey,encryptState,decryptState};
 
 };
 
@@ -1104,38 +1594,38 @@ module.exports={
     if(/найди фото/.test(c)){const q=c.replace(/.*найди фото/,'').trim()||'кот';const imgs=await wikiImages(q);return imgs.length?{reply:'Нашла фотографии.',html:imageCard(q,imgs)}:{reply:'Не нашла фото.'};}
 
     if(/^найди|^поищи|^поиск/.test(c)){
-      const q=c.replace(/^(найди|поищи|поиск)/,'').trim();if(!q)return{reply:'Что найти?'};
+      const q=c.replace(/^(найди|поищи|поиск)/,'').replace(/^в интернете\s*/,'').trim();if(!q)return{reply:'Что найти в интернете?'};
       const results=await searchAll(q,0);if(!results.length)return{reply:'Не нашла результатов.'};
       runtime.context.remember(ctx,{lastIntent:'BROWSER',lastTool:'browser',lastResults:results,searchQuery:q,searchPage:0,selectedIndex:null});
-      return{reply:'Нашла '+results.length+' результатов.',html:searchCard(q,results)};
+      return{reply:'Нашла '+results.length+' результатов.',voiceText:'Нашла '+results.length+' результатов. '+results.slice(0,3).map((x,i)=>(i+1)+'. '+x.title).join('. ')+'.',html:searchCard(q,results)};
     }
 
     if(/покажи еще|покажи ещё/.test(c)){
       if(!s.searchQuery)return{reply:'Сначала что-нибудь найди.'};
       const page=(s.searchPage||0)+1,results=await searchAll(s.searchQuery,page);if(!results.length)return{reply:'Больше результатов не нашла.'};
       runtime.context.remember(ctx,{lastResults:results,searchPage:page,selectedIndex:null});
-      return{reply:'Показала следующую страницу.',html:searchCard(s.searchQuery,results)};
+      return{reply:'Показала следующую страницу.',voiceText:results.slice(0,3).map((x,i)=>(i+1)+'. '+x.title).join('. ')+'.',html:searchCard(s.searchQuery,results)};
     }
 
     if(/открой сайт/.test(c)){
-      const name=c.replace(/.*открой сайт/,'').trim().replace(/\s+/g,'');let url=null;
+      const name=c.replace(/.*открой сайт/,'').trim().replace(/\s+/g,'');if(!name)return{reply:'Какой сайт открыть?'};let url=null;
       if(name.includes('.'))url='https://'+name;else{const r=await searchAll(name+' официальный сайт',0);if(r.length)url=r[0].url;}
       if(!url)return{reply:'Не нашла сайт.'};
       const text=await readPage(url);if(!text)return{reply:'Не смогла прочитать сайт.'};
       const obj={type:'web',title:name,url,pages:splitPages(text),page:0};runtime.context.remember(ctx,{lastReferencedObject:obj});
-      return{reply:'Открыла сайт в режиме чтения.',html:textCard(name,obj.pages[0])};
+      return{reply:'Открыла сайт в режиме чтения.',voiceText:obj.pages[0].slice(0,900),html:textCard(name,obj.pages[0])};
     }
 
     if(/^открой/.test(c)){
       const n=runtime.context.resolveOrdinal(c);if(!n||!s.lastResults[n-1])return{reply:'Назови номер результата, например: открой второй.'};
       const r=s.lastResults[n-1],text=await readPage(r.url);if(!text)return{reply:'Не смогла прочитать страницу.'};
       const obj={type:'web',title:r.title,url:r.url,pages:splitPages(text),page:0};runtime.context.remember(ctx,{lastReferencedObject:obj,selectedIndex:n});
-      return{reply:'Открыла '+r.title+'.',html:textCard(r.title,obj.pages[0])};
+      return{reply:'Открыла '+r.title+'.',voiceText:obj.pages[0].slice(0,900),html:textCard(r.title,obj.pages[0])};
     }
 
-    if(/назад к списку/.test(c)){if(!s.lastResults.length)return{reply:'Списка нет.'};return{reply:'Вернулась к результатам.',html:searchCard(s.searchQuery||'поиск',s.lastResults)};}
+    if(/назад к списку/.test(c)){if(!s.lastResults.length)return{reply:'Списка нет.'};return{reply:'Вернулась к результатам.',voiceText:s.lastResults.slice(0,3).map((x,i)=>(i+1)+'. '+x.title).join('. ')+'.',html:searchCard(s.searchQuery||'поиск',s.lastResults)};}
 
-    if(/^зачитай|прочитай вслух|озвучь/.test(c)){const obj=runtime.context.resolveReference(ctx);if(obj&&obj.type==='web')return{reply:'Зачитываю.',speakOnly:obj.pages[obj.page].slice(0,1000)};if(s.lastResults.length)return{reply:'Зачитываю результаты.',speakOnly:s.lastResults.map((x,i)=>(i+1)+'. '+x.title).join('. ')};return{reply:'Нечего зачитывать.'};}
+    if(/^зачитай|прочитай вслух|озвучь|прочитай страницу/.test(c)){const obj=runtime.context.resolveReference(ctx);if(obj&&obj.type==='web')return{reply:'Зачитываю.',speakOnly:obj.pages[obj.page].slice(0,1000)};if(s.lastResults.length)return{reply:'Зачитываю результаты.',speakOnly:s.lastResults.map((x,i)=>(i+1)+'. '+x.title).join('. ')};return{reply:'Нечего зачитывать.'};}
     if(/стоп чтение|хватит читать|замолчи/.test(c))return{reply:'Остановилась.',stopSpeak:true};
 
     return{reply:'Скажи: найди …, затем открой второй.'};
@@ -1147,9 +1637,51 @@ module.exports={
 __modules["src/tools/calculator.js"] = function(module, exports, __require, require) {
 function nums(s){return (String(s).match(/\d+(?:[.,]\d+)?/g)||[]).map(x=>Number(x.replace(',','.')));}
 function calcExpr(s){
-  const t=String(s).replace(/плюс/g,'+').replace(/минус/g,'-').replace(/умножить/g,'*').replace(/разделить/g,'/').replace(/[хx×]/g,'*').replace(/:/g,'/').replace(/,/g,'.').replace(/[^0-9.+\-*/() ]/g,'');
+  const t=String(s)
+    .replace(/плюс/g,'+').replace(/минус/g,'-')
+    .replace(/умножить/g,'*').replace(/разделить/g,'/')
+    .replace(/[хx×]/g,'*').replace(/:/g,'/').replace(/,/g,'.')
+    .replace(/[^0-9.+\-*/() ]/g,'');
   if(!t.trim()||!/\d/.test(t))return null;
-  try{const v=Function('"use strict";return ('+t+')')();return typeof v==='number'&&isFinite(v)?Math.round(v*100)/100:null;}catch{return null;}
+
+  const tokens=t.match(/\d+(?:\.\d+)?|[()+\-*/]/g)||[];
+  if(!tokens.length)return null;
+  let i=0;
+
+  function factor(){
+    const tok=tokens[i];
+    if(tok==='+'||tok==='-'){
+      i++;const v=factor();return v===null?null:(tok==='-'?-v:v);
+    }
+    if(tok==='('){
+      i++;const v=expr();if(tokens[i]!==')')return null;i++;return v;
+    }
+    if(tok&&/^\d+(?:\.\d+)?$/.test(tok)){i++;return Number(tok);}
+    return null;
+  }
+  function term(){
+    let v=factor();if(v===null)return null;
+    while(tokens[i]==='*'||tokens[i]==='/'){
+      const op=tokens[i++],r=factor();if(r===null)return null;
+      if(op==='/'&&r===0)return null;
+      v=op==='*'?v*r:v/r;
+      if(!Number.isFinite(v))return null;
+    }
+    return v;
+  }
+  function expr(){
+    let v=term();if(v===null)return null;
+    while(tokens[i]==='+'||tokens[i]==='-'){
+      const op=tokens[i++],r=term();if(r===null)return null;
+      v=op==='+'?v+r:v-r;
+      if(!Number.isFinite(v))return null;
+    }
+    return v;
+  }
+
+  const v=expr();
+  if(v===null||i!==tokens.length||!Number.isFinite(v))return null;
+  return Math.round(v*100)/100;
 }
 module.exports = {
   name:'calculator', description:'Калькулятор', risk:'read',
@@ -1252,12 +1784,12 @@ module.exports = {
       lists[name]=lists[name]||[];items.split(/,| и /).map(x=>x.trim()).filter(Boolean).forEach(x=>lists[name].push({text:x,done:false}));
       runtime.storage.scheduleSave();return{reply:'Добавила в список «'+name+'».'};
     }
-    if(/покажи все списки/.test(c)){const flat=[];for(const [k,v] of Object.entries(lists)){flat.push('['+k+']');for(const x of v)flat.push((x.done?'✓ ':'')+x.text);}return{reply:Object.keys(lists).length?'Списки показала.':'Списков пока нет.',html:rows('Списки',flat)};}
+    if(/покажи все списки/.test(c)){const flat=[];for(const [k,v] of Object.entries(lists)){flat.push('['+k+']');for(const x of v)flat.push((x.done?'✓ ':'')+x.text);}const names=Object.keys(lists);return{reply:names.length?'У тебя '+names.length+' списков.':'Списков пока нет.',voiceText:names.length?'Списки: '+names.join(', ')+'.':'Списков пока нет.',html:rows('Списки',flat)};}
     if(/вычеркни/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0),k=findList(c,lists);if(k&&n&&lists[k][n-1]){lists[k][n-1].done=true;runtime.storage.scheduleSave();return{reply:'Вычеркнула.'};}return{reply:'Не нашла позицию.'};}
 
     if(/удали \d+ из/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0),k=findList(c,lists);if(k&&n&&lists[k][n-1]){const x=lists[k].splice(n-1,1)[0];runtime.storage.scheduleSave();return{reply:'Удалила: '+x.text};}return{reply:'Не нашла позицию.'};}
     if(/зачитай /.test(c)){const k=findList(c,lists);if(k)return{reply:'Зачитываю.',speakOnly:k+': '+lists[k].map((x,i)=>(i+1)+'. '+x.text).join('. ')};}
-    if(/покажи /.test(c)&&!/покажи все списки/.test(c)){const k=findList(c,lists);if(k)return{reply:'Список «'+k+'» показала.',html:rows(k,lists[k].map(x=>(x.done?'✓ ':'')+x.text))};}
+    if(/покажи /.test(c)&&!/покажи все списки/.test(c)){const k=findList(c,lists);if(k){const v=lists[k].slice(0,8).map((x,i)=>(i+1)+'. '+x.text).join('. ');return{reply:'В списке «'+k+'» '+lists[k].length+' позиций.',voiceText:lists[k].length?'Список «'+k+'»: '+v+'.':'Список «'+k+'» пуст.',html:rows(k,lists[k].map(x=>(x.done?'✓ ':'')+x.text))};}}
     if(/очисти список/.test(c)){const k=findList(c,lists);if(k){lists[k]=[];runtime.storage.scheduleSave();return{reply:'Список очищен.'};}return{reply:'Какой список очистить?'};}
     if(/удали список/.test(c)){const k=c.replace(/.*удали список/,'').trim();if(lists[k]){delete lists[k];runtime.storage.scheduleSave();return{reply:'Список удалён.'};}return{reply:'Не нашла список.'};}
     if(/сколько позиций/.test(c)){const k=findList(c,lists);return{k,reply:k?'Осталось позиций: '+lists[k].filter(x=>!x.done).length+'.':'В каком списке?'};}
@@ -1274,9 +1806,9 @@ module.exports = {
   async run(input, runtime){
     const c=input.ctx.command,u=runtime.storage.ensureUser(input.ctx.userId),notes=u.notes;
     if(/^запиши/.test(c)){const t=c.replace(/^запиши/,'').trim();if(!t)return{reply:'Что записать?'};notes.push(t);runtime.storage.scheduleSave();return{reply:'Записала.'};}
-    if(/покажи заметки/.test(c))return{reply:notes.length?'Заметки показала.':'Заметок пока нет.',html:rows('Заметки',notes)};
-    if(/найди в заметках/.test(c)){const q=c.replace(/.*найди в заметках/,'').trim();const f=notes.filter(x=>x.includes(q));return{reply:f.length?'Нашла '+f.length+'.':'Не нашла.',html:rows('Найдено',f)};}
-    if(/зачитай заметки/.test(c))return{reply:notes.length?'Зачитываю.':'Заметок нет.',speakOnly:notes.join('. ')};
+    if(/покажи заметки/.test(c)){const v=notes.slice(0,8).map((x,i)=>(i+1)+'. '+x).join('. ');return{reply:notes.length?'У тебя '+notes.length+' заметок.':'Заметок пока нет.',voiceText:notes.length?'У тебя '+notes.length+' заметок. '+v+'.':'Заметок пока нет.',html:rows('Заметки',notes)};}
+    if(/найди в заметках/.test(c)){const q=c.replace(/.*найди в заметках/,'').trim();const f=notes.filter(x=>x.includes(q));const v=f.slice(0,6).map((x,i)=>(i+1)+'. '+x).join('. ');return{reply:f.length?'Нашла '+f.length+'.':'Не нашла.',voiceText:f.length?'Нашла '+f.length+'. '+v+'.':'Не нашла.',html:rows('Найдено',f)};}
+    if(/зачитай заметки|прочитай заметки/.test(c)){const v=notes.join('. ');return{reply:notes.length?'Зачитываю.':'Заметок нет.',voiceText:v,speakOnly:v};}
     if(/удали заметку/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&notes[n-1]){notes.splice(n-1,1);runtime.storage.scheduleSave();return{reply:'Удалила.'};}return{reply:'Не нашла заметку.'};}
     if(/очисти заметки/.test(c)){u.notes=[];runtime.storage.scheduleSave();return{reply:'Заметки очищены.'};}
     return{reply:'Скажи: запиши…, покажи заметки или найди в заметках…'};
@@ -1286,6 +1818,7 @@ module.exports = {
 };
 
 __modules["src/tools/pc.js"] = function(module, exports, __require, require) {
+const { dangerousUiContext } = __require("src/core/safety.js");
 const APP_ALIASES = [
   ['google chrome','chrome'],['хром','chrome'],['chrome','chrome'],
   ['яндекс браузер','yandex'],['яндекс-браузер','yandex'],
@@ -1317,7 +1850,12 @@ function resultReply(r, fallback) {
       WINDOW_CHANGED: 'Окно уже изменилось. Ничего не нажала.',
       AMBIGUOUS: 'Нашла несколько одинаковых элементов. Ничего не нажала.',
       NOT_SUPPORTED: 'Этот элемент пока нельзя безопасно нажать.',
-      BLOCKED: 'Это действие пока заблокировано из соображений безопасности.'
+      BLOCKED: 'Это действие пока заблокировано из соображений безопасности.',
+      BLOCKED_CONTEXT: 'Контекст окна изменился и теперь похож на опасное действие. Ничего не нажала.',
+      NOT_BROWSER: 'Сейчас активно не окно браузера.',
+      RESULT_TIMEOUT: 'Команду компьютеру передала, но он не успел подтвердить результат. Я не считаю действие выполненным.',
+      OFFLINE: 'Компьютер сейчас не на связи.',
+      NOT_CONFIGURED: 'Windows Agent ещё не настроен.'
     };
     return { reply: errors[code] || 'Не получилось выполнить команду на компьютере.' };
   }
@@ -1491,7 +2029,7 @@ function shortList(items, max=6){
 function systemTargetFromCommand(c){
   const rules=[
     ['taskmgr',/диспетчер задач/],['settings',/(параметры windows|настройки windows|открой параметры)$/],
-    ['control',/панель управления/],['devices',/диспетчер устройств/],
+    ['control',/панель управления/],['devices',/диспетчер устройств|^открой устройства$/],
     ['bluetooth',/bluetooth|блютуз/],['sound',/(настройки звука|параметры звука)/],
     ['display',/(настройки экрана|параметры экрана)/],['startup',/автозагрузк/],
     ['printers',/(принтеры|принтер)/],['apps',/(установленные программы|приложения windows)/],
@@ -1521,6 +2059,20 @@ module.exports = {
       }
 
       return {reply:'Компьютер на связи, но я не успела прочитать активное окно. Скажи, что хотела сделать.'};
+    }
+
+    // YouTube is controlled through the active PC browser.
+    if(/^(открой|запусти)\s+(youtube|ютуб)/.test(c)){
+      return resultReply(await bridge.run('open_url',{url:'https://www.youtube.com'}),'Открыла YouTube.');
+    }
+    if(/найди видео.*(youtube|ютуб)|найди.*на (youtube|ютуб)/.test(c)){
+      let q=c.replace(/найди видео/,'').replace(/найди/,'').replace(/на\s+(youtube|ютуб).*/,'').replace(/(youtube|ютуб)/g,'').trim();
+      if(!q)return{reply:'Что найти на YouTube?'};
+      const url='https://www.youtube.com/results?search_query='+encodeURIComponent(q);
+      return resultReply(await bridge.run('open_url',{url}),'Открыла результаты поиска YouTube.');
+    }
+    if(/полный экран.*(youtube|ютуб)|(youtube|ютуб).*полный экран/.test(c)){
+      return resultReply(await bridge.run('browser_hotkey',{command:'youtube_fullscreen'}),'Переключила полноэкранный режим YouTube.');
     }
 
     // Unified Core 2.0: common system shortcuts.
@@ -1569,7 +2121,7 @@ module.exports = {
     }
 
     // Screen readout.
-    if(/сколько мониторов|какие мониторы|разрешение экрана/.test(c)){
+    if(/сколько мониторов|какие мониторы|разрешение экрана|какое разрешение/.test(c)){
       const r=await bridge.run('screen_info',{});
       const screens=Array.isArray(r&&r.data&&r.data.screens)?r.data.screens:[];
       if(!screens.length)return{reply:'Не получилось получить данные мониторов.'};
@@ -1609,6 +2161,34 @@ module.exports = {
       });
       const names=shortList(items).map((x,i)=>(i+1)+'. '+x.name).join('. ');
       return{reply:'Нашла '+items.length+'. '+names+'. Какой открыть?'};
+    }
+
+    // Direct browser navigation commands are semantic hotkeys, not UI clicks.
+    if(/^(назад|вперед|вперёд)$/.test(c)){
+      const r=await bridge.run('browser_hotkey',{command:/назад/.test(c)?'back':'forward'});
+      return resultReply(r,/назад/.test(c)?'Вернулась на предыдущую страницу.':'Перешла вперёд.');
+    }
+    if(/^(обнови страницу|обновить страницу)$/.test(c)){
+      return resultReply(await bridge.run('browser_hotkey',{command:'refresh'}),'Обновила страницу.');
+    }
+    if(/восстанови закрытую вкладку/.test(c)){
+      return resultReply(await bridge.run('browser_hotkey',{command:'restore_tab'}),'Восстановила закрытую вкладку.');
+    }
+
+    // Ordinal selection of the last file-search result.
+    if(/^открой\s+.*файл/.test(c)){
+      const n=runtime.context.resolveOrdinal(c);
+      const s=runtime.context.session(input.ctx.sessionId);
+      const items=Array.isArray(s.lastFileResults)?s.lastFileResults:[];
+      if(n && items[n-1]){
+        const item=items[n-1];
+        const r=await bridge.run('open_path',{path:item.path});
+        if(r&&r.ok!==false){
+          runtime.context.remember(input.ctx,{lastReferencedObject:{type:'file',...item}});
+          return{reply:'Открыла «'+String(item.name||'файл')+'».'};
+        }
+        return resultReply(r,'Открыла файл.');
+      }
     }
 
     // Browser tab context is separate from Windows windows.
@@ -1726,17 +2306,20 @@ module.exports = {
         return{reply:'Элемент «'+target.name+'» относится к действию, которое я пока не выполняю автоматически.'};
       }
 
-      runtime.context.remember(input.ctx,{
-        pendingClarification:{
-          type:'pc_ui_action',
-          label:target.name,
-          args:{
-            name:target.name,
-            type:target.type,
-            automationId:target.automationId||'',
-            expectedProcessId:win.processId,
-            expectedWindowTitle:win.title||''
-          }
+      const contextLabels=Array.isArray(r.data&&r.data.contextLabels)?r.data.contextLabels:[];
+      if(dangerousUiContext(target,win,contextLabels)){
+        return{reply:'В этом окне обнаружен контекст удаления, установки, платежа, отправки или другого опасного действия. Я не нажимаю «'+target.name+'» автоматически.'};
+      }
+
+      runtime.context.setPending(input.ctx,{
+        type:'pc_ui_action',
+        label:target.name,
+        args:{
+          name:target.name,
+          type:target.type,
+          automationId:target.automationId||'',
+          expectedProcessId:win.processId,
+          expectedWindowTitle:win.title||''
         }
       });
 
@@ -1758,8 +2341,17 @@ module.exports = {
       if(app)return resultReply(await bridge.run('open_app',{app}),'Открыла программу.');
     }
 
-    if(/последн.*(скачан|загруз)|что.*скачал|что.*загрузил/.test(c)){
-      return resultReply(await bridge.run('recent_downloads',{limit:5}),'Показала последние загрузки.');
+    if(/последн.*(скачан|загруз)|что.*скачал|что.*загрузил|последние загрузки/.test(c)){
+      const r=await bridge.run('recent_downloads',{limit:5});
+      if(!r||r.ok===false)return resultReply(r,'Не получилось получить последние загрузки.');
+      const items=Array.isArray(r.data&&r.data.items)?r.data.items:[];
+      if(!items.length)return{reply:'В папке загрузок ничего не нашла.'};
+      runtime.context.remember(input.ctx,{
+        lastFileResults:items,
+        lastResults:items.map(x=>({type:'file',name:x.name,path:x.path})),
+        pendingClarification:{type:'file_select'}
+      });
+      return{reply:'Последние загрузки: '+items.map((x,i)=>(i+1)+'. '+x.name).join('. ')+'. Какую открыть?'};
     }
 
     if(/^(найди|поищи)\s+(файл|документ|папку)/.test(c)){
@@ -1790,7 +2382,7 @@ module.exports = {
       return {reply:'Активное окно определить не удалось.'};
     }
 
-    if(/что сейчас открыто|какие окна открыты|покажи открытые окна/.test(c)){
+    if(/что сейчас открыто|какие окна открыты|покажи открытые окна|какие программы открыты/.test(c)){
       const r=await bridge.run('list_windows',{});
       if(!r) return {reply:'Не успела получить список окон.'};
       if(r.ok===false) return resultReply(r,'Не получилось получить список окон.');
@@ -1847,11 +2439,11 @@ module.exports = {
   async run(input, runtime){
     const c=input.ctx.command, u=runtime.storage.ensureUser(input.ctx.userId), tasks=u.tasks;
     if(/добавь задачу/.test(c)){const t=c.replace(/.*добавь задачу/,'').trim();if(!t)return{reply:'Какую задачу добавить?'};tasks.push({text:t,done:false,star:false});runtime.storage.scheduleSave();return{reply:'Задача добавлена: '+t,html:rows('Задачи',tasks.map(x=>(x.done?'✓ ':'')+x.text))};}
-    if(/покажи важные/.test(c)){const f=tasks.filter(x=>x.star);return{reply:f.length?'Важные задачи показала.':'Важных задач нет.',html:rows('Важные задачи',f.map(x=>x.text))};}
+    if(/покажи важные/.test(c)){const f=tasks.filter(x=>x.star);return{reply:f.length?'Важных задач: '+f.length+'.':'Важных задач нет.',voiceText:f.length?f.slice(0,6).map((x,i)=>(i+1)+'. '+x.text).join('. '):'Важных задач нет.',html:rows('Важные задачи',f.map(x=>x.text))};}
     if(/зачитай задачи/.test(c)){return{reply:tasks.length?'Зачитываю.':'Задач нет.',speakOnly:tasks.map((x,i)=>(i+1)+'. '+x.text).join('. ')};}
-    if(/покажи задачи|план на сегодня/.test(c))return{reply:tasks.length?'Задачи показала.':'Задач пока нет.',html:rows('Задачи',tasks.map(x=>(x.done?'✓ ':'')+x.text))};
+    if(/покажи задачи|план на сегодня|что у меня на сегодня/.test(c)){const v=tasks.slice(0,6).map((x,i)=>(i+1)+'. '+(x.done?'выполнено, ':'')+x.text).join('. ');return{reply:tasks.length?'У тебя '+tasks.length+' задач.':'Задач пока нет.',voiceText:tasks.length?'У тебя '+tasks.length+' задач. '+v+'.':'Задач пока нет.',html:rows('Задачи',tasks.map(x=>(x.done?'✓ ':'')+x.text))};}
     if(/сколько задач/.test(c))return{reply:'Активных задач: '+tasks.filter(x=>!x.done).length+'.'};
-    if(/выполни/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&tasks[n-1]){tasks[n-1].done=true;runtime.storage.scheduleSave();return{reply:'Готово: '+tasks[n-1].text};}return{reply:'Не нашла задачу. Назови её номер.'};}
+    if(/выполни|отметь выполненной/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&tasks[n-1]){tasks[n-1].done=true;runtime.storage.scheduleSave();return{reply:'Готово: '+tasks[n-1].text};}return{reply:'Какую задачу отметить выполненной? Назови номер.'};}
     if(/удали задачу/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&tasks[n-1]){const t=tasks[n-1].text;tasks.splice(n-1,1);runtime.storage.scheduleSave();return{reply:'Удалила задачу: '+t};}return{reply:'Не нашла задачу.'};}
     if(/очисти выполненные/.test(c)){u.tasks=tasks.filter(x=>!x.done);runtime.storage.scheduleSave();return{reply:'Выполненные задачи удалены.'};}
     if(/важная/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&tasks[n-1]){tasks[n-1].star=!tasks[n-1].star;runtime.storage.scheduleSave();return{reply:'Отметку изменила.'};}return{reply:'Какую задачу отметить? Назови номер.'};}
@@ -1885,11 +2477,25 @@ module.exports = {
   async run(input){
     const c=input.ctx.command,d=now();
     if(/который час|сколько времени|время сейчас/.test(c))return{reply:'Сейчас '+fmtClock(d)+'.'};
-    if(/какое число|какая дата/.test(c))return{reply:'Сегодня '+fmtDate(d)+'.'};
+    if(/какое( сегодня)? число|какая дата/.test(c))return{reply:'Сегодня '+fmtDate(d)+'.'};
     if(/день недели/.test(c))return{reply:'Сегодня '+fmtDay(d)+'.'};
     if(/выходной/.test(c)){const w=d.getDay();return{reply:(w===0||w===6)?'Да, сегодня выходной.':'Нет, сегодня будний день.'};}
     if(/неделя года/.test(c))return{reply:'Сейчас '+isoWeek(d)+'-я неделя года.'};
     if(/время в мире/.test(c)){const z=[['Москва','Europe/Moscow'],['Нью-Йорк','America/New_York'],['Лондон','Europe/London'],['Токио','Asia/Tokyo'],['Дубай','Asia/Dubai']];return{reply:z.map(x=>x[0]+' '+d.toLocaleTimeString('ru-RU',{timeZone:x[1],hour:'2-digit',minute:'2-digit'})).join(', ')+'.'};}
+    const zm=c.match(/время в\s+([а-яa-z-]+)/i);
+    if(zm){
+      const key=zm[1].toLowerCase();
+      const zones={
+        'москве':['Москве','Europe/Moscow'],'москва':['Москве','Europe/Moscow'],
+        'токио':['Токио','Asia/Tokyo'],'лондоне':['Лондоне','Europe/London'],'лондон':['Лондоне','Europe/London'],
+        'дубае':['Дубае','Asia/Dubai'],'дубай':['Дубае','Asia/Dubai'],
+        'риге':['Риге','Europe/Riga'],'рига':['Риге','Europe/Riga'],
+        'нью-йорке':['Нью-Йорке','America/New_York'],'нью-йорк':['Нью-Йорке','America/New_York']
+      };
+      const z=zones[key];
+      if(z)return{reply:'В '+z[0]+' сейчас '+d.toLocaleTimeString('ru-RU',{timeZone:z[1],hour:'2-digit',minute:'2-digit'})+'.'};
+      return{reply:'Для этого города часовой пояс пока не настроен.'};
+    }
     if(/до нового года/.test(c)){const n=daysDiff(d,new Date(d.getFullYear()+1,0,1));return{reply:'До Нового года '+n+' дней.'};}
     if(/какое число будет через/.test(c)){const n=firstNum(c);if(!n)return{reply:'Скажи, через сколько дней.'};const dt=new Date(Date.now()+n*86400000);return{reply:'Через '+n+' дней будет '+dt.toLocaleDateString('ru-RU',{day:'numeric',month:'long'})+'.'};}
     if(/сколько/.test(c)&&/(прошло|до)/.test(c)){const dt=parseDateRu(c);if(!dt)return{reply:'Назови дату, например 15 августа.'};const n=/прошло/.test(c)?daysDiff(dt,d):daysDiff(d,dt);return{reply:(/прошло/.test(c)?'Прошло ':'Осталось ')+Math.abs(n)+' дней.'};}
@@ -1939,12 +2545,12 @@ module.exports={
     if(/напомни/.test(c)){
       const ms=parseDur(c);if(!ms)return{reply:'Скажи, например: напомни через 10 минут позвонить.'};
       const text=c.replace(/.*напомни/,'').replace(/через\s*\d+\s*(секунд|сек|минут|мин|час[а-я]*)/,'').trim()||'Напоминание';
-      const r={id:st.nextReminderId++,endsAt:Date.now()+ms,text};st.reminders.push(r);
-      setTimeout(()=>{st.reminders=st.reminders.filter(x=>x.id!==r.id);runtime.sendView({speak:'Напоминаю: '+r.text});},ms);
-      return{reply:'Хорошо, напомню. В браузерной панели напоминание сработает автоматически.'};
+      const r={id:st.nextReminderId++,endsAt:Date.now()+ms,text,handle:null};st.reminders.push(r);
+      r.handle=setTimeout(()=>{st.reminders=st.reminders.filter(x=>x.id!==r.id);runtime.sendView({speak:'Напоминаю: '+r.text});},ms);
+      return{reply:'Хорошо. Напоминание сохранено внутри помощника. Автоматическая озвучка на Станции этим механизмом не гарантируется.'};
     }
     if(/покажи напоминания/.test(c)){if(!st.reminders.length)return{reply:'Напоминаний нет.'};return{reply:st.reminders.map((x,i)=>(i+1)+'. '+x.text).join('. ')};}
-    if(/отмени напоминание/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&st.reminders[n-1]){const x=st.reminders.splice(n-1,1)[0];return{reply:'Отменила: '+x.text};}return{reply:'Не нашла такое напоминание.'};}
+    if(/отмени напоминание/.test(c)){const n=Number((c.match(/\d+/)||[])[0]||0);if(n&&st.reminders[n-1]){const x=st.reminders.splice(n-1,1)[0];if(x.handle)clearTimeout(x.handle);return{reply:'Отменила: '+x.text};}return{reply:'Не нашла такое напоминание.'};}
 
     if(/стоп помодоро|останови помодоро/.test(c)){if(st.pomo&&st.pomo.handle)clearTimeout(st.pomo.handle);st.pomo=null;return{reply:'Помодоро остановлен.'};}
     if(/помодоро/.test(c)){if(st.pomo&&st.pomo.handle)clearTimeout(st.pomo.handle);st.pomo={phase:'work',round:1};startPomo(st,runtime);return{reply:'Помодоро начат: 25 минут работы.'};}
@@ -1965,7 +2571,7 @@ module.exports = {
   name:'translate', description:'Перевод текста', risk:'read',
   async run(input){
     const c=input.ctx.command;
-    const t=c.replace(/.*?(переведи|как по-английски)/,'').trim();
+    const t=c.replace(/.*?(переведи|как по[- ]английски)/,'').replace(/^на английский\s*/,'').trim();
     if(!t)return{reply:'Что перевести?'};
     const dir=/[а-яё]/.test(t)?'ru|en':'en|ru';
     const tr=await translate(t,dir);
@@ -1995,10 +2601,10 @@ module.exports = {
     const html=card('Погода: '+g.name,`<div class="big">${Math.round(cur.temperature_2m)}°</div><div class="sub">${wmo(cur.weather_code)}, ощущается как ${Math.round(cur.apparent_temperature)}°</div>`);
     if(/будет дождь/.test(c))return{reply:(isRain(cur.weather_code)||isRain(w.daily.weather_code[0]))?'Да, вероятен дождь. Возьми зонт.':'Дождя не ожидается.',html};
     if(/нужна куртка/.test(c))return{reply:cur.temperature_2m<8?'Да, лучше куртку. Сейчас '+Math.round(cur.temperature_2m)+'°.':'Сейчас '+Math.round(cur.temperature_2m)+'°, тёплая куртка не обязательна.',html};
-    if(/уф/.test(c))return{reply:'УФ-индекс сегодня: '+Math.round(w.daily.uv_index_max[0])+' из 11.',html};
+    if(/(?:^|\s)(уф|ультрафиолет)(?:\s|$)/.test(c))return{reply:'УФ-индекс сегодня: '+Math.round(w.daily.uv_index_max[0])+' из 11.',html};
     if(/рассвет/.test(c))return{reply:'Рассвет в '+w.daily.sunrise[0].slice(11,16)+'.'};
     if(/закат/.test(c))return{reply:'Закат в '+w.daily.sunset[0].slice(11,16)+'.'};
-    if(/прогноз на неделю/.test(c)){const lines=w.daily.time.map((d,i)=>d+': '+Math.round(w.daily.temperature_2m_min[i])+'…'+Math.round(w.daily.temperature_2m_max[i])+'°, '+wmo(w.daily.weather_code[i]));return{reply:'Прогноз на неделю показала.',html:card('Неделя: '+g.name,'<div class="text">'+lines.join('<br>')+'</div>')};}
+    if(/прогноз на неделю/.test(c)){const lines=w.daily.time.map((d,i)=>d+': '+Math.round(w.daily.temperature_2m_min[i])+'…'+Math.round(w.daily.temperature_2m_max[i])+'°, '+wmo(w.daily.weather_code[i]));return{reply:'Прогноз на неделю готов.',voiceText:'Прогноз для '+g.name+'. '+lines.join('. ')+'.',html:card('Неделя: '+g.name,'<div class="text">'+lines.join('<br>')+'</div>')};}
     return{reply:'В городе '+g.name+' сейчас '+Math.round(cur.temperature_2m)+'°, '+wmo(cur.weather_code)+'.',html};
   }
 };
