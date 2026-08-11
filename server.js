@@ -1,4 +1,4 @@
-// SMART ASSISTANT CORE 1.2.2 — GENERATED DEPLOYMENT BUILD
+// SMART ASSISTANT UNIFIED CORE 2.0.0 — DEPLOYMENT CANDIDATE
 // Source architecture: modular package SMART_ASSISTANT_CORE_1.2.2_REGRESSION_CANDIDATE
 // This single file is generated only to make deployment to the existing GitHub/Render service simple.
 // Do not add secrets here. GH_TOKEN / GH_REPO / PC_AGENT_TOKEN remain Render environment variables.
@@ -29,6 +29,67 @@ app.listen(port, () => {
 
 };
 
+
+__modules["src/core/capability-registry.js"] = function(module, exports, __require, require) {
+const CAPABILITIES = [{"id": "dialog.context", "title": "Диалог и контекст", "status": "working", "executor": "core", "risk": "read", "examples": ["помоги", "повтори", "что ты умеешь", "открой его", "вторую"]}, {"id": "pc.apps", "title": "Программы", "status": "working", "executor": "pc", "risk": "change", "examples": ["открой телеграм", "запусти ворд", "какие программы открыты", "переключись на блокнот"]}, {"id": "pc.windows", "title": "Окна Windows", "status": "working", "executor": "pc", "risk": "change", "examples": ["какие окна открыты", "что сейчас на экране", "переключись на телеграм", "предыдущее окно"]}, {"id": "browser.tabs", "title": "Вкладки браузера", "status": "working", "executor": "pc", "risk": "change", "examples": ["какие вкладки открыты", "открой вторую вкладку", "следующая вкладка", "открой новую вкладку"]}, {"id": "browser.navigation", "title": "Навигация браузера", "status": "working", "executor": "pc", "risk": "change", "examples": ["назад", "вперёд", "обнови страницу", "восстанови закрытую вкладку"]}, {"id": "browser.web", "title": "Поиск и веб-страницы", "status": "working", "executor": "browser", "risk": "read", "examples": ["найди в интернете", "открой сайт", "прочитай страницу", "открой второй результат"]}, {"id": "pc.ui.read", "title": "Чтение интерфейса", "status": "working", "executor": "pc", "risk": "read", "examples": ["какие кнопки здесь есть", "что здесь написано", "что можно нажать", "помоги"]}, {"id": "pc.ui.action", "title": "Подтверждённые действия интерфейса", "status": "working", "executor": "pc", "risk": "confirm", "examples": ["нажми ОК", "выбери вкладку настройки", "нажми назад"]}, {"id": "files.search", "title": "Поиск файлов и папок", "status": "working", "executor": "pc", "risk": "read", "examples": ["найди файл договор", "найди документ смета", "последние загрузки"]}, {"id": "files.open", "title": "Открытие файлов и папок", "status": "working", "executor": "pc", "risk": "change", "examples": ["открой загрузки", "открой документы", "открой второй файл"]}, {"id": "files.manage", "title": "Копирование, перемещение, переименование, папки", "status": "guarded", "executor": "pc", "risk": "confirm", "examples": ["создай папку", "переименуй файл", "скопируй документ", "перемести файл"]}, {"id": "files.delete", "title": "Удаление и восстановление", "status": "guarded", "executor": "pc", "risk": "dangerous", "examples": ["удали файл", "восстанови из корзины"]}, {"id": "documents.office", "title": "Word / Excel / PDF / документы", "status": "unified", "executor": "pc-ui", "risk": "confirm", "examples": ["открой документ", "сохрани документ", "распечатай", "переключи лист"]}, {"id": "archives", "title": "ZIP/RAR и архивы", "status": "unified", "executor": "pc-ui", "risk": "confirm", "examples": ["распакуй архив", "покажи содержимое архива"]}, {"id": "clipboard", "title": "Буфер обмена", "status": "working", "executor": "pc", "risk": "private", "examples": ["что в буфере обмена", "скопируй этот текст", "очисти буфер"]}, {"id": "audio", "title": "Звук и медиа на ПК", "status": "working", "executor": "pc", "risk": "change", "examples": ["сделай громче", "выключи звук", "пауза", "следующий трек"]}, {"id": "screen", "title": "Экран и мониторы", "status": "working", "executor": "pc", "risk": "read", "examples": ["сколько мониторов", "какое разрешение"]}, {"id": "keyboard", "title": "Клавиатурные действия", "status": "working", "executor": "pc", "risk": "confirm", "examples": ["нажми escape", "нажми control s", "переключись на предыдущее окно"]}, {"id": "printer", "title": "Принтер и печать", "status": "unified", "executor": "pc-ui", "risk": "confirm", "examples": ["какой принтер выбран", "открой очередь печати", "распечатай документ"]}, {"id": "devices", "title": "USB, Bluetooth, камера, микрофон", "status": "unified", "executor": "pc-ui", "risk": "read", "examples": ["какие устройства подключены", "открой bluetooth", "проверь микрофон"]}, {"id": "vpn.app", "title": "VPN-программа как приложение", "status": "unified", "executor": "pc-ui", "risk": "confirm", "examples": ["открой outline", "подключи outline", "отключи outline"]}, {"id": "telegram", "title": "Telegram", "status": "unified", "executor": "pc-ui", "risk": "confirm", "examples": ["открой телеграм", "найди чат", "отправь сообщение"]}, {"id": "mail.calendar", "title": "Почта и календарь через интерфейс", "status": "unified", "executor": "browser-ui", "risk": "confirm", "examples": ["открой почту", "найди письмо", "открой календарь", "создай событие"]}, {"id": "tasks", "title": "Задачи", "status": "working", "executor": "tasks", "risk": "change", "examples": ["добавь задачу", "что у меня на сегодня", "отметь выполненной"]}, {"id": "lists", "title": "Списки", "status": "working", "executor": "lists", "risk": "change", "examples": ["создай список", "добавь в список", "прочитай список"]}, {"id": "notes", "title": "Заметки", "status": "working", "executor": "notes", "risk": "change", "examples": ["запиши заметку", "найди в заметках", "прочитай заметки"]}, {"id": "timers", "title": "Таймеры, секундомер, Pomodoro", "status": "working", "executor": "timer", "risk": "change", "examples": ["поставь таймер", "секундомер", "помодоро"]}, {"id": "time.date", "title": "Время и дата", "status": "working", "executor": "time_date", "risk": "read", "examples": ["который час", "какое сегодня число", "время в токио"]}, {"id": "weather", "title": "Погода", "status": "working", "executor": "weather", "risk": "read", "examples": ["погода сегодня", "будет дождь", "прогноз на неделю"]}, {"id": "calculator", "title": "Калькулятор и единицы", "status": "working", "executor": "calculator", "risk": "read", "examples": ["посчитай", "сколько процентов", "переведи километры в мили"]}, {"id": "translate", "title": "Перевод", "status": "working", "executor": "translate", "risk": "read", "examples": ["переведи на английский", "как по английски"]}, {"id": "knowledge", "title": "Справочная информация", "status": "working", "executor": "knowledge", "risk": "read", "examples": ["что такое", "кто такой", "расскажи про"]}, {"id": "news", "title": "Новости и актуальный поиск", "status": "source-needed", "executor": "external", "risk": "read", "examples": ["последние новости", "что нового"]}, {"id": "media.youtube", "title": "YouTube и медиа в браузере", "status": "unified", "executor": "browser-ui", "risk": "change", "examples": ["открой youtube", "найди видео", "пауза", "полный экран"]}, {"id": "system.settings", "title": "Системные разделы Windows", "status": "working", "executor": "pc", "risk": "change", "examples": ["открой диспетчер задач", "открой параметры", "открой устройства", "открой автозагрузку"]}, {"id": "software.install", "title": "Установка/удаление/обновление программ", "status": "guarded", "executor": "pc-ui", "risk": "dangerous", "examples": ["установи программу", "удали программу", "обнови программу"]}, {"id": "security", "title": "Безопасность Windows", "status": "unified", "executor": "pc-ui", "risk": "read", "examples": ["открой безопасность windows", "что означает предупреждение"]}, {"id": "help.mode", "title": "Режим «Помоги мне»", "status": "working", "executor": "pc-ui", "risk": "read", "examples": ["помоги", "я не понимаю что произошло", "что мне нажать", "куда всё пропало"]}, {"id": "history.undo", "title": "История действий и отмена", "status": "unified", "executor": "core-pc", "risk": "confirm", "examples": ["что ты только что сделала", "отмени последнее", "верни закрытую вкладку"]}, {"id": "multi.step", "title": "Многошаговые сценарии", "status": "unified", "executor": "planner", "risk": "confirm", "examples": ["найди договор и открой его", "открой загрузки и найди последний pdf"]}];
+
+class CapabilityRegistry {
+  constructor(items) {
+    this.items = Array.isArray(items) ? items.slice() : [];
+  }
+
+  list() {
+    return this.items.map(x=>({...x}));
+  }
+
+  byId(id) {
+    return this.items.find(x=>x.id===id)||null;
+  }
+
+  summary() {
+    const out={};
+    for(const x of this.items) out[x.status]=(out[x.status]||0)+1;
+    return out;
+  }
+
+  match(command) {
+    const c=String(command||'').toLowerCase().trim();
+    if(!c)return null;
+
+    const rules=[
+      ['browser.tabs',/\bвкладк|следующ(ая|ую) вклад|предыдущ(ая|ую) вклад/,'pc',.99],
+      ['pc.windows',/\bокн(о|а|е|у)|предыдущее окно|следующее окно|переключись на/,'pc',.94],
+      ['files.search',/\b(файл|документ|папк|загрузк|рабоч(ий|ем) стол)\b/,'pc',.93],
+      ['clipboard',/буфер обмена|скопирован|вставь|скопируй/,'pc',.91],
+      ['audio',/громк|звук|без звука|пауза|следующий трек|предыдущий трек/,'pc',.91],
+      ['system.settings',/диспетчер задач|параметр(ы|ов) windows|панель управления|диспетчер устройств|автозагрузк|bluetooth|блютуз/,'pc',.94],
+      ['help.mode',/не понимаю|что произошло|что случилось|помоги|что нажать|куда нажать|куда пропало/,'pc',.98],
+      ['pc.ui.read',/какие кнопки|что здесь написано|что можно нажать|прочитай окно/,'pc',.96],
+      ['pc.apps',/^(открой|запусти|переключись на)\s+[^/]+$/,'pc',.70],
+      ['browser.web',/сайт|в интернете|в интернете|поищи|поиск|https?:|www\./,'browser',.88],
+      ['tasks',/задач/,'tasks',.90],
+      ['lists',/\bспис(ок|ка)\b/,'lists',.88],
+      ['notes',/заметк|запиши/,'notes',.88],
+      ['timers',/таймер|секундомер|помодоро|напомни/,'timer',.90],
+      ['weather',/погод|дожд|прогноз/,'weather',.94],
+      ['calculator',/посчитай|процент|переведи .* (метр|километр|килограмм|дюйм|градус)/,'calculator',.85],
+      ['translate',/переведи|как по-английски|как на английском/,'translate',.90],
+      ['knowledge',/что такое|кто такой|кто такая|расскажи про/,'knowledge',.82]
+    ];
+
+    let best=null;
+    for(const [id,re,tool,confidence] of rules){
+      if(re.test(c) && (!best || confidence>best.confidence)){
+        best={id,tool,confidence,capability:this.byId(id)};
+      }
+    }
+    return best;
+  }
+}
+
+module.exports={CapabilityRegistry,CAPABILITIES};
+};
+
 __modules["src/app.js"] = function(module, exports, __require, require) {
 const express = require('express');
 const { VERSION } = __require("src/config.js");
@@ -39,6 +100,7 @@ const { route } = __require("src/core/router.js");
 const { GitHubStorage } = __require("src/storage/github-storage.js");
 const { panelHtml } = __require("src/ui/panel.js");
 const { PcBridge } = __require("src/pc/bridge.js");
+const { CapabilityRegistry } = __require("src/core/capability-registry.js");
 
 const timeTool = __require("src/tools/time.js");
 const timerTool = __require("src/tools/timer.js");
@@ -61,6 +123,7 @@ function createApp() {
   const storage = new GitHubStorage();
   const registry = new ToolRegistry();
   const pcBridge = new PcBridge();
+  const capabilities = new CapabilityRegistry(__require("src/core/capability-registry.js").CAPABILITIES);
   [
     timeTool,timerTool,tasksTool,listsTool,notesTool,weatherTool,
     calculatorTool,translateTool,knowledgeTool,entertainmentTool,browserTool,pcTool
@@ -75,7 +138,7 @@ function createApp() {
     for(const c of clients){try{c.write(data);}catch{}}
   }
 
-  const runtime = { context, storage, registry, sendView, pcBridge };
+  const runtime = { context, storage, registry, sendView, pcBridge, capabilities };
 
   storage.load().then(()=>console.log('[storage] loaded')).catch(e=>console.error('[storage]',e.message));
   setInterval(()=>context.cleanup(),5*60*1000).unref();
@@ -90,6 +153,11 @@ function createApp() {
       ok:true,
       version:VERSION,
       tools:registry.list().map(x=>x.name),
+      unifiedCore:true,
+      capabilities:{
+        count:capabilities.list().length,
+        summary:capabilities.summary()
+      },
       pc:{
         configured:s.configured,
         online:s.online,
@@ -98,6 +166,13 @@ function createApp() {
       }
     });
   });
+
+  app.get('/capabilities',(req,res)=>res.json({
+    ok:true,
+    version:VERSION,
+    principle:'one_yandex_skill_one_server_one_windows_agent',
+    capabilities:capabilities.list()
+  }));
 
   app.get('/alice',(req,res)=>res.json({status:'ok',text:'Smart Assistant Core работает',version:VERSION}));
   app.head('/alice',(req,res)=>res.status(200).end());
@@ -211,7 +286,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '1.6.3-station-protocol-safe',
+  VERSION: '2.0.0-unified-core-candidate',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -273,8 +348,11 @@ class ContextStore {
 
   resolveOrdinal(text) {
     const map = {
-      'перв': 1, 'втор': 2, 'трет': 3, 'четверт': 4, 'пят': 5,
-      'шест': 6, 'седьм': 7, 'восьм': 8, 'девят': 9, 'десят': 10
+      'перв': 1, 'один': 1, 'одну': 1,
+      'втор': 2, 'два': 2, 'две': 2,
+      'трет': 3, 'три': 3,
+      'четверт': 4, 'четыр': 4,
+      'пят': 5, 'шест': 6, 'седьм': 7, 'восьм': 8, 'девят': 9, 'десят': 10
     };
     const m = String(text || '').match(/\b(\d{1,2})\b/);
     if (m) return Number(m[1]);
@@ -374,7 +452,7 @@ function detectIntent(ctx, contextStore) {
     return { name: 'ENTERTAINMENT', confidence: .88 };
   }
 
-  if (/компьютер|пк|программ|окн|файл|документ|папк|загрузк|рабочий стол|браузер|хром|телеграм|word|ворд|excel|эксель|что сейчас на экране|где я сейчас|в какой программе|кнопк|ссылк|элемент|что написано|что здесь можно/.test(c)) {
+  if (/компьютер|пк|программ|окн|вкладк|файл|документ|папк|загрузк|рабочий стол|браузер|хром|телеграм|word|ворд|excel|эксель|буфер обмена|громк|звук|монитор|диспетчер задач|панель управления|bluetooth|блютуз|автозагрузк|безопасность windows|что сейчас на экране|где я сейчас|в какой программе|кнопк|ссылк|элемент|что написано|что здесь можно/.test(c)) {
     return { name: 'PC', confidence: .82 };
   }
 
@@ -464,12 +542,23 @@ const MAP = {
 };
 
 async function route(ctx, runtime) {
-  const intent = detectIntent(ctx, runtime.context);
-  runtime.context.remember(ctx,{lastIntent:intent.name});
+  let intent = detectIntent(ctx, runtime.context);
+  const capMatch=runtime.capabilities&&runtime.capabilities.match(ctx.command);
+  if(capMatch && (
+      intent.name==='UNKNOWN' ||
+      (intent.name==='BROWSER' && capMatch.tool==='pc' && capMatch.confidence>=.90)
+    )){
+    const reverse={pc:'PC',browser:'BROWSER',tasks:'TASKS',lists:'LISTS',notes:'NOTES',timer:'TIMER',
+      weather:'WEATHER',calculator:'CALCULATOR',translate:'TRANSLATE',knowledge:'KNOWLEDGE'};
+    if(reverse[capMatch.tool]) intent={name:reverse[capMatch.tool],confidence:capMatch.confidence,capabilityId:capMatch.id};
+  }
+  runtime.context.remember(ctx,{lastIntent:intent.name,lastCapability:intent.capabilityId||null});
 
   if(intent.name==='EMPTY')return{reply:'Я слушаю.'};
   if(intent.name==='GREETING')return{reply:'Привет. Я на связи.'};
-  if(intent.name==='HELP')return{reply:'Можно говорить обычными словами: задачи, заметки, списки, погода, поиск, расчёты. Контур компьютера подключается отдельным модулем.'};
+  if(intent.name==='HELP'){
+    return{reply:'Говори обычными словами. Я умею работать с программами, окнами и вкладками, файлами, интерфейсом Windows, браузером, заметками, задачами, списками, погодой, расчётами и другими подключёнными функциями. Если команда неоднозначна, я уточню.'};
+  }
 
   if(intent.name==='HELP_ME'){
     const result=await runtime.registry.run('pc',{ctx,intent},runtime);
@@ -479,6 +568,66 @@ async function route(ctx, runtime) {
 
   if(intent.name==='CONTEXT_SELECT'){
     const s=runtime.context.session(ctx.sessionId), n=intent.index;
+
+    if(s.pendingClarification && s.pendingClarification.type==='file_select'){
+      const items=Array.isArray(s.lastFileResults)?s.lastFileResults:[];
+      if(!n||!items[n-1])return{reply:'Такого файла в последнем списке нет.'};
+      const item=items[n-1];
+      s.pendingClarification=null;
+      const r=await runtime.pcBridge.run('open_path',{path:item.path});
+      if(!r||r.ok===false)return{reply:'Не получилось открыть «'+String(item.name||'файл')+'».'};
+      runtime.context.remember(ctx,{lastReferencedObject:{type:'file',...item}});
+      return{reply:'Открыла «'+String(item.name||'файл')+'».'};
+    }
+
+    if(s.pendingClarification && s.pendingClarification.type==='window_select'){
+      const items=Array.isArray(s.lastPcWindows)?s.lastPcWindows:[];
+      if(!n||!items[n-1])return{reply:'Такого окна в последнем списке нет.'};
+      const item=items[n-1];
+      s.pendingClarification=null;
+      const r=await runtime.pcBridge.run('switch_window',{processId:item.processId});
+      if(!r||r.ok===false)return{reply:'Не получилось переключиться на это окно.'};
+      return{reply:'Переключилась на «'+String(item.title||item.process||'окно')+'».'};
+    }
+
+    if(s.pendingClarification && s.pendingClarification.type==='app_select'){
+      const items=Array.isArray(s.lastAppCandidates)?s.lastAppCandidates:[];
+      if(!n||!items[n-1])return{reply:'Такой программы в последнем списке нет.'};
+      const item=items[n-1];
+      s.pendingClarification=null;
+      // Shortcut path is under Start Menu and can be launched as a path only by the agent's generic resolver.
+      const r=await runtime.pcBridge.run('open_app_generic',{query:item.name});
+      if(!r||r.ok===false)return{reply:'Не получилось открыть «'+String(item.name||'программу')+'».'};
+      return{reply:'Открыла «'+String(item.name||'программу')+'».'};
+    }
+
+    if(s.pendingClarification && s.pendingClarification.type==='browser_tab_select'){
+      const tabs=Array.isArray(s.lastBrowserTabs)?s.lastBrowserTabs:[];
+      if(!n || !tabs[n-1]){
+        return{reply:'Такой вкладки в последнем списке нет. Назови номер от одного до '+Math.max(1,tabs.length)+'.'};
+      }
+
+      const tab=tabs[n-1];
+      const pending=s.pendingClarification;
+      s.pendingClarification=null;
+
+      const r=await runtime.pcBridge.run('activate_browser_tab',{
+        index:n,
+        name:tab.name||'',
+        expectedProcessId:pending.expectedProcessId||0
+      });
+
+      if(!r)return{reply:'Не получила ответ от браузера. Ничего не переключаю повторно.'};
+      if(r.ok===false){
+        if(r.code==='WINDOW_CHANGED')return{reply:'Активное окно изменилось. Сначала снова спроси, какие вкладки открыты.'};
+        if(r.code==='NOT_FOUND')return{reply:'Эта вкладка уже не найдена. Сначала снова спроси список вкладок.'};
+        return{reply:'Не получилось переключиться на эту вкладку.'};
+      }
+
+      runtime.context.remember(ctx,{lastPcContext:(r.data&&r.data.window)||null});
+      return{reply:'Открыла вкладку '+n+': «'+String(tab.name||'без названия')+'».'};
+    }
+
     if(!n||!s.lastResults[n-1])return{reply:'Сейчас нет такого результата.'};
     const obj=s.lastResults[n-1];
     runtime.context.remember(ctx,{selectedIndex:n,lastReferencedObject:obj});
@@ -491,6 +640,10 @@ async function route(ctx, runtime) {
     if(obj.url){
       const synthetic={...ctx,command:'открой '+(runtime.context.session(ctx.sessionId).selectedIndex||1)};
       return await runtime.registry.run('browser',{ctx:synthetic},runtime);
+    }
+    if(obj.type==='file' && obj.path){
+      const r=await runtime.pcBridge.run('open_path',{path:obj.path});
+      return{reply:r&&r.ok!==false?'Открыла «'+String(obj.name||'файл')+'».':'Не получилось открыть этот файл.'};
     }
     return{reply:'Помню объект, но для него пока нет такого действия.'};
   }
@@ -539,7 +692,7 @@ async function route(ctx, runtime) {
   }
 
   if(intent.name==='UNKNOWN'){
-    return{reply:'Я поняла слова, но пока не уверена, что именно нужно сделать. Скажи цель обычной фразой — например: «найди документ», «запиши заметку» или «помоги с компьютером».'};
+    return{reply:'Не уверена, какое действие ты имеешь в виду. Скажи цель обычной фразой. Например: «открой Телеграм», «какие вкладки открыты», «найди документ», «что здесь можно нажать» или «помоги».'};
   }
 
   const toolName=MAP[intent.name];
@@ -1299,6 +1452,49 @@ function summarizeUiSnapshot(data, mode='help'){
   return parts.join(' ');
 }
 
+
+function cleanTabTarget(c){
+  let s=String(c||'').trim();
+  s=s
+    .replace(/^(открой|переключись|переключи|перейди|выбери)\s+/,'')
+    .replace(/^на\s+/,'')
+    .replace(/^(вкладку|вкладка)\s*/,'')
+    .replace(/\s+(вкладку|вкладка)$/,'')
+    .replace(/^(номер|№)\s*/,'')
+    .replace(/[«»"]/g,'')
+    .trim();
+  return s.slice(0,120);
+}
+
+function tabListReply(tabs){
+  const shown=tabs.slice(0,6);
+  const text=shown.map((t,i)=>(i+1)+'. '+cleanWindowText(t.name||'без названия')).join('. ');
+  const more=tabs.length>6?' Ещё '+(tabs.length-6)+'.':'';
+  return 'В браузере открыто '+tabs.length+' вкладок. '+text+'.'+more+' Какую открыть? Можно сказать, например, «вторую» или название вкладки.';
+}
+
+
+function stripOpenVerb(c){
+  return String(c||'')
+    .replace(/^(открой|запусти|включи|переключись на)\s+/,'')
+    .replace(/[«»"]/g,'').trim().slice(0,120);
+}
+function shortList(items, max=6){
+  return (Array.isArray(items)?items:[]).slice(0,max);
+}
+function systemTargetFromCommand(c){
+  const rules=[
+    ['taskmgr',/диспетчер задач/],['settings',/(параметры windows|настройки windows|открой параметры)$/],
+    ['control',/панель управления/],['devices',/диспетчер устройств/],
+    ['bluetooth',/bluetooth|блютуз/],['sound',/(настройки звука|параметры звука)/],
+    ['display',/(настройки экрана|параметры экрана)/],['startup',/автозагрузк/],
+    ['printers',/(принтеры|принтер)/],['apps',/(установленные программы|приложения windows)/],
+    ['security',/(безопасность windows|защитник windows)/]
+  ];
+  for(const [id,re] of rules)if(re.test(c))return id;
+  return null;
+}
+
 module.exports = {
   name:'pc', description:'Безопасное управление Windows через локальный агент', risk:'read',
   async run(input, runtime){
@@ -1319,6 +1515,182 @@ module.exports = {
       }
 
       return {reply:'Компьютер на связи, но я не успела прочитать активное окно. Скажи, что хотела сделать.'};
+    }
+
+    // Unified Core 2.0: common system shortcuts.
+    const sysTarget=systemTargetFromCommand(c);
+    if(sysTarget){
+      const r=await bridge.run('open_system_target',{target:sysTarget});
+      return{reply:r&&r.ok!==false?'Открыла нужный раздел Windows.':'Не получилось открыть этот раздел Windows.'};
+    }
+
+    // Audio/media.
+    if(/сделай громче|увеличь громкость|громче/.test(c)){
+      const r=await bridge.run('media_key',{key:'volume_up'});
+      return{reply:r&&r.ok!==false?'Сделала громче.':'Не получилось изменить громкость.'};
+    }
+    if(/сделай тише|уменьши громкость|тише/.test(c)){
+      const r=await bridge.run('media_key',{key:'volume_down'});
+      return{reply:r&&r.ok!==false?'Сделала тише.':'Не получилось изменить громкость.'};
+    }
+    if(/выключи звук|без звука|mute|включи звук обратно/.test(c)){
+      const r=await bridge.run('media_key',{key:'mute'});
+      return{reply:r&&r.ok!==false?'Переключила звук.':'Не получилось переключить звук.'};
+    }
+    if(/пауза|продолжи воспроизведение|play pause|воспроизведение/.test(c)){
+      const r=await bridge.run('media_key',{key:'play_pause'});
+      return{reply:r&&r.ok!==false?'Готово.':'Не получилось управлять воспроизведением.'};
+    }
+    if(/следующий трек/.test(c)){
+      const r=await bridge.run('media_key',{key:'next'});
+      return{reply:r&&r.ok!==false?'Переключила на следующий трек.':'Не получилось переключить трек.'};
+    }
+    if(/предыдущий трек/.test(c)){
+      const r=await bridge.run('media_key',{key:'previous'});
+      return{reply:r&&r.ok!==false?'Переключила на предыдущий трек.':'Не получилось переключить трек.'};
+    }
+
+    // Clipboard is read only on an explicit phrase.
+    if(/что (сейчас )?(в|лежит в) буфере обмена|что скопировано/.test(c)){
+      const r=await bridge.run('clipboard_get',{});
+      if(!r||r.ok===false)return{reply:'Не получилось прочитать буфер обмена.'};
+      const t=String(r.data&&r.data.text||'').trim();
+      return{reply:t?'В буфере обмена: '+t:'Буфер обмена пуст.'};
+    }
+    if(/очисти буфер обмена/.test(c)){
+      const r=await bridge.run('clipboard_clear',{});
+      return{reply:r&&r.ok!==false?'Буфер обмена очищен.':'Не получилось очистить буфер обмена.'};
+    }
+
+    // Screen readout.
+    if(/сколько мониторов|какие мониторы|разрешение экрана/.test(c)){
+      const r=await bridge.run('screen_info',{});
+      const screens=Array.isArray(r&&r.data&&r.data.screens)?r.data.screens:[];
+      if(!screens.length)return{reply:'Не получилось получить данные мониторов.'};
+      const desc=screens.map(x=>'монитор '+x.index+': '+x.width+' на '+x.height+(x.primary?' основной':'')).join('; ');
+      return{reply:'Подключено '+screens.length+'. '+desc+'.'};
+    }
+
+    // Window switching.
+    if(/предыдущее окно|переключись на предыдущее окно|верни меня в предыдущее окно/.test(c)){
+      const r=await bridge.run('switch_window',{mode:'previous'});
+      return{reply:r&&r.ok!==false?'Переключилась на предыдущее окно.':'Не получилось переключить окно.'};
+    }
+    if(/^(переключись на|перейди в|открой окно)\s+/.test(c)){
+      const q=c.replace(/^(переключись на|перейди в|открой окно)\s+/,'').trim();
+      const r=await bridge.run('switch_window',{query:q});
+      if(!r)return{reply:'Не получила ответ от компьютера.'};
+      if(r.ok===false && r.code==='AMBIGUOUS'){
+        const wins=Array.isArray(r.data&&r.data.candidates)?r.data.candidates:[];
+        runtime.context.remember(input.ctx,{lastPcWindows:wins,pendingClarification:{type:'window_select'}});
+        const names=shortList(wins).map((x,i)=>(i+1)+'. '+String(x.title||x.process)).join('. ');
+        return{reply:'Нашла несколько окон. '+names+'. Какое открыть?'};
+      }
+      if(r.ok===false)return{reply:'Такое окно не нашла.'};
+      return{reply:'Переключилась на нужное окно.'};
+    }
+
+    // Structured file search with conversational selection.
+    if(/^(найди|поищи)\s+(файл|документ|папку)\s+/.test(c)){
+      const q=c.replace(/^(найди|поищи)\s+(файл|документ|папку)\s+/,'').trim();
+      const r=await bridge.run('search_files_v2',{query:q});
+      const items=Array.isArray(r&&r.data&&r.data.items)?r.data.items:[];
+      if(!items.length)return{reply:'Ничего похожего не нашла.'};
+      runtime.context.remember(input.ctx,{
+        lastFileResults:items,
+        lastResults:items.map(x=>({type:'file',name:x.name,path:x.path})),
+        pendingClarification:{type:'file_select'}
+      });
+      const names=shortList(items).map((x,i)=>(i+1)+'. '+x.name).join('. ');
+      return{reply:'Нашла '+items.length+'. '+names+'. Какой открыть?'};
+    }
+
+    // Browser tab context is separate from Windows windows.
+    if(/^(какие|покажи|перечисли).*(вкладк)|какие вкладки открыты|что за вкладки открыты/.test(c)){
+      const r=await bridge.run('list_browser_tabs',{});
+      if(!r)return{reply:'Не успела получить список вкладок браузера.'};
+      if(r.ok===false){
+        if(r.code==='NOT_BROWSER')return{reply:'Сейчас активно не окно браузера. Сначала открой браузер или переключись на него.'};
+        return{reply:'Не получилось прочитать вкладки браузера.'};
+      }
+
+      const tabs=Array.isArray(r.data&&r.data.tabs)?r.data.tabs:[];
+      if(!tabs.length)return{reply:'В активном браузере вкладок не нашла.'};
+
+      runtime.context.remember(input.ctx,{
+        lastBrowserTabs:tabs,
+        pendingClarification:{
+          type:'browser_tab_select',
+          expectedProcessId:(r.data&&r.data.window&&r.data.window.processId)||0
+        }
+      });
+      return{reply:tabListReply(tabs)};
+    }
+
+    if(/^(открой|создай)\s+нов(ую|ая)\s+вкладк/.test(c)){
+      const r=await bridge.run('activate_browser_tab',{direction:'new'});
+      if(!r)return{reply:'Не получила ответ от браузера.'};
+      if(r.ok===false)return{reply:r.code==='NOT_BROWSER'?'Сейчас активно не окно браузера.':'Не получилось открыть новую вкладку.'};
+      return{reply:'Открыла новую вкладку.'};
+    }
+
+    if(/^(открой|переключись|переключи|перейди|выбери)\s+(на\s+)?(следующую|следующая)\s+вкладк/.test(c)){
+      const r=await bridge.run('activate_browser_tab',{direction:'next'});
+      if(!r)return{reply:'Не получила ответ от браузера.'};
+      if(r.ok===false)return{reply:r.code==='NOT_BROWSER'?'Сейчас активно не окно браузера.':'Не получилось перейти на следующую вкладку.'};
+      return{reply:'Перешла на следующую вкладку.'};
+    }
+
+    if(/^(открой|переключись|переключи|перейди|выбери)\s+(на\s+)?(предыдущую|предыдущая)\s+вкладк/.test(c)){
+      const r=await bridge.run('activate_browser_tab',{direction:'previous'});
+      if(!r)return{reply:'Не получила ответ от браузера.'};
+      if(r.ok===false)return{reply:r.code==='NOT_BROWSER'?'Сейчас активно не окно браузера.':'Не получилось перейти на предыдущую вкладку.'};
+      return{reply:'Перешла на предыдущую вкладку.'};
+    }
+
+    if(/^(открой|переключись|переключи|перейди|выбери).*\bвкладк/.test(c)){
+      const ordinal=runtime.context.resolveOrdinal(c);
+      const target=cleanTabTarget(c);
+
+      // "Открой вкладку" alone is ambiguous: existing tab vs new tab.
+      if(!ordinal && (!target || /^(вкладку|вкладка)$/.test(target))){
+        const r=await bridge.run('list_browser_tabs',{});
+        if(!r)return{reply:'Не успела получить список вкладок браузера.'};
+        if(r.ok===false){
+          if(r.code==='NOT_BROWSER')return{reply:'Сейчас активно не окно браузера.'};
+          return{reply:'Не получилось прочитать вкладки браузера.'};
+        }
+        const tabs=Array.isArray(r.data&&r.data.tabs)?r.data.tabs:[];
+        if(!tabs.length)return{reply:'Открытых вкладок не нашла. Если нужна новая, скажи «открой новую вкладку».'};
+
+        runtime.context.remember(input.ctx,{
+          lastBrowserTabs:tabs,
+          pendingClarification:{
+            type:'browser_tab_select',
+            expectedProcessId:(r.data&&r.data.window&&r.data.window.processId)||0
+          }
+        });
+        return{reply:tabListReply(tabs)};
+      }
+
+      const args={};
+      if(ordinal)args.index=ordinal;
+      else args.name=target;
+
+      const r=await bridge.run('activate_browser_tab',args);
+      if(!r)return{reply:'Не получила ответ от браузера. Ничего повторно не переключаю.'};
+      if(r.ok===false){
+        if(r.code==='NOT_BROWSER')return{reply:'Сейчас активно не окно браузера.'};
+        if(r.code==='NOT_FOUND')return{reply:'Такую вкладку не нашла. Скажи «какие вкладки открыты», и я перечислю их.'};
+        if(r.code==='AMBIGUOUS'){
+          const names=Array.isArray(r.data&&r.data.candidates)?r.data.candidates.slice(0,5):[];
+          return{reply:'Нашла несколько похожих вкладок'+(names.length?': '+names.join(', '):'')+'. Уточни название или номер.'};
+        }
+        return{reply:'Не получилось переключиться на вкладку.'};
+      }
+
+      const selected=(r.data&&r.data.selectedName)||target||(ordinal?String(ordinal):'');
+      return{reply:'Открыла вкладку «'+cleanWindowText(selected)+'».'};
     }
 
     if(/^(нажми|кликни|щёлкни|щелкни|выбери)\s+/.test(c)){
@@ -1422,52 +1794,40 @@ module.exports = {
       const more=wins.length>5?' Ещё открыто '+(wins.length-5)+'.':'';
       return {
         reply:'Сейчас открыто '+wins.length+' окон. '+first.join('. ')+'.'+more,
-        remember:{lastPcWindows:wins,lastPcContext:wins[0]||null}
+        remember:{
+          lastPcWindows:wins,
+          lastPcContext:wins[0]||null,
+          pendingClarification:{type:'window_select'}
+        }
       };
     }
 
-    if(/информация о компьютере|что с компьютером|состояние компьютера|почему компьютер тормозит/.test(c)){
-      const s = bridge.status();
-      if(!s.configured) return {reply:'Windows Agent ещё не настроен на сервере.'};
-      if(!s.online) return {reply:'Компьютер сейчас не на связи.'};
-
-      const d = (s.meta && s.meta.telemetry) || {};
-      const parts = ['Компьютер на связи.'];
-
-      if(d.cpuLoadPercent!=null && Number.isFinite(Number(d.cpuLoadPercent))){
-        parts.push('Процессор загружен примерно на '+Math.round(Number(d.cpuLoadPercent))+' процентов.');
-      }
-
-      if(d.totalMemoryGB!=null && d.freeMemoryGB!=null &&
-         Number.isFinite(Number(d.totalMemoryGB)) && Number.isFinite(Number(d.freeMemoryGB))){
-        const total = Number(d.totalMemoryGB);
-        const free = Number(d.freeMemoryGB);
-        const used = Math.max(0,total-free);
-        const pct = total>0 ? Math.round(used/total*100) : 0;
-        parts.push('Оперативная память: занято '+used.toFixed(1)+' из '+total.toFixed(1)+' гигабайт, '+pct+' процентов.');
-      }
-
-      if(d.diskTotalGB!=null && d.diskFreeGB!=null &&
-         Number.isFinite(Number(d.diskTotalGB)) && Number.isFinite(Number(d.diskFreeGB))){
-        parts.push('На диске C свободно '+Number(d.diskFreeGB).toFixed(1)+' из '+Number(d.diskTotalGB).toFixed(1)+' гигабайт.');
-      }
-
-      if(d.uptimeHours!=null && Number.isFinite(Number(d.uptimeHours))){
-        parts.push('Windows работает без перезагрузки около '+Math.round(Number(d.uptimeHours))+' часов.');
-      }
-
-      if(s.meta && s.meta.version){
-        parts.push('Агент версии '+s.meta.version+'.');
-      }
-
-      if(parts.length===1 || (parts.length===2 && s.meta && s.meta.version)){
-        parts.push('Диагностический снимок ещё не получен. Подожди около двадцати секунд и повтори.');
-      }
-
-      return {reply:parts.join(' ')};
+    if(/информация о компьютере|что с компьютером|состояние компьютера/.test(c)){
+      const s=bridge.status();
+      return{reply:s.online?'Компьютер на связи.':'Компьютер сейчас не на связи.'};
     }
 
-    return{reply:'Команду для компьютера поняла не полностью. Скажи, например: «открой хром», «что сейчас на экране», «какие кнопки здесь есть», «нажми Назад», «какие окна открыты», «найди файл договор» или просто «помоги».'};
+    if(/почему компьютер тормозит|что грузит память|что занимает процессор|мало ли места на диске/.test(c)){
+      return{reply:'Этот диагностический блок отключён в текущей конфигурации помощника.'};
+    }
+
+    // Generic application launcher. It searches Start Menu/App Paths instead of a fixed list.
+    if(/^(открой|запусти)\s+/.test(c) &&
+       !/^(открой|запусти)\s+(сайт|страниц|файл|документ|папк|новую вкладк)/.test(c)){
+      const q=stripOpenVerb(c);
+      const r=await bridge.run('open_app_generic',{query:q});
+      if(!r)return{reply:'Не получила ответ от компьютера.'};
+      if(r.ok===false && r.code==='AMBIGUOUS'){
+        const items=Array.isArray(r.data&&r.data.candidates)?r.data.candidates:[];
+        runtime.context.remember(input.ctx,{lastAppCandidates:items,pendingClarification:{type:'app_select'}});
+        const names=shortList(items).map((x,i)=>(i+1)+'. '+x.name).join('. ');
+        return{reply:'Нашла несколько программ. '+names+'. Какую открыть?'};
+      }
+      if(r.ok===false)return{reply:'Не нашла такую установленную программу.'};
+      return{reply:'Открыла «'+String(r.data&&r.data.name||q)+'».'};
+    }
+
+    return{reply:'Команду для компьютера поняла не полностью. Скажи, например: «открой хром», «какие вкладки открыты», «открой вторую вкладку», «что сейчас на экране», «нажми Назад», «какие окна открыты», «найди файл договор» или просто «помоги».'};
   }
 };
 
