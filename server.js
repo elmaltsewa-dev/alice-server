@@ -1642,7 +1642,7 @@ __modules["src/ui/cards.js"] = function(module, exports, __require, require) {
 function esc(v){
   return String(v ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 }
-function card(title, inner){return `<div class="card"><h1>${esc(title)}</h1>${inner}</div>`;
+function card(title, inner){return `<div class="card"><h1>${esc(title)}</h1>${inner}</div>`;}
 function textCard(title, text){return card(title, `<div class="text">${esc(text).replace(/\n/g,'<br>')}</div>`);}
 function rows(title, items){
   return card(title, items.map((x,i)=>`<div class="row"><span class="num">${i+1}</span><div class="t">${esc(x)}</div></div>`).join(''));
