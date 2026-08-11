@@ -144,14 +144,38 @@ function createApp() {
   });
 
   app.post('/alice',async(req,res)=>{
+    const started=Date.now();
     const body=req.body||{};
+    const request=body.request||{};
+    const session=body.session||{};
+
+    // Yandex Dialogs health-check. Keep this path synchronous and minimal.
+    if(String(request.original_utterance||'').trim().toLowerCase()==='ping'){
+      const text='Мой помощник на связи.';
+      console.log('[alice] ping',Date.now()-started+'ms');
+      return res.status(200).json({
+        response:{text,tts:text,end_session:false},
+        version:'1.0'
+      });
+    }
+
+    // First launch from Station must never depend on tools, GitHub or Windows Agent.
+    if(session.new===true){
+      const text='Мой помощник на связи. Что сделать на компьютере?';
+      console.log('[alice] new-session',Date.now()-started+'ms');
+      return res.status(200).json({
+        response:{text,tts:text,end_session:false},
+        version:'1.0'
+      });
+    }
+
     const ctx=buildRequestContext(body);
     let out;
     try{
       out=await route(ctx,runtime);
     }catch(e){
       console.error('[alice]',e.stack||e.message);
-      out={reply:'Произошла внутренняя ошибка. Я записала её в журнал сервера.'};
+      out={reply:'Произошла внутренняя ошибка. Попробуй ещё раз.'};
     }
 
     if(out&&(out.html||out.speakOnly||out.stopSpeak)){
@@ -162,13 +186,17 @@ function createApp() {
       sendView(view);
     }
 
-    res.json({
-      version:'1.0',
-      session:body.session||{},
+    const text=String((out&&out.reply)||'Готово.').slice(0,1024);
+    console.log('[alice]',ctx.command||'<empty>',Date.now()-started+'ms');
+
+    // Strict Yandex Dialogs response schema.
+    return res.status(200).json({
       response:{
-        text:(out&&out.reply)||'Готово.',
+        text,
+        tts:text,
         end_session:false
-      }
+      },
+      version:'1.0'
     });
   });
 
@@ -183,7 +211,7 @@ module.exports={createApp};
 
 __modules["src/config.js"] = function(module, exports, __require, require) {
 module.exports = {
-  VERSION: '1.6.0-confirmed-ui-actions',
+  VERSION: '1.6.3-station-protocol-safe',
   TZ: process.env.TZ_NAME || 'Europe/Moscow',
   GH_TOKEN: process.env.GH_TOKEN || '',
   GH_REPO: process.env.GH_REPO || 'elmaltsewa-dev/alice-server',
@@ -636,7 +664,7 @@ class PcBridge {
     return this.jobs.splice(i, 1)[0];
   }
 
-  waitResult(id, timeoutMs = 3000) {
+  waitResult(id, timeoutMs = 2200) {
     return new Promise(resolve => {
       const timer = setTimeout(() => {
         this.waiters.delete(id);
@@ -660,7 +688,7 @@ class PcBridge {
     if (!this.configured()) return { ok:false, code:'NOT_CONFIGURED', message:'Windows Agent ещё не настроен.' };
     if (!this.online(machine)) return { ok:false, code:'OFFLINE', message:'Компьютер сейчас не на связи. Возможно, он выключен или спит.' };
     const job = this.enqueue(action, args, machine);
-    const result = await this.waitResult(job.id, 3000);
+    const result = await this.waitResult(job.id, 2200);
     if (!result) return { ok:true, accepted:true, message:'Команду компьютеру передала.' };
     return result;
   }
